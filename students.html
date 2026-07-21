@@ -18,21 +18,16 @@
 <style>
 
 body{
-
 font-family:"Microsoft YaHei";
-
 background:#f5f7fb;
-
 margin:0;
-
 padding:30px;
-
 }
 
 
 .container{
 
-max-width:1200px;
+max-width:1400px;
 
 margin:auto;
 
@@ -51,6 +46,7 @@ h1{
 text-align:center;
 
 }
+
 
 
 .toolbar{
@@ -96,12 +92,6 @@ cursor:pointer;
 }
 
 
-button:hover{
-
-opacity:.8;
-
-}
-
 
 .logout{
 
@@ -137,7 +127,10 @@ padding:10px;
 
 text-align:center;
 
+white-space:nowrap;
+
 }
+
 
 
 th{
@@ -149,7 +142,6 @@ background:#f2f2f2;
 
 
 /* 弹窗 */
-
 
 .modal{
 
@@ -170,19 +162,21 @@ background:rgba(0,0,0,.5);
 }
 
 
+
 .modal-content{
 
 background:white;
 
 width:400px;
 
-margin:60px auto;
+margin:50px auto;
 
 padding:20px;
 
 border-radius:10px;
 
 }
+
 
 
 .modal input{
@@ -192,7 +186,6 @@ width:90%;
 margin:8px;
 
 }
-
 
 
 </style>
@@ -209,13 +202,14 @@ margin:8px;
 <div class="container">
 
 
-
 <h1>
+
 学生管理系统
 
 <button class="logout" onclick="logout()">
 退出登录
 </button>
+
 
 </h1>
 
@@ -226,22 +220,19 @@ margin:8px;
 
 <input 
 id="search"
-placeholder="搜索姓名/学校/手机号/专业"
+placeholder="搜索姓名/学校/手机号/专业/性别/年份"
 >
 
 
+
 <button onclick="loadStudents()">
-
 搜索
-
 </button>
 
 
 
 <button onclick="openAdd()">
-
 + 添加学生
-
 </button>
 
 
@@ -253,12 +244,10 @@ accept=".xlsx,.xls"
 >
 
 
+
 <button onclick="importExcel()">
-
 导入Excel
-
 </button>
-
 
 
 </div>
@@ -296,14 +285,17 @@ accept=".xlsx,.xls"
 
 <th>操作</th>
 
+
 </tr>
 
 </thead>
 
 
+
 <tbody id="list">
 
 </tbody>
+
 
 
 </table>
@@ -316,7 +308,9 @@ accept=".xlsx,.xls"
 
 
 
+
 <!-- 添加编辑 -->
+
 
 <div class="modal" id="modal">
 
@@ -325,52 +319,57 @@ accept=".xlsx,.xls"
 
 
 <h3 id="title">
-
 添加学生
-
 </h3>
 
 
 <input id="name" placeholder="姓名">
 
+
 <input id="school" placeholder="学校">
+
 
 <input id="idcard" placeholder="身份证">
 
+
 <input id="phone" placeholder="手机号">
 
-<input id="major" placeholder="专业">
-
-<input id="level" placeholder="层次">
 
 <input id="gender" placeholder="性别">
 
+
 <input id="nation" placeholder="民族">
 
+
+<input id="major" placeholder="专业">
+
+
+<input id="level" placeholder="层次">
+
+
 <input id="year" placeholder="入学时间">
+
 
 
 <br>
 
 
 <button onclick="saveStudent()">
-
 保存
-
 </button>
 
 
 <button onclick="closeModal()">
-
 取消
-
 </button>
 
 
+
 </div>
 
 
 </div>
+
 
 
 
@@ -408,6 +407,8 @@ let editId=null;
 
 
 
+
+
 //====================
 // 登录检查
 //====================
@@ -421,14 +422,14 @@ let {data}=await db.auth.getSession();
 
 if(!data.session){
 
-
 location.href="login.html";
 
-
 }
 
 
 }
+
+
 
 
 
@@ -442,12 +443,12 @@ location.href="login.html";
 async function loadStudents(){
 
 
-let keyword=
+let keyword =
 document.getElementById("search").value;
 
 
 
-let query=
+let query =
 db.from("students")
 .select("*")
 .order("id");
@@ -459,10 +460,14 @@ if(keyword){
 
 query=query.or(
 
-`name.ilike.%${keyword}%,
+`
+name.ilike.%${keyword}%,
 school.ilike.%${keyword}%,
 phone.ilike.%${keyword}%,
-major.ilike.%${keyword}%`
+major.ilike.%${keyword}%,
+gender.ilike.%${keyword}%,
+year.ilike.%${keyword}%
+`
 
 );
 
@@ -496,6 +501,14 @@ html+=`
 
 <tr>
 
+<td>${s.id||""}</td>
+
+<td>${s.name||""}</td>
+
+<td>${s.school||""}</td>
+
+<td>${s.idcard||""}</td>
+
 <td>${s.phone||""}</td>
 
 <td>${s.gender||""}</td>
@@ -518,6 +531,7 @@ onclick="editStudent(${s.id})">
 
 </button>
 
+
 </td>
 
 
@@ -533,7 +547,10 @@ onclick="editStudent(${s.id})">
 document.getElementById("list").innerHTML=html;
 
 
+
 }
+
+
 
 
 
@@ -552,10 +569,10 @@ function openAdd(){
 editId=null;
 
 
-document.getElementById("title").innerHTML="添加学生";
-
-
 clearForm();
+
+
+document.getElementById("title").innerHTML="添加学生";
 
 
 document.getElementById("modal").style.display="block";
@@ -576,6 +593,8 @@ document.getElementById("modal").style.display="none";
 
 
 
+
+
 function clearForm(){
 
 
@@ -584,6 +603,8 @@ document.querySelectorAll(".modal input")
 
 
 }
+
+
 
 
 
@@ -625,23 +646,25 @@ editId=id;
 
 
 
-document.getElementById("name").value=data.name||"";
+for(let key of [
 
-document.getElementById("school").value=data.school||"";
+"name",
+"school",
+"idcard",
+"phone",
+"gender",
+"nation",
+"major",
+"level",
+"year"
 
-document.getElementById("idcard").value=data.idcard||"";
+]){
 
-document.getElementById("phone").value=data.phone||"";
 
-document.getElementById("major").value=data.major||"";
+document.getElementById(key).value=data[key]||"";
 
-document.getElementById("level").value=data.level||"";
 
-document.getElementById("gender").value=data.gender||"";
-
-document.getElementById("nation").value=data.nation||"";
-
-document.getElementById("year").value=data.year||"";
+}
 
 
 
@@ -652,6 +675,7 @@ document.getElementById("modal").style.display="block";
 
 
 }
+
 
 
 
@@ -672,23 +696,23 @@ async function saveStudent(){
 let obj={
 
 
-name:document.getElementById("name").value,
+name:name.value,
 
-school:document.getElementById("school").value,
+school:school.value,
 
-idcard:document.getElementById("idcard").value,
+idcard:idcard.value,
 
-phone:document.getElementById("phone").value,
+phone:phone.value,
 
-major:document.getElementById("major").value,
+gender:gender.value,
 
-level:document.getElementById("level").value,
+nation:nation.value,
 
-gender:document.getElementById("gender").value,
+major:major.value,
 
-nation:document.getElementById("nation").value,
+level:level.value,
 
-year:document.getElementById("year").value
+year:year.value
 
 
 };
@@ -702,7 +726,8 @@ let result;
 if(editId){
 
 
-result=await db
+result=
+await db
 
 .from("students")
 
@@ -715,7 +740,8 @@ result=await db
 }else{
 
 
-result=await db
+result=
+await db
 
 .from("students")
 
@@ -737,7 +763,9 @@ alert(result.error.message);
 
 alert("保存成功");
 
+
 closeModal();
+
 
 loadStudents();
 
@@ -754,13 +782,13 @@ loadStudents();
 
 
 
+
 //====================
 // Excel导入
 //====================
 
 
 async function importExcel(){
-
 
 
 let file=
@@ -782,22 +810,18 @@ let reader=new FileReader();
 
 
 
-reader.onload=async function(e){
+reader.onload=async e=>{
 
 
-
-let workbook=XLSX.read(
-
+let workbook=
+XLSX.read(
 new Uint8Array(e.target.result),
-
 {type:"array"}
-
 );
 
 
 
 let sheet=
-
 workbook.Sheets[
 workbook.SheetNames[0]
 ];
@@ -805,7 +829,6 @@ workbook.SheetNames[0]
 
 
 let rows=
-
 XLSX.utils.sheet_to_json(sheet);
 
 
@@ -825,9 +848,9 @@ gender:r["性别"],
 
 nation:r["民族"],
 
-level:r["层次"],
-
 major:r["专业"],
+
+level:r["层次"],
 
 year:r["入学时间"]
 
@@ -854,7 +877,7 @@ alert(error.message);
 
 
 alert(
-"导入成功："+list.length+"条"
+"成功导入："+list.length+"条"
 );
 
 
@@ -879,8 +902,10 @@ reader.readAsArrayBuffer(file);
 
 
 
+
+
 //====================
-// 退出登录
+//退出
 //====================
 
 
@@ -894,6 +919,7 @@ location.href="login.html";
 
 
 }
+
 
 
 
@@ -915,6 +941,5 @@ loadStudents();
 
 
 </body>
-
 
 </html>
