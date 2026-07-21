@@ -1,37 +1,92 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <meta charset="UTF-8">
 
 <title>学生管理系统</title>
 
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <style>
 
 body{
-    font-family:"Microsoft YaHei";
-    padding:30px;
+font-family:"Microsoft YaHei";
+padding:30px;
+background:#f5f7fb;
 }
+
+
+h1{
+color:#333;
+}
+
+
+.box{
+background:white;
+padding:20px;
+border-radius:10px;
+}
+
+
+input{
+padding:10px;
+width:300px;
+}
+
+
+button{
+
+padding:10px 15px;
+border:none;
+background:#1677ff;
+color:white;
+border-radius:5px;
+cursor:pointer;
+
+}
+
 
 table{
-    border-collapse:collapse;
-    width:100%;
+
+margin-top:20px;
+width:100%;
+border-collapse:collapse;
+background:white;
+
 }
+
 
 th,td{
-    border:1px solid #ddd;
-    padding:10px;
+
+border:1px solid #ddd;
+padding:10px;
+
 }
 
+
 th{
-    background:#f5f5f5;
+
+background:#f2f2f2;
+
 }
+
+
+.delete{
+
+background:red;
+
+}
+
 
 </style>
 
+
 </head>
+
 
 
 <body>
@@ -40,24 +95,44 @@ th{
 <h1>学生管理系统</h1>
 
 
+<div class="box">
+
+
+<input id="search"
+placeholder="搜索姓名/学校/手机号">
+
+
+<button onclick="loadStudents()">
+搜索
+</button>
+
+
+<button onclick="addStudent()">
++ 添加学生
+</button>
+
+
+
 <table>
+
 
 <thead>
 
 <tr>
 
-<th>编号</th>
+<th>ID</th>
 <th>姓名</th>
 <th>学校</th>
 <th>专业</th>
 <th>手机号</th>
+<th>操作</th>
 
 </tr>
 
 </thead>
 
 
-<tbody id="studentList">
+<tbody id="list">
 
 </tbody>
 
@@ -65,21 +140,25 @@ th{
 </table>
 
 
+</div>
+
+
 
 <script>
 
 
-const supabaseUrl =
+const url =
 "https://ukxxmxnubxjezkwbbxdr.supabase.co";
 
 
-const supabaseKey =
+const key =
 "sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
 
 
-const db = supabase.createClient(
-    supabaseUrl,
-    supabaseKey
+const db =
+supabase.createClient(
+url,
+key
 );
 
 
@@ -87,19 +166,37 @@ const db = supabase.createClient(
 async function loadStudents(){
 
 
-const {data,error}=await db
+let keyword =
+document.getElementById("search").value;
 
-.from("students")
 
+
+let query =
+db.from("students")
 .select("*");
+
+
+
+if(keyword){
+
+
+query =
+query.or(
+`name.ilike.%${keyword}%,school.ilike.%${keyword}%,phone.ilike.%${keyword}%`
+);
+
+
+}
+
+
+
+let {data,error}=await query;
+
 
 
 if(error){
 
-console.log(error);
-
 alert(error.message);
-
 return;
 
 }
@@ -109,37 +206,163 @@ return;
 let html="";
 
 
-data.forEach(student=>{
+
+data.forEach(s=>{
 
 
 html += `
 
+
 <tr>
 
-<td>${student.id}</td>
 
-<td>${student.name}</td>
+<td>${s.id}</td>
 
-<td>${student.school}</td>
+<td>${s.name}</td>
 
-<td>${student.major}</td>
+<td>${s.school}</td>
 
-<td>${student.phone}</td>
+<td>${s.major}</td>
+
+<td>${s.phone}</td>
+
+
+<td>
+
+<button onclick="editStudent(${s.id})">
+编辑
+</button>
+
+
+<button class="delete"
+onclick="deleteStudent(${s.id})">
+
+删除
+
+</button>
+
+
+</td>
 
 
 </tr>
 
+
 `;
+
+
 
 });
 
 
-document.getElementById(
-"studentList"
-).innerHTML=html;
+
+document.getElementById("list").innerHTML=html;
 
 
 }
+
+
+
+
+async function addStudent(){
+
+
+let name =
+prompt("请输入姓名");
+
+
+if(!name)return;
+
+
+
+let school =
+prompt("请输入学校");
+
+
+let major =
+prompt("请输入专业");
+
+
+let phone =
+prompt("请输入手机号");
+
+
+
+let {error}=await db
+.from("students")
+.insert({
+
+name,
+school,
+major,
+phone
+
+});
+
+
+
+if(error){
+
+alert(error.message);
+
+}else{
+
+
+alert("添加成功");
+
+loadStudents();
+
+
+}
+
+
+}
+
+
+
+async function deleteStudent(id){
+
+
+if(!confirm("确定删除？"))
+return;
+
+
+
+let {error}=await db
+.from("students")
+.delete()
+.eq("id",id);
+
+
+
+if(error){
+
+alert(error.message);
+
+}else{
+
+
+loadStudents();
+
+
+}
+
+
+
+}
+
+
+
+
+function editStudent(id){
+
+alert(
+"编辑功能下一步添加"
+);
+
+
+}
+
 
 
 loadStudents();
@@ -149,4 +372,5 @@ loadStudents();
 
 
 </body>
+
 </html>
