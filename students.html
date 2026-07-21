@@ -17,7 +17,6 @@
 
 <style>
 
-
 body{
 
 font-family:"Microsoft YaHei";
@@ -29,7 +28,6 @@ margin:0;
 padding:30px;
 
 }
-
 
 
 .container{
@@ -53,7 +51,6 @@ h1{
 text-align:center;
 
 }
-
 
 
 .toolbar{
@@ -99,10 +96,24 @@ cursor:pointer;
 }
 
 
-
 button:hover{
 
 opacity:.8;
+
+}
+
+
+.logout{
+
+background:#ff4d4f;
+
+}
+
+
+
+.edit{
+
+background:#00a86b;
 
 }
 
@@ -129,7 +140,6 @@ text-align:center;
 }
 
 
-
 th{
 
 background:#f2f2f2;
@@ -138,12 +148,7 @@ background:#f2f2f2;
 
 
 
-.edit{
-
-background:#00a86b;
-
-}
-
+/* 弹窗 */
 
 
 .modal{
@@ -165,21 +170,19 @@ background:rgba(0,0,0,.5);
 }
 
 
-
 .modal-content{
 
 background:white;
 
 width:400px;
 
-margin:80px auto;
+margin:60px auto;
 
 padding:20px;
 
 border-radius:10px;
 
 }
-
 
 
 .modal input{
@@ -198,6 +201,7 @@ margin:8px;
 </head>
 
 
+
 <body>
 
 
@@ -205,7 +209,15 @@ margin:8px;
 <div class="container">
 
 
-<h1>学生管理系统</h1>
+
+<h1>
+学生管理系统
+
+<button class="logout" onclick="logout()">
+退出登录
+</button>
+
+</h1>
 
 
 
@@ -219,13 +231,17 @@ placeholder="搜索姓名/学校/手机号/专业"
 
 
 <button onclick="loadStudents()">
+
 搜索
+
 </button>
 
 
 
 <button onclick="openAdd()">
+
 + 添加学生
+
 </button>
 
 
@@ -237,9 +253,10 @@ accept=".xlsx,.xls"
 >
 
 
-
 <button onclick="importExcel()">
+
 导入Excel
+
 </button>
 
 
@@ -248,10 +265,13 @@ accept=".xlsx,.xls"
 
 
 
+
+
 <table>
 
 
 <thead>
+
 
 <tr>
 
@@ -274,8 +294,8 @@ accept=".xlsx,.xls"
 
 </tr>
 
-</thead>
 
+</thead>
 
 
 <tbody id="list">
@@ -292,8 +312,8 @@ accept=".xlsx,.xls"
 
 
 
-<!-- 添加编辑窗口 -->
 
+<!-- 添加编辑 -->
 
 <div class="modal" id="modal">
 
@@ -302,33 +322,27 @@ accept=".xlsx,.xls"
 
 
 <h3 id="title">
+
 添加学生
+
 </h3>
 
 
 <input id="name" placeholder="姓名">
 
-
 <input id="school" placeholder="学校">
-
 
 <input id="idcard" placeholder="身份证">
 
-
 <input id="phone" placeholder="手机号">
-
 
 <input id="major" placeholder="专业">
 
-
 <input id="level" placeholder="层次">
-
 
 <input id="gender" placeholder="性别">
 
-
 <input id="nation" placeholder="民族">
-
 
 <input id="year" placeholder="入学时间">
 
@@ -337,12 +351,16 @@ accept=".xlsx,.xls"
 
 
 <button onclick="saveStudent()">
+
 保存
+
 </button>
 
 
 <button onclick="closeModal()">
+
 取消
+
 </button>
 
 
@@ -350,6 +368,8 @@ accept=".xlsx,.xls"
 
 
 </div>
+
+
 
 
 
@@ -359,12 +379,13 @@ accept=".xlsx,.xls"
 
 
 //====================
-// Supabase配置
+// Supabase
 //====================
 
 
 const SUPABASE_URL =
 "https://ukxxmxnubxjezkwbbxdr.supabase.co";
+
 
 
 const SUPABASE_KEY =
@@ -385,8 +406,10 @@ let editId=null;
 
 
 //====================
-// 加载学生
+// 登录检查
 //====================
+
+
 async function checkLogin(){
 
 
@@ -404,16 +427,24 @@ location.href="login.html";
 
 }
 
+
+
+
+
+//====================
+// 加载学生
+//====================
+
+
 async function loadStudents(){
 
 
-
-let keyword =
+let keyword=
 document.getElementById("search").value;
 
 
 
-let query =
+let query=
 db.from("students")
 .select("*")
 .order("id");
@@ -423,14 +454,13 @@ db.from("students")
 if(keyword){
 
 
-query =
-query.or(
-`
-name.ilike.%${keyword}%,
+query=query.or(
+
+`name.ilike.%${keyword}%,
 school.ilike.%${keyword}%,
 phone.ilike.%${keyword}%,
-major.ilike.%${keyword}%
-`
+major.ilike.%${keyword}%`
+
 );
 
 
@@ -480,6 +510,7 @@ html+=`
 
 <td>
 
+
 <button class="edit"
 onclick="editStudent(${s.id})">
 
@@ -509,8 +540,10 @@ document.getElementById("list").innerHTML=html;
 
 
 
+
+
 //====================
-// 打开添加
+// 添加
 //====================
 
 
@@ -520,8 +553,7 @@ function openAdd(){
 editId=null;
 
 
-document.getElementById("title").innerHTML=
-"添加学生";
+document.getElementById("title").innerHTML="添加学生";
 
 
 clearForm();
@@ -535,7 +567,6 @@ document.getElementById("modal").style.display="block";
 
 
 
-
 function closeModal(){
 
 
@@ -543,8 +574,6 @@ document.getElementById("modal").style.display="none";
 
 
 }
-
-
 
 
 
@@ -561,8 +590,10 @@ document.querySelectorAll(".modal input")
 
 
 
+
+
 //====================
-// 编辑学生
+// 编辑
 //====================
 
 
@@ -595,27 +626,27 @@ editId=id;
 
 
 
-name.value=data.name||"";
+document.getElementById("name").value=data.name||"";
 
-school.value=data.school||"";
+document.getElementById("school").value=data.school||"";
 
-idcard.value=data.idcard||"";
+document.getElementById("idcard").value=data.idcard||"";
 
-phone.value=data.phone||"";
+document.getElementById("phone").value=data.phone||"";
 
-major.value=data.major||"";
+document.getElementById("major").value=data.major||"";
 
-level.value=data.level||"";
+document.getElementById("level").value=data.level||"";
 
-gender.value=data.gender||"";
+document.getElementById("gender").value=data.gender||"";
 
-nation.value=data.nation||"";
+document.getElementById("nation").value=data.nation||"";
 
-year.value=data.year||"";
+document.getElementById("year").value=data.year||"";
 
 
-document.getElementById("title").innerHTML=
-"编辑学生";
+
+document.getElementById("title").innerHTML="编辑学生";
 
 
 document.getElementById("modal").style.display="block";
@@ -627,8 +658,11 @@ document.getElementById("modal").style.display="block";
 
 
 
+
+
+
 //====================
-// 保存学生
+// 保存
 //====================
 
 
@@ -639,27 +673,26 @@ async function saveStudent(){
 let obj={
 
 
-name:name.value,
+name:document.getElementById("name").value,
 
-school:school.value,
+school:document.getElementById("school").value,
 
-idcard:idcard.value,
+idcard:document.getElementById("idcard").value,
 
-phone:phone.value,
+phone:document.getElementById("phone").value,
 
-major:major.value,
+major:document.getElementById("major").value,
 
-level:level.value,
+level:document.getElementById("level").value,
 
-gender:gender.value,
+gender:document.getElementById("gender").value,
 
-nation:nation.value,
+nation:document.getElementById("nation").value,
 
-year:year.value
+year:document.getElementById("year").value
 
 
 };
-
 
 
 
@@ -670,8 +703,7 @@ let result;
 if(editId){
 
 
-result=
-await db
+result=await db
 
 .from("students")
 
@@ -684,23 +716,22 @@ await db
 }else{
 
 
-result=
-await db
+result=await db
 
 .from("students")
 
 .insert(obj);
 
 
-
 }
-
 
 
 
 if(result.error){
 
+
 alert(result.error.message);
+
 
 }else{
 
@@ -716,6 +747,10 @@ loadStudents();
 
 
 }
+
+
+
+
 
 
 
@@ -744,7 +779,6 @@ return;
 
 
 
-
 let reader=new FileReader();
 
 
@@ -753,15 +787,18 @@ reader.onload=async function(e){
 
 
 
-let workbook=
-XLSX.read(
+let workbook=XLSX.read(
+
 new Uint8Array(e.target.result),
+
 {type:"array"}
+
 );
 
 
 
 let sheet=
+
 workbook.Sheets[
 workbook.SheetNames[0]
 ];
@@ -769,6 +806,7 @@ workbook.SheetNames[0]
 
 
 let rows=
+
 XLSX.utils.sheet_to_json(sheet);
 
 
@@ -812,11 +850,12 @@ if(error){
 
 alert(error.message);
 
+
 }else{
 
 
 alert(
-"成功导入 "+list.length+" 条数据"
+"导入成功："+list.length+"条"
 );
 
 
@@ -826,13 +865,11 @@ loadStudents();
 }
 
 
-
 };
 
 
 
 reader.readAsArrayBuffer(file);
-
 
 
 }
@@ -841,7 +878,37 @@ reader.readAsArrayBuffer(file);
 
 
 
+
+
+//====================
+// 退出登录
+//====================
+
+
+async function logout(){
+
+
+await db.auth.signOut();
+
+
+location.href="login.html";
+
+
+}
+
+
+
+
+
+
+//启动
+
+
+checkLogin().then(()=>{
+
 loadStudents();
+
+});
 
 
 
@@ -849,5 +916,6 @@ loadStudents();
 
 
 </body>
+
 
 </html>
