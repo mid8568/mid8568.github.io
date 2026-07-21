@@ -272,7 +272,6 @@ accept=".xlsx,.xls"
 
 <thead>
 
-
 <tr>
 
 <th>ID</th>
@@ -285,15 +284,19 @@ accept=".xlsx,.xls"
 
 <th>手机号</th>
 
+<th>性别</th>
+
+<th>民族</th>
+
 <th>专业</th>
 
 <th>层次</th>
 
+<th>入学时间</th>
+
 <th>操作</th>
 
-
 </tr>
-
 
 </thead>
 
@@ -493,23 +496,20 @@ html+=`
 
 <tr>
 
-<td>${s.id}</td>
-
-<td>${s.name||""}</td>
-
-<td>${s.school||""}</td>
-
-<td>${s.idcard||""}</td>
-
 <td>${s.phone||""}</td>
+
+<td>${s.gender||""}</td>
+
+<td>${s.nation||""}</td>
 
 <td>${s.major||""}</td>
 
 <td>${s.level||""}</td>
 
+<td>${s.year||""}</td>
+
 
 <td>
-
 
 <button class="edit"
 onclick="editStudent(${s.id})">
@@ -517,7 +517,6 @@ onclick="editStudent(${s.id})">
 编辑
 
 </button>
-
 
 </td>
 
