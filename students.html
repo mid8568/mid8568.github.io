@@ -18,10 +18,15 @@
 <style>
 
 body{
+
 font-family:"Microsoft YaHei";
+
 background:#f5f7fb;
+
 margin:0;
+
 padding:30px;
+
 }
 
 
@@ -92,7 +97,6 @@ cursor:pointer;
 }
 
 
-
 .logout{
 
 background:#ff4d4f;
@@ -114,6 +118,8 @@ table{
 width:100%;
 
 border-collapse:collapse;
+
+overflow:auto;
 
 }
 
@@ -140,8 +146,18 @@ background:#f2f2f2;
 }
 
 
+a{
+
+color:#1677ff;
+
+cursor:pointer;
+
+}
+
+
 
 /* 弹窗 */
+
 
 .modal{
 
@@ -169,7 +185,7 @@ background:white;
 
 width:400px;
 
-margin:50px auto;
+margin:60px auto;
 
 padding:20px;
 
@@ -184,6 +200,15 @@ border-radius:10px;
 width:90%;
 
 margin:8px;
+
+}
+
+
+.page{
+
+text-align:center;
+
+margin-top:20px;
 
 }
 
@@ -207,9 +232,10 @@ margin:8px;
 学生管理系统
 
 <button class="logout" onclick="logout()">
-退出登录
-</button>
 
+退出登录
+
+</button>
 
 </h1>
 
@@ -218,36 +244,53 @@ margin:8px;
 <div class="toolbar">
 
 
-<input 
+<input
 id="search"
 placeholder="搜索姓名/学校/手机号/专业/性别/年份"
 >
 
 
+<button onclick="searchStudent()">
 
-<button onclick="loadStudents()">
 搜索
+
 </button>
 
 
 
 <button onclick="openAdd()">
+
 + 添加学生
+
 </button>
 
 
 
-<input 
+<input
+
 type="file"
+
 id="excelFile"
+
 accept=".xlsx,.xls"
+
 >
 
 
-
 <button onclick="importExcel()">
+
 导入Excel
+
 </button>
+
+
+
+<button onclick="exportExcel()">
+
+导出Excel
+
+</button>
+
 
 
 </div>
@@ -285,11 +328,9 @@ accept=".xlsx,.xls"
 
 <th>操作</th>
 
-
 </tr>
 
 </thead>
-
 
 
 <tbody id="list">
@@ -297,13 +338,119 @@ accept=".xlsx,.xls"
 </tbody>
 
 
-
 </table>
+
+
+
+<div class="page">
+
+
+<button onclick="prevPage()">
+
+上一页
+
+</button>
+
+
+
+<span id="pageInfo">
+
+第1页
+
+</span>
+
+
+
+<button onclick="nextPage()">
+
+下一页
+
+</button>
+
 
 
 </div>
 
 
+</div>
+
+
+
+
+
+<!-- 学生详情 -->
+
+
+<div class="modal" id="detailModal">
+
+
+<div class="modal-content">
+
+
+<h3>
+
+学生档案
+
+</h3>
+
+
+<p>姓名：
+<span id="d_name"></span>
+</p>
+
+
+<p>学校：
+<span id="d_school"></span>
+</p>
+
+
+<p>身份证：
+<span id="d_idcard"></span>
+</p>
+
+
+<p>手机号：
+<span id="d_phone"></span>
+</p>
+
+
+<p>性别：
+<span id="d_gender"></span>
+</p>
+
+
+<p>民族：
+<span id="d_nation"></span>
+</p>
+
+
+<p>专业：
+<span id="d_major"></span>
+</p>
+
+
+<p>层次：
+<span id="d_level"></span>
+</p>
+
+
+<p>入学时间：
+<span id="d_year"></span>
+</p>
+
+
+
+<button onclick="closeDetail()">
+
+关闭
+
+</button>
+
+
+</div>
+
+
+</div>
 
 
 
@@ -319,79 +466,64 @@ accept=".xlsx,.xls"
 
 
 <h3 id="title">
+
 添加学生
+
 </h3>
 
 
 <input id="name" placeholder="姓名">
 
-
 <input id="school" placeholder="学校">
-
 
 <input id="idcard" placeholder="身份证">
 
-
 <input id="phone" placeholder="手机号">
-
 
 <input id="gender" placeholder="性别">
 
-
 <input id="nation" placeholder="民族">
-
 
 <input id="major" placeholder="专业">
 
-
 <input id="level" placeholder="层次">
 
-
 <input id="year" placeholder="入学时间">
-
 
 
 <br>
 
 
 <button onclick="saveStudent()">
+
 保存
+
 </button>
 
 
 <button onclick="closeModal()">
+
 取消
+
 </button>
 
 
-
 </div>
 
 
 </div>
-
-
-
-
-
 
 
 
 <script>
 
 
-//====================
-// Supabase
-//====================
-
-
 const SUPABASE_URL =
 "https://ukxxmxnubxjezkwbbxdr.supabase.co";
 
 
-
 const SUPABASE_KEY =
-"sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
+"你的sb_publishable_key";
 
 
 
@@ -406,16 +538,19 @@ SUPABASE_KEY
 let editId=null;
 
 
+let currentPage=1;
 
 
+let pageSize=50;
+
+
+let totalPages=1;
 
 //====================
 // 登录检查
 //====================
 
-
 async function checkLogin(){
-
 
 let {data}=await db.auth.getSession();
 
@@ -426,17 +561,14 @@ location.href="login.html";
 
 }
 
-
 }
 
 
 
 
 
-
-
 //====================
-// 加载学生
+// 加载学生（分页）
 //====================
 
 
@@ -444,13 +576,23 @@ async function loadStudents(){
 
 
 let keyword =
-document.getElementById("search").value;
+document.getElementById("search").value.trim();
+
+
+
+let start =
+(currentPage-1)*pageSize;
+
+
+
+let end =
+start+pageSize-1;
 
 
 
 let query =
 db.from("students")
-.select("*")
+.select("*",{count:"exact"})
 .order("id");
 
 
@@ -476,7 +618,8 @@ year.ilike.%${keyword}%
 
 
 
-let {data,error}=await query;
+
+let {data,count,error}=await query.range(start,end);
 
 
 
@@ -485,6 +628,19 @@ if(error){
 alert(error.message);
 
 return;
+
+}
+
+
+
+
+totalPages=Math.ceil(count/pageSize);
+
+
+
+if(totalPages===0){
+
+totalPages=1;
 
 }
 
@@ -503,28 +659,49 @@ html+=`
 
 <td>${s.id||""}</td>
 
-<td>${s.name||""}</td>
+
+<td>
+
+<a onclick="showStudent(${s.id})">
+
+${s.name||""}
+
+</a>
+
+</td>
+
+
 
 <td>${s.school||""}</td>
 
+
 <td>${s.idcard||""}</td>
+
 
 <td>${s.phone||""}</td>
 
+
 <td>${s.gender||""}</td>
+
 
 <td>${s.nation||""}</td>
 
+
 <td>${s.major||""}</td>
 
+
 <td>${s.level||""}</td>
+
 
 <td>${s.year||""}</td>
 
 
+
 <td>
 
+
 <button class="edit"
+
 onclick="editStudent(${s.id})">
 
 编辑
@@ -548,6 +725,78 @@ document.getElementById("list").innerHTML=html;
 
 
 
+document.getElementById("pageInfo").innerHTML=
+
+`
+第 ${currentPage} / ${totalPages} 页
+`;
+
+
+
+}
+
+
+
+
+
+//====================
+// 搜索
+//====================
+
+
+function searchStudent(){
+
+currentPage=1;
+
+loadStudents();
+
+}
+
+
+
+
+
+
+//====================
+// 下一页
+//====================
+
+
+function nextPage(){
+
+
+if(currentPage<totalPages){
+
+currentPage++;
+
+loadStudents();
+
+}
+
+
+}
+
+
+
+
+
+//====================
+// 上一页
+//====================
+
+
+function prevPage(){
+
+
+if(currentPage>1){
+
+currentPage--;
+
+loadStudents();
+
+}
+
+
 }
 
 
@@ -557,9 +806,8 @@ document.getElementById("list").innerHTML=html;
 
 
 
-
 //====================
-// 添加
+// 添加学生
 //====================
 
 
@@ -583,6 +831,7 @@ document.getElementById("modal").style.display="block";
 
 
 
+
 function closeModal(){
 
 
@@ -599,6 +848,7 @@ function clearForm(){
 
 
 document.querySelectorAll(".modal input")
+
 .forEach(i=>i.value="");
 
 
@@ -613,11 +863,12 @@ document.querySelectorAll(".modal input")
 
 
 //====================
-// 编辑
+// 编辑学生
 //====================
 
 
 async function editStudent(id){
+
 
 
 let {data,error}=await db
@@ -629,6 +880,7 @@ let {data,error}=await db
 .eq("id",id)
 
 .single();
+
 
 
 
@@ -646,8 +898,7 @@ editId=id;
 
 
 
-for(let key of [
-
+[
 "name",
 "school",
 "idcard",
@@ -658,13 +909,13 @@ for(let key of [
 "level",
 "year"
 
-]){
+].forEach(k=>{
 
 
-document.getElementById(key).value=data[key]||"";
+document.getElementById(k).value=data[k]||"";
 
 
-}
+});
 
 
 
@@ -674,6 +925,7 @@ document.getElementById("title").innerHTML="编辑学生";
 document.getElementById("modal").style.display="block";
 
 
+
 }
 
 
@@ -683,9 +935,8 @@ document.getElementById("modal").style.display="block";
 
 
 
-
 //====================
-// 保存
+// 保存学生
 //====================
 
 
@@ -719,6 +970,7 @@ year:year.value
 
 
 
+
 let result;
 
 
@@ -727,6 +979,7 @@ if(editId){
 
 
 result=
+
 await db
 
 .from("students")
@@ -741,6 +994,7 @@ await db
 
 
 result=
+
 await db
 
 .from("students")
@@ -748,7 +1002,9 @@ await db
 .insert(obj);
 
 
+
 }
+
 
 
 
@@ -756,6 +1012,7 @@ if(result.error){
 
 
 alert(result.error.message);
+
 
 
 }else{
@@ -773,6 +1030,7 @@ loadStudents();
 }
 
 
+
 }
 
 
@@ -784,87 +1042,24 @@ loadStudents();
 
 
 //====================
-// Excel导入
+// 学生详情
 //====================
 
 
-async function importExcel(){
-
-
-let file=
-document.getElementById("excelFile").files[0];
+async function showStudent(id){
 
 
 
-if(!file){
-
-alert("请选择Excel文件");
-
-return;
-
-}
-
-
-
-let reader=new FileReader();
-
-
-
-reader.onload=async e=>{
-
-
-let workbook=
-XLSX.read(
-new Uint8Array(e.target.result),
-{type:"array"}
-);
-
-
-
-let sheet=
-workbook.Sheets[
-workbook.SheetNames[0]
-];
-
-
-
-let rows=
-XLSX.utils.sheet_to_json(sheet);
-
-
-
-let list=rows.map(r=>({
-
-
-school:r["学校"],
-
-name:r["姓名"],
-
-idcard:r["身份证号码"],
-
-phone:r["手机号"],
-
-gender:r["性别"],
-
-nation:r["民族"],
-
-major:r["专业"],
-
-level:r["层次"],
-
-year:r["入学时间"]
-
-
-}));
-
-
-
-
-let {error}=await db
+let {data,error}=await db
 
 .from("students")
 
-.insert(list);
+.select("*")
+
+.eq("id",id)
+
+.single();
+
 
 
 
@@ -872,50 +1067,34 @@ if(error){
 
 alert(error.message);
 
-
-}else{
-
-
-alert(
-"成功导入："+list.length+"条"
-);
-
-
-loadStudents();
-
-
-}
-
-
-};
-
-
-
-reader.readAsArrayBuffer(file);
-
+return;
 
 }
 
 
 
 
+document.getElementById("d_name").innerHTML=data.name||"";
+
+document.getElementById("d_school").innerHTML=data.school||"";
+
+document.getElementById("d_idcard").innerHTML=data.idcard||"";
+
+document.getElementById("d_phone").innerHTML=data.phone||"";
+
+document.getElementById("d_gender").innerHTML=data.gender||"";
+
+document.getElementById("d_nation").innerHTML=data.nation||"";
+
+document.getElementById("d_major").innerHTML=data.major||"";
+
+document.getElementById("d_level").innerHTML=data.level||"";
+
+document.getElementById("d_year").innerHTML=data.year||"";
 
 
 
-
-
-//====================
-//退出
-//====================
-
-
-async function logout(){
-
-
-await db.auth.signOut();
-
-
-location.href="login.html";
+document.getElementById("detailModal").style.display="block";
 
 
 }
@@ -924,22 +1103,10 @@ location.href="login.html";
 
 
 
+function closeDetail(){
 
 
-//启动
+document.getElementById("detailModal").style.display="none";
 
 
-checkLogin().then(()=>{
-
-loadStudents();
-
-});
-
-
-
-</script>
-
-
-</body>
-
-</html>
+}
