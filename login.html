@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>管理员登录</title>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<style>
+
+body{
+
+font-family:"Microsoft YaHei";
+
+background:#f5f7fb;
+
+}
+
+
+.box{
+
+width:350px;
+
+margin:100px auto;
+
+background:white;
+
+padding:30px;
+
+border-radius:10px;
+
+text-align:center;
+
+}
+
+
+
+input{
+
+width:90%;
+
+padding:12px;
+
+margin:10px;
+
+}
+
+
+
+button{
+
+padding:12px 30px;
+
+background:#1677ff;
+
+color:white;
+
+border:0;
+
+border-radius:5px;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+<div class="box">
+
+
+<h2>
+学生管理后台登录
+</h2>
+
+
+<input id="email"
+placeholder="邮箱">
+
+
+<input id="password"
+type="password"
+placeholder="密码">
+
+
+
+<button onclick="login()">
+登录
+</button>
+
+
+
+</div>
+
+
+
+
+<script>
+
+
+const url =
+"https://ukxxmxnubxjezkwbbxdr.supabase.co";
+
+
+const key =
+"你的sb_publishable_key";
+
+
+
+const db =
+supabase.createClient(
+url,
+key
+);
+
+
+
+async function login(){
+
+
+let email =
+document.getElementById("email").value;
+
+
+let password =
+document.getElementById("password").value;
+
+
+
+let {data,error}=await db.auth.signInWithPassword({
+
+email,
+
+password
+
+});
+
+
+
+if(error){
+
+
+alert(
+"登录失败："+error.message
+);
+
+
+return;
+
+}
+
+
+
+location.href=
+"students.html";
+
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+
+</html>
