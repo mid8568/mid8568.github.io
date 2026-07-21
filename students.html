@@ -387,7 +387,22 @@ let editId=null;
 //====================
 // 加载学生
 //====================
+async function checkLogin(){
 
+
+let {data}=await db.auth.getSession();
+
+
+if(!data.session){
+
+
+location.href="login.html";
+
+
+}
+
+
+}
 
 async function loadStudents(){
 
