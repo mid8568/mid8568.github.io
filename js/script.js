@@ -849,33 +849,7 @@ yearModal.style.display="none";
 async function filterByYear(year){
 
 
-let {data,error}=await db
-
-.from("students")
-
-.select("*")
-
-.ilike(
-"year",
-`%${year}%`
-)
-
-.order("id");
-
-
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-
-
 let html="";
-
 
 
 data.forEach(s=>{
@@ -886,59 +860,82 @@ html+=`
 <tr>
 
 
-<td>${s.id || ""}</td>
-
-
-
 <td>
 
-<a href="javascript:void(0)"
-onclick="showStudent(${Number(s.id)})">
+<button 
+class="name-btn"
+onclick="showStudent(${s.id})">
 
 ${s.name || ""}
 
-</a>
-
+</button>
 
 </td>
 
 
 
+<td class="pc-col">
 
-<td>${s.school || ""}</td>
+${s.school || ""}
 
-
-
-<td>${s.idcard || ""}</td>
-
-
-
-<td>${s.phone || ""}</td>
+</td>
 
 
 
-<td>${s.gender || ""}</td>
+<td class="pc-col">
 
+${s.idcard || ""}
 
-
-<td>${s.major || ""}</td>
-
-
-
-<td>${s.level || ""}</td>
-
-
-
-<td>${s.year || ""}</td>
+</td>
 
 
 
 <td>
 
+${s.phone || ""}
+
+</td>
+
+
+
+<td class="pc-col">
+
+${s.gender || ""}
+
+</td>
+
+
+
+<td>
+
+${s.major || ""}
+
+</td>
+
+
+
+<td>
+
+${s.level || ""}
+
+</td>
+
+
+
+<td class="pc-col">
+
+${s.year || ""}
+
+</td>
+
+
+
+<td class="pc-col">
+
 
 <button 
 class="edit"
-onclick="editStudent(${Number(s.id)})">
+onclick="editStudent(${s.id})">
 
 编辑
 
@@ -950,10 +947,10 @@ onclick="editStudent(${Number(s.id)})">
 
 </tr>
 
-
 `;
 
 });
+
 
 
 
