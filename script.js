@@ -110,9 +110,6 @@ ${s.name||""}
 <td>${s.gender||""}</td>
 
 
-<td>${s.nation||""}</td>
-
-
 <td>${s.major||""}</td>
 
 
