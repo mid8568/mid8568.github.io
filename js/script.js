@@ -969,19 +969,19 @@ checkLogin();
 // 首页
 //====================
 
+// 当前网站首页
 function goHome(){
 
-location.href="index.html";
+    // 返回网站首页 index.html
+    window.location.href = "students.html";
 
 }
 
 
-//====================
-// 返回
-//====================
-
+// 返回上一页
 function goBack(){
 
-history.back();
+    // 返回浏览器上一页
+    window.history.back();
 
 }
