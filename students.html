@@ -5,11 +5,7 @@
 
 <meta charset="UTF-8">
 
-
-<!-- 手机H5适配 -->
-<meta 
-name="viewport" 
-content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 
 <title>
@@ -17,34 +13,25 @@ content="width=device-width,initial-scale=1.0">
 </title>
 
 
-
-<!-- CSS -->
-
 <link rel="stylesheet" href="css/style.css">
 
-
-
-<!-- Supabase -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-
-<!-- Excel -->
-
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-
 
 
 </head>
 
 
 
-<body>
+<body class="student-page">
 
 
 
 <div class="container">
+
 
 
 <h1>
@@ -70,6 +57,7 @@ onclick="logout()">
 <div class="toolbar">
 
 
+
 <input
 id="search"
 placeholder="搜索姓名/学校/手机号/专业/性别/年份"
@@ -85,6 +73,7 @@ placeholder="搜索姓名/学校/手机号/专业/性别/年份"
 
 
 
+
 <button onclick="openAdd()">
 
 + 添加学生
@@ -93,11 +82,14 @@ placeholder="搜索姓名/学校/手机号/专业/性别/年份"
 
 
 
+
 <button onclick="openYearFilter()">
 
 按入学时间筛选
 
 </button>
+
+
 
 
 
@@ -113,11 +105,15 @@ accept=".xlsx,.xls"
 
 
 
+
+
 <button onclick="importExcel()">
 
 导入Excel
 
 </button>
+
+
 
 
 
@@ -135,7 +131,15 @@ accept=".xlsx,.xls"
 
 
 
+
+
+<!-- 表格滚动区域 -->
+
+<div class="table-box">
+
+
 <table>
+
 
 
 <thead>
@@ -172,6 +176,7 @@ accept=".xlsx,.xls"
 
 
 
+
 <tbody id="list">
 
 
@@ -182,10 +187,16 @@ accept=".xlsx,.xls"
 </table>
 
 
+</div>
+
+
+
+
 
 
 
 <div class="page">
+
 
 
 <button onclick="prevPage()">
@@ -196,11 +207,13 @@ accept=".xlsx,.xls"
 
 
 
+
 <span id="pageInfo">
 
 第1页
 
 </span>
+
 
 
 
@@ -227,12 +240,14 @@ accept=".xlsx,.xls"
 
 
 
-<!-- 学生详情弹窗 -->
+<!-- 学生详情 -->
+
 
 <div class="modal" id="detailModal">
 
 
 <div class="modal-content">
+
 
 
 <h3>
@@ -319,7 +334,8 @@ accept=".xlsx,.xls"
 
 
 
-<!-- 添加编辑弹窗 -->
+
+<!-- 添加编辑学生 -->
 
 
 <div class="modal" id="modal">
@@ -328,11 +344,13 @@ accept=".xlsx,.xls"
 <div class="modal-content">
 
 
+
 <h3 id="title">
 
 添加学生
 
 </h3>
+
 
 
 
@@ -361,11 +379,14 @@ accept=".xlsx,.xls"
 
 
 
+
+
 <button onclick="saveStudent()">
 
 保存
 
 </button>
+
 
 
 
@@ -388,13 +409,16 @@ accept=".xlsx,.xls"
 
 
 
-<!-- 入学时间筛选弹窗 -->
+
+
+<!-- 入学年份筛选 -->
 
 
 <div class="modal" id="yearModal">
 
 
 <div class="modal-content">
+
 
 
 <h3>
@@ -405,6 +429,7 @@ accept=".xlsx,.xls"
 
 
 
+
 <div id="yearList">
 
 
@@ -412,7 +437,10 @@ accept=".xlsx,.xls"
 
 
 
+
+
 <br>
+
 
 
 <button onclick="closeYearFilter()">
@@ -423,18 +451,19 @@ accept=".xlsx,.xls"
 
 
 
-</div>
-
 
 </div>
 
 
+</div>
 
 
 
 
 
-<!-- JS文件放这里 -->
+
+
+
 
 <script src="js/script.js"></script>
 
