@@ -90,23 +90,9 @@ db
 
 if(keyword){
 
-
-query=query.or(`
-
-name.ilike.%${keyword}%,
-
-school.ilike.%${keyword}%,
-
-phone.ilike.%${keyword}%,
-
-major.ilike.%${keyword}%,
-
-gender.ilike.%${keyword}%,
-
-year.ilike.%${keyword}%
-
-`);
-
+query=query.or(
+`name.ilike.%${keyword}%,school.ilike.%${keyword}%,phone.ilike.%${keyword}%,major.ilike.%${keyword}%,gender.ilike.%${keyword}%,year.ilike.%${keyword}%`
+);
 
 }
 
@@ -849,6 +835,23 @@ yearModal.style.display="none";
 async function filterByYear(year){
 
 
+let {data,error}=await db
+.from("students")
+.select("*")
+.eq("year",year)
+.order("id");
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+
+
 let html="";
 
 
@@ -859,79 +862,55 @@ html+=`
 
 <tr>
 
-
 <td>
 
 <button 
 class="name-btn"
 onclick="showStudent(${s.id})">
 
-${s.name || ""}
+${s.name||""}
 
 </button>
 
 </td>
 
 
-
 <td class="pc-col">
-
-${s.school || ""}
-
+${s.school||""}
 </td>
 
 
-
 <td class="pc-col">
-
-${s.idcard || ""}
-
+${s.idcard||""}
 </td>
-
 
 
 <td>
-
-${s.phone || ""}
-
+${s.phone||""}
 </td>
-
 
 
 <td class="pc-col">
-
-${s.gender || ""}
-
+${s.gender||""}
 </td>
-
 
 
 <td>
-
-${s.major || ""}
-
+${s.major||""}
 </td>
-
 
 
 <td>
-
-${s.level || ""}
-
+${s.level||""}
 </td>
 
 
-
 <td class="pc-col">
-
-${s.year || ""}
-
+${s.year||""}
 </td>
 
 
-
 <td class="pc-col">
-
 
 <button 
 class="edit"
@@ -940,7 +919,6 @@ onclick="editStudent(${s.id})">
 编辑
 
 </button>
-
 
 </td>
 
@@ -952,23 +930,14 @@ onclick="editStudent(${s.id})">
 });
 
 
-
-
-
 document.getElementById("list").innerHTML=html;
 
 
-
-// 更新分页显示
-
 document.getElementById("pageInfo").innerHTML=
-
-`筛选：${year}`;
-
+`筛选：${year} 共 ${data.length} 人`;
 
 
 closeYearFilter();
-
 
 
 }
