@@ -2,7 +2,6 @@
    全局
 ===================== */
 
-
 *{
 
 margin:0;
@@ -19,14 +18,150 @@ sans-serif;
 }
 
 
+html,
+body{
+
+width:100%;
+
+min-height:100%;
+
+}
+
 
 body{
 
-
 background:#f5f6fa;
 
+color:#333;
 
 padding:20px;
+
+}
+
+
+/* =====================
+   登录页面
+   login.html 使用
+   <body class="login-page">
+===================== */
+
+
+.login-page{
+
+min-height:100vh;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+background:#f3f5f9;
+
+padding:20px;
+
+}
+
+
+
+.login-box{
+
+width:380px;
+
+max-width:100%;
+
+background:white;
+
+padding:35px;
+
+border-radius:15px;
+
+box-shadow:
+
+0 5px 20px rgba(0,0,0,.12);
+
+}
+
+
+
+.login-box h2{
+
+text-align:center;
+
+margin-bottom:25px;
+
+font-size:22px;
+
+color:#333;
+
+}
+
+
+
+.login-box input{
+
+
+width:100%;
+
+height:45px;
+
+margin-bottom:15px;
+
+padding:0 15px;
+
+border:
+
+1px solid #ddd;
+
+border-radius:8px;
+
+font-size:15px;
+
+
+}
+
+
+
+.login-box input:focus{
+
+
+outline:none;
+
+border-color:#1677ff;
+
+
+}
+
+
+
+.login-box button{
+
+
+width:100%;
+
+height:45px;
+
+background:#1677ff;
+
+color:white;
+
+border:none;
+
+border-radius:8px;
+
+font-size:16px;
+
+cursor:pointer;
+
+
+}
+
+
+
+.login-box button:hover{
+
+
+opacity:.9;
 
 
 }
@@ -34,7 +169,7 @@ padding:20px;
 
 
 /* =====================
-   主容器
+学生管理主体
 ===================== */
 
 
@@ -60,6 +195,7 @@ border-radius:12px;
 
 
 box-shadow:
+
 0 3px 15px rgba(0,0,0,.08);
 
 
@@ -75,12 +211,6 @@ box-shadow:
 h1{
 
 
-font-size:26px;
-
-
-margin-bottom:20px;
-
-
 display:flex;
 
 
@@ -90,11 +220,16 @@ justify-content:space-between;
 align-items:center;
 
 
+font-size:26px;
+
+
+margin-bottom:20px;
+
+
 }
 
 
-
-/*退出按钮*/
+/* 退出按钮 */
 
 
 .logout{
@@ -109,13 +244,26 @@ color:white;
 border:none;
 
 
-padding:8px 15px;
+padding:8px 18px;
 
 
 border-radius:6px;
 
 
 cursor:pointer;
+
+
+font-size:14px;
+
+
+}
+
+
+
+.logout:hover{
+
+
+opacity:.85;
 
 
 }
@@ -131,6 +279,9 @@ cursor:pointer;
 
 
 display:flex;
+
+
+align-items:center;
 
 
 gap:10px;
@@ -155,7 +306,9 @@ height:38px;
 padding:0 12px;
 
 
-border:1px solid #ddd;
+border:
+
+1px solid #ddd;
 
 
 border-radius:6px;
@@ -166,6 +319,39 @@ font-size:14px;
 
 }
 
+
+
+.toolbar input:focus{
+
+
+outline:none;
+
+
+border-color:#1677ff;
+
+
+}
+
+
+
+/* 文件上传 */
+
+#excelFile{
+
+
+padding:6px;
+
+
+background:white;
+
+
+}
+
+
+
+/* =====================
+按钮统一
+===================== */
 
 
 button{
@@ -192,6 +378,9 @@ color:white;
 cursor:pointer;
 
 
+font-size:14px;
+
+
 }
 
 
@@ -203,18 +392,61 @@ opacity:.85;
 
 
 }
-
-
-
 /* =====================
-表格
+   表格
 ===================== */
 
 
-table{
+/*
+  注意：
+  students.html 里面表格外需要包：
+  
+  <div class="table-box">
+      <table>
+      ...
+      </table>
+  </div>
+
+*/
+
+
+.table-box{
 
 
 width:100%;
+
+
+overflow-x:auto;
+
+
+-webkit-overflow-scrolling:touch;
+
+
+border-radius:8px;
+
+
+}
+
+
+
+.table-box table{
+
+
+min-width:1100px;
+
+
+width:100%;
+
+
+border-collapse:collapse;
+
+
+}
+
+
+
+
+table{
 
 
 border-collapse:collapse;
@@ -233,11 +465,15 @@ background:#f0f2f5;
 font-weight:bold;
 
 
+color:#333;
+
+
 }
 
 
 
-th,td{
+th,
+td{
 
 
 border:1px solid #eee;
@@ -250,6 +486,19 @@ text-align:center;
 
 
 font-size:14px;
+
+
+white-space:nowrap;
+
+
+}
+
+
+
+tbody tr:hover{
+
+
+background:#fafafa;
 
 
 }
@@ -265,7 +514,43 @@ color:#1677ff;
 cursor:pointer;
 
 
+text-decoration:none;
+
+
 }
+
+
+
+td a:hover{
+
+
+text-decoration:underline;
+
+
+}
+
+
+
+/* 编辑按钮 */
+
+
+.edit{
+
+
+background:#1677ff;
+
+
+font-size:13px;
+
+
+padding:6px 12px;
+
+
+height:auto;
+
+
+}
+
 
 
 
@@ -277,10 +562,19 @@ cursor:pointer;
 .page{
 
 
-margin-top:20px;
+display:flex;
 
 
-text-align:center;
+justify-content:center;
+
+
+align-items:center;
+
+
+gap:15px;
+
+
+margin-top:25px;
 
 
 }
@@ -290,11 +584,23 @@ text-align:center;
 .page span{
 
 
-margin:0 15px;
+font-size:14px;
+
+
+color:#666;
 
 
 }
 
+
+
+.page button{
+
+
+height:36px;
+
+
+}
 
 
 
@@ -326,13 +632,15 @@ height:100%;
 
 
 background:
+
 rgba(0,0,0,.45);
 
 
-z-index:99;
+z-index:999;
 
 
 }
+
 
 
 
@@ -357,7 +665,14 @@ padding:25px;
 border-radius:12px;
 
 
+box-shadow:
+
+
+0 5px 25px rgba(0,0,0,.2);
+
+
 }
+
 
 
 
@@ -370,7 +685,25 @@ text-align:center;
 margin-bottom:20px;
 
 
+font-size:20px;
+
+
 }
+
+
+
+
+.modal-content p{
+
+
+margin-bottom:12px;
+
+
+font-size:15px;
+
+
+}
+
 
 
 
@@ -386,16 +719,32 @@ height:42px;
 margin-bottom:12px;
 
 
-padding:0 10px;
+padding:0 12px;
 
 
-border:1px solid #ddd;
+border:
+
+
+1px solid #ddd;
 
 
 border-radius:6px;
 
 
 font-size:14px;
+
+
+}
+
+
+
+.modal-content input:focus{
+
+
+outline:none;
+
+
+border-color:#1677ff;
 
 
 }
@@ -412,8 +761,43 @@ margin-right:10px;
 
 
 
+
+
 /* =====================
-手机自适应
+入学年份按钮
+===================== */
+
+
+#yearList{
+
+
+display:flex;
+
+
+flex-wrap:wrap;
+
+
+gap:10px;
+
+
+}
+
+
+
+#yearList button{
+
+
+min-width:90px;
+
+
+}
+
+
+
+
+
+/* =====================
+手机适配
 ===================== */
 
 
@@ -431,13 +815,18 @@ padding:10px;
 
 
 
+
 .container{
 
 
 padding:12px;
 
 
+border-radius:8px;
+
+
 }
+
 
 
 
@@ -457,17 +846,8 @@ gap:15px;
 
 
 
-.toolbar{
 
-
-gap:8px;
-
-
-}
-
-
-
-.toolbar input{
+.logout{
 
 
 width:100%;
@@ -480,49 +860,69 @@ height:42px;
 
 
 
-.toolbar button{
+
+.toolbar{
 
 
-flex:1;
+display:flex;
 
 
-min-width:100px;
+flex-direction:column;
+
+
+align-items:stretch;
+
+
+}
+
+
+
+
+.toolbar input{
+
+
+width:100%;
 
 
 height:42px;
 
 
-}
-
-
-
-/* 表格手机横向滚动 */
-
-
-table{
-
-
-min-width:900px;
+font-size:16px;
 
 
 }
 
 
 
-.container{
+
+.toolbar button{
 
 
-overflow:hidden;
+width:100%;
+
+
+height:42px;
+
+
+font-size:15px;
 
 
 }
 
 
 
-.container table{
 
 
-display:block;
+/*
+ 手机表格区域
+ 可以左右滑动
+*/
+
+
+.table-box{
+
+
+width:100%;
 
 
 overflow-x:auto;
@@ -532,7 +932,34 @@ overflow-x:auto;
 
 
 
-/* 弹窗 */
+.table-box table{
+
+
+min-width:1100px;
+
+
+}
+
+
+
+
+th,
+td{
+
+
+font-size:13px;
+
+
+padding:10px 12px;
+
+
+}
+
+
+
+
+
+/* 弹窗手机 */
 
 
 .modal-content{
@@ -551,6 +978,7 @@ padding:20px;
 
 
 
+
 .modal-content input{
 
 
@@ -564,30 +992,91 @@ font-size:16px;
 
 
 
-button{
+
+.modal-content button{
 
 
 height:42px;
 
 
-font-size:15px;
+}
+
+
+
+
+.page{
+
+
+margin-top:20px;
 
 
 }
 
 
-
 }
-
-
-/* 超小屏 */
+/* =====================
+   超小手机
+===================== */
 
 
 @media(max-width:400px){
 
 
+body{
+
+padding:8px;
+
+}
+
+
+
+.container{
+
+padding:10px;
+
+}
+
+
 
 h1{
+
+font-size:18px;
+
+}
+
+
+
+.toolbar button{
+
+font-size:14px;
+
+height:40px;
+
+}
+
+
+
+.table-box table{
+
+
+min-width:1050px;
+
+
+}
+
+
+
+.modal-content{
+
+
+padding:15px;
+
+
+}
+
+
+
+.modal-content h3{
 
 
 font-size:18px;
@@ -596,163 +1085,36 @@ font-size:18px;
 }
 
 
-.toolbar button{
-
-
-width:100%;
-
 
 }
 
 
 
-}
+/* =====================
+   登录页手机优化
+===================== */
 
-/* ======================
-管理员登录 H5
-====================== */
-
-
-body{
-
-min-height:100vh;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-background:#f3f5f9;
-
-}
-
-
-
-/* 登录盒子 */
-
-.login-box{
-
-
-width:380px;
-
-
-max-width:90%;
-
-
-background:white;
-
-
-padding:35px;
-
-
-border-radius:15px;
-
-
-box-shadow:
-
-0 5px 20px rgba(0,0,0,.12);
-
-
-}
-
-
-
-.login-box h2{
-
-
-text-align:center;
-
-margin-bottom:25px;
-
-color:#333;
-
-
-}
-
-
-
-.login-box input{
-
-
-width:100%;
-
-
-height:45px;
-
-
-margin-bottom:15px;
-
-
-border:
-
-1px solid #ddd;
-
-
-border-radius:8px;
-
-
-padding:0 15px;
-
-
-font-size:15px;
-
-
-}
-
-
-
-.login-box input:focus{
-
-
-outline:none;
-
-
-border-color:#1677ff;
-
-
-}
-
-
-
-.login-box button{
-
-
-width:100%;
-
-
-height:45px;
-
-
-background:#1677ff;
-
-
-color:white;
-
-
-border:none;
-
-
-border-radius:8px;
-
-
-font-size:16px;
-
-
-}
-
-
-
-/* 手机适配 */
 
 @media(max-width:600px){
 
 
+.login-page{
+
+
+padding:15px;
+
+
+}
+
+
 
 .login-box{
 
 
-width:90%;
+width:100%;
+
+
+max-width:360px;
 
 
 padding:25px;
@@ -792,6 +1154,206 @@ height:48px;
 
 
 font-size:17px;
+
+
+}
+
+
+}
+
+
+
+
+
+/* =====================
+   按钮触摸效果
+===================== */
+
+
+button{
+
+
+-webkit-tap-highlight-color:transparent;
+
+
+transition:.2s;
+
+
+}
+
+
+
+button:active{
+
+
+transform:scale(.96);
+
+
+}
+
+
+
+
+/* =====================
+   输入框优化
+===================== */
+
+
+input{
+
+
+outline:none;
+
+
+}
+
+
+
+input::placeholder{
+
+
+color:#aaa;
+
+
+}
+
+
+
+
+/* =====================
+   滚动条美化
+===================== */
+
+
+.table-box::-webkit-scrollbar{
+
+
+height:8px;
+
+
+}
+
+
+
+.table-box::-webkit-scrollbar-thumb{
+
+
+background:#ccc;
+
+
+border-radius:10px;
+
+
+}
+
+
+
+
+/* =====================
+   防止页面横向溢出
+===================== */
+
+
+html,
+body{
+
+
+overflow-x:hidden;
+
+
+}
+
+
+
+/* =====================
+   学生详情优化
+===================== */
+
+
+#detailModal .modal-content p{
+
+
+padding:8px 0;
+
+
+border-bottom:1px solid #eee;
+
+
+}
+
+
+
+#detailModal span{
+
+
+color:#1677ff;
+
+
+font-weight:bold;
+
+
+}
+
+
+
+/* =====================
+   年份筛选按钮
+===================== */
+
+
+#yearList button{
+
+
+background:#1677ff;
+
+
+margin-bottom:5px;
+
+
+}
+
+
+
+
+/* =====================
+   文件上传优化
+===================== */
+
+
+input[type="file"]{
+
+
+cursor:pointer;
+
+
+}
+
+
+
+
+/* =====================
+   PC大屏优化
+===================== */
+
+
+@media(min-width:1400px){
+
+
+.container{
+
+
+padding:30px;
+
+
+}
+
+
+
+th,
+td{
+
+
+font-size:15px;
 
 
 }
