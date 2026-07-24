@@ -1,72 +1,146 @@
-/* 全局 */
+/* =====================
+   全局
+===================== */
+
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:"Microsoft YaHei",Arial,sans-serif;
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+font-family:
+"Microsoft YaHei",
+Arial,
+sans-serif;
+
 }
+
 
 
 body{
 
-    background:#f5f6fa;
-    color:#333;
+
+background:#f5f6fa;
+
+
+padding:20px;
+
 
 }
 
 
 
-/* 主容器 */
+/* =====================
+   主容器
+===================== */
+
 
 .container{
 
-    width:100%;
-    max-width:1200px;
-    margin:auto;
-    padding:15px;
+
+width:100%;
+
+
+max-width:1400px;
+
+
+margin:auto;
+
+
+background:white;
+
+
+padding:20px;
+
+
+border-radius:12px;
+
+
+box-shadow:
+0 3px 15px rgba(0,0,0,.08);
+
 
 }
 
 
 
-/* 标题 */
+/* =====================
+标题
+===================== */
+
 
 h1{
 
-    font-size:22px;
-    text-align:center;
-    margin-bottom:15px;
-    position:relative;
+
+font-size:26px;
+
+
+margin-bottom:20px;
+
+
+display:flex;
+
+
+justify-content:space-between;
+
+
+align-items:center;
+
 
 }
 
+
+
+/*退出按钮*/
 
 
 .logout{
 
-    position:absolute;
-    right:0;
-    top:0;
 
-    background:#ff4d4f;
-    color:white;
-    border:none;
-    padding:8px 12px;
-    border-radius:6px;
+background:#ff4d4f;
+
+
+color:white;
+
+
+border:none;
+
+
+padding:8px 15px;
+
+
+border-radius:6px;
+
+
+cursor:pointer;
+
 
 }
 
 
 
-/* 工具栏 */
+/* =====================
+工具栏
+===================== */
+
 
 .toolbar{
 
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-bottom:15px;
+
+display:flex;
+
+
+gap:10px;
+
+
+flex-wrap:wrap;
+
+
+margin-bottom:20px;
+
 
 }
 
@@ -74,16 +148,21 @@ h1{
 
 .toolbar input{
 
-    flex:1;
-    min-width:180px;
 
-    height:38px;
+height:38px;
 
-    border:1px solid #ddd;
 
-    border-radius:6px;
+padding:0 12px;
 
-    padding:0 10px;
+
+border:1px solid #ddd;
+
+
+border-radius:6px;
+
+
+font-size:14px;
+
 
 }
 
@@ -91,48 +170,55 @@ h1{
 
 button{
 
-    height:38px;
 
-    padding:0 15px;
+height:38px;
 
-    border:none;
 
-    border-radius:6px;
+padding:0 15px;
 
-    background:#1677ff;
 
-    color:white;
+border:none;
 
-    cursor:pointer;
+
+border-radius:6px;
+
+
+background:#1677ff;
+
+
+color:white;
+
+
+cursor:pointer;
+
 
 }
 
 
 
-/* 表格滚动 */
+button:hover{
+
+
+opacity:.85;
+
+
+}
+
+
+
+/* =====================
+表格
+===================== */
+
 
 table{
 
-    width:100%;
 
-    border-collapse:collapse;
-
-    background:white;
-
-}
+width:100%;
 
 
+border-collapse:collapse;
 
-th,
-td{
-
-    padding:10px;
-
-    border-bottom:1px solid #eee;
-
-    text-align:center;
-
-    font-size:14px;
 
 }
 
@@ -140,29 +226,62 @@ td{
 
 th{
 
-    background:#fafafa;
+
+background:#f0f2f5;
+
+
+font-weight:bold;
+
 
 }
 
 
 
-a{
+th,td{
 
-    color:#1677ff;
 
-    cursor:pointer;
+border:1px solid #eee;
+
+
+padding:10px;
+
+
+text-align:center;
+
+
+font-size:14px;
+
 
 }
 
 
 
-/* 分页 */
+td a{
+
+
+color:#1677ff;
+
+
+cursor:pointer;
+
+
+}
+
+
+
+/* =====================
+分页
+===================== */
+
 
 .page{
 
-    margin-top:15px;
 
-    text-align:center;
+margin-top:20px;
+
+
+text-align:center;
+
 
 }
 
@@ -170,31 +289,48 @@ a{
 
 .page span{
 
-    margin:0 15px;
+
+margin:0 15px;
+
 
 }
 
 
 
-/* 弹窗 */
+
+
+/* =====================
+弹窗
+===================== */
+
 
 .modal{
 
-    display:none;
 
-    position:fixed;
+display:none;
 
-    left:0;
 
-    top:0;
+position:fixed;
 
-    width:100%;
 
-    height:100%;
+left:0;
 
-    background:rgba(0,0,0,.5);
 
-    z-index:99;
+top:0;
+
+
+width:100%;
+
+
+height:100%;
+
+
+background:
+rgba(0,0,0,.45);
+
+
+z-index:99;
+
 
 }
 
@@ -202,17 +338,24 @@ a{
 
 .modal-content{
 
-    background:white;
 
-    width:90%;
+width:400px;
 
-    max-width:400px;
 
-    margin:80px auto;
+max-width:90%;
 
-    padding:20px;
 
-    border-radius:12px;
+background:white;
+
+
+margin:80px auto;
+
+
+padding:25px;
+
+
+border-radius:12px;
+
 
 }
 
@@ -220,9 +363,12 @@ a{
 
 .modal-content h3{
 
-    text-align:center;
 
-    margin-bottom:15px;
+text-align:center;
+
+
+margin-bottom:20px;
+
 
 }
 
@@ -230,34 +376,66 @@ a{
 
 .modal-content input{
 
-    width:100%;
 
-    height:40px;
+width:100%;
 
-    margin-bottom:10px;
 
-    border:1px solid #ddd;
+height:42px;
 
-    border-radius:6px;
 
-    padding:0 10px;
+margin-bottom:12px;
+
+
+padding:0 10px;
+
+
+border:1px solid #ddd;
+
+
+border-radius:6px;
+
+
+font-size:14px;
+
 
 }
 
 
 
-/* ================= */
-/* 手机H5适配 */
-/* ================= */
+.modal-content button{
 
 
-@media(max-width:600px){
+margin-right:10px;
+
+
+}
+
+
+
+/* =====================
+手机自适应
+===================== */
+
+
+@media(max-width:768px){
+
+
+
+body{
+
+
+padding:10px;
+
+
+}
 
 
 
 .container{
 
-    padding:10px;
+
+padding:12px;
+
 
 }
 
@@ -265,31 +443,25 @@ a{
 
 h1{
 
-    font-size:20px;
 
-    padding-right:60px;
+font-size:20px;
+
+
+flex-direction:column;
+
+
+gap:15px;
+
 
 }
 
 
-
-.logout{
-
-    font-size:12px;
-
-    padding:6px 8px;
-
-}
-
-
-
-/* 工具按钮 */
 
 .toolbar{
 
-    display:grid;
 
-    grid-template-columns:1fr 1fr;
+gap:8px;
+
 
 }
 
@@ -297,9 +469,12 @@ h1{
 
 .toolbar input{
 
-    grid-column:1/3;
 
-    width:100%;
+width:100%;
+
+
+height:42px;
+
 
 }
 
@@ -307,150 +482,127 @@ h1{
 
 .toolbar button{
 
-    width:100%;
+
+flex:1;
+
+
+min-width:100px;
+
+
+height:42px;
+
 
 }
 
 
 
-/* 表格变卡片 */
+/* 表格手机横向滚动 */
 
-table,
-thead,
-tbody,
-th,
-td,
-tr{
 
-    display:block;
+table{
+
+
+min-width:900px;
+
 
 }
 
 
 
-/* 隐藏表头 */
+.container{
 
-thead{
 
-    display:none;
+overflow:hidden;
+
 
 }
 
 
 
-tr{
+.container table{
 
-    background:white;
 
-    margin-bottom:12px;
+display:block;
 
-    border-radius:10px;
 
-    padding:10px;
+overflow-x:auto;
 
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
 
 }
 
 
 
-td{
+/* 弹窗 */
 
-    display:flex;
 
-    justify-content:space-between;
+.modal-content{
 
-    text-align:right;
 
-    padding:8px;
+width:92%;
 
-    border:none;
+
+margin:50px auto;
+
+
+padding:20px;
+
 
 }
 
 
 
-td::before{
+.modal-content input{
 
-    font-weight:bold;
 
-    color:#666;
+height:45px;
+
+
+font-size:16px;
+
 
 }
 
 
 
-/* 每个字段名字 */
+button{
 
-td:nth-child(1)::before{
 
-    content:"ID";
+height:42px;
+
+
+font-size:15px;
+
 
 }
 
 
-td:nth-child(2)::before{
-
-    content:"姓名";
 
 }
 
 
-td:nth-child(3)::before{
+/* 超小屏 */
 
-    content:"学校";
+
+@media(max-width:400px){
+
+
+
+h1{
+
+
+font-size:18px;
+
 
 }
 
 
-td:nth-child(4)::before{
+.toolbar button{
 
-    content:"身份证";
+
+width:100%;
+
 
 }
-
-
-td:nth-child(5)::before{
-
-    content:"手机号";
-
-}
-
-
-td:nth-child(6)::before{
-
-    content:"性别";
-
-}
-
-
-td:nth-child(7)::before{
-
-    content:"专业";
-
-}
-
-
-td:nth-child(8)::before{
-
-    content:"层次";
-
-}
-
-
-td:nth-child(9)::before{
-
-    content:"入学时间";
-
-}
-
-
-td:nth-child(10)::before{
-
-    content:"操作";
-
-}
-
 
 
 
