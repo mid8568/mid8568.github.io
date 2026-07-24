@@ -977,11 +977,20 @@ function goHome(){
 
 }
 
-
-// 返回上一页
 function goBack(){
 
-    // 返回浏览器上一页
-    window.history.back();
+    let ref = document.referrer;
+
+
+    // 如果上一页是登录页面，则直接返回首页
+    if(ref.includes("login.html")){
+
+        window.location.href="index.html";
+
+    }else{
+
+        window.history.back();
+
+    }
 
 }
