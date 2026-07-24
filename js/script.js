@@ -465,7 +465,14 @@ loadStudents();
 //====================
 
 async function showStudent(id){
+  
+if(!id){
 
+alert("学生ID不存在");
+
+return;
+
+}
 
 let {data,error}=await db
 
@@ -811,6 +818,10 @@ yearModal.style.display="none";
 
 
 
+//====================
+// 按年份筛选
+//====================
+
 async function filterByYear(year){
 
 
@@ -820,7 +831,10 @@ let {data,error}=await db
 
 .select("*")
 
-.ilike("year",`%${year}%`)
+.ilike(
+"year",
+`%${year}%`
+)
 
 .order("id");
 
@@ -839,6 +853,7 @@ return;
 let html="";
 
 
+
 data.forEach(s=>{
 
 
@@ -846,35 +861,71 @@ html+=`
 
 <tr>
 
-<td>${s.id}</td>
 
-<td>${s.name}</td>
+<td>${s.id || ""}</td>
 
-<td>${s.school}</td>
 
-<td>${s.idcard}</td>
-
-<td>${s.phone}</td>
-
-<td>${s.gender}</td>
-
-<td>${s.major}</td>
-
-<td>${s.level}</td>
-
-<td>${s.year}</td>
 
 <td>
 
-<button onclick="editStudent(${s.id})">
+<a href="javascript:void(0)"
+onclick="showStudent(${Number(s.id)})">
+
+${s.name || ""}
+
+</a>
+
+
+</td>
+
+
+
+
+<td>${s.school || ""}</td>
+
+
+
+<td>${s.idcard || ""}</td>
+
+
+
+<td>${s.phone || ""}</td>
+
+
+
+<td>${s.gender || ""}</td>
+
+
+
+<td>${s.major || ""}</td>
+
+
+
+<td>${s.level || ""}</td>
+
+
+
+<td>${s.year || ""}</td>
+
+
+
+<td>
+
+
+<button 
+class="edit"
+onclick="editStudent(${Number(s.id)})">
 
 编辑
 
 </button>
 
+
 </td>
 
+
 </tr>
+
 
 `;
 
@@ -882,14 +933,24 @@ html+=`
 
 
 
-list.innerHTML=html;
+
+document.getElementById("list").innerHTML=html;
+
+
+
+// 更新分页显示
+
+document.getElementById("pageInfo").innerHTML=
+
+`筛选：${year}`;
+
 
 
 closeYearFilter();
 
 
-}
 
+}
 
 
 //====================
