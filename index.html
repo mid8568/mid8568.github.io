@@ -1,81 +1,367 @@
 <!DOCTYPE html>
-
 <html lang="zh-CN">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>学生管理系统</title>
-
-
-<link rel="stylesheet" href="css/style.css">
+<title>招生简章</title>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Microsoft YaHei",Arial;
+}
+
+
+body{
+
+background:#f5f7fa;
+
+color:#333;
+
+}
+
+
+/* 顶部 */
+
+.header{
+
+background:#1677ff;
+
+color:white;
+
+text-align:center;
+
+padding:25px 15px;
+
+}
+
+
+.header h1{
+
+font-size:26px;
+
+}
+
+
+.header p{
+
+margin-top:10px;
+
+}
+
+
+
+/* 主体 */
+
+.container{
+
+max-width:900px;
+
+margin:20px auto;
+
+background:white;
+
+padding:25px;
+
+border-radius:12px;
+
+}
+
+
+
+/* 标题 */
+
+.title{
+
+font-size:20px;
+
+color:#1677ff;
+
+border-left:5px solid #1677ff;
+
+padding-left:10px;
+
+margin:25px 0 15px;
+
+}
+
+
+
+/* 内容 */
+
+.item{
+
+line-height:2;
+
+font-size:16px;
+
+}
+
+
+
+/* 表格 */
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+margin-top:15px;
+
+}
+
+
+td,th{
+
+border:1px solid #ddd;
+
+padding:10px;
+
+text-align:center;
+
+}
+
+
+
+th{
+
+background:#f2f6ff;
+
+}
+
+
+
+/* 按钮 */
+
+.btn{
+
+display:block;
+
+width:200px;
+
+margin:30px auto;
+
+background:#1677ff;
+
+color:white;
+
+text-align:center;
+
+padding:12px;
+
+border-radius:8px;
+
+text-decoration:none;
+
+}
+
+
+
+/* 手机 */
+
+@media(max-width:600px){
+
+.container{
+
+margin:10px;
+
+padding:15px;
+
+}
+
+
+.header h1{
+
+font-size:22px;
+
+}
+
+
+.item{
+
+font-size:14px;
+
+}
+
+
+}
+
+
+</style>
 
 
 </head>
 
 
+
 <body>
 
 
-<header>
 
-<h2>
-学生管理系统
-</h2>
+<div class="header">
 
-</header>
+<h1>成人学历提升招生简章</h1>
 
-
-
-<div class="search-box">
-
-
-<input 
-id="search"
-placeholder="搜索姓名/学校/手机号">
-
-
-<button onclick="searchStudent()">
-搜索
-</button>
-
-
-</div>
-
-
-
-<div class="actions">
-
-
-<button onclick="openAdd()">
-
-➕ 添加学生
-
-</button>
-
-
-
-<button onclick="openYearFilter()">
-
-📅 入学时间
-
-</button>
-
+<p>正规学历提升 · 国家认可 · 学信网可查</p>
 
 </div>
 
 
 
 
+<div class="container">
 
-<div id="list">
+
+
+<div class="title">
+一、招生对象
+</div>
+
+
+<div class="item">
+
+<p>
+1. 高中、中专、技校及以上学历人员。
+</p>
+
+<p>
+2. 希望提升学历，提高就业竞争力人员。
+</p>
+
+<p>
+3. 在职人员、社会人员均可报名。
+</p>
+
+</div>
+
+
+
+
+<div class="title">
+二、招生专业
+</div>
+
+
+
+<table>
+
+
+<tr>
+
+<th>
+专业
+</th>
+
+<th>
+层次
+</th>
+
+<th>
+学习形式
+</th>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+工商管理
+</td>
+
+<td>
+本科
+</td>
+
+<td>
+线上学习
+</td>
+
+</tr>
+
+
+
+<tr>
+
+<td>
+计算机科学与技术
+</td>
+
+<td>
+本科
+</td>
+
+<td>
+线上学习
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>
+行政管理
+</td>
+
+<td>
+专科
+</td>
+
+<td>
+线上学习
+</td>
+
+</tr>
+
+
+</table>
+
+
+
+
+
+<div class="title">
+三、报名流程
+</div>
+
+
+<div class="item">
+
+
+<p>
+① 提交报名资料
+</p>
+
+
+<p>
+② 教务审核
+</p>
+
+
+<p>
+③ 缴费注册
+</p>
+
+
+<p>
+④ 入学学习
+</p>
+
+
+<p>
+⑤ 毕业领取证书
+</p>
 
 
 </div>
@@ -84,49 +370,28 @@ placeholder="搜索姓名/学校/手机号">
 
 
 
-<!-- 添加学生 -->
 
-<div class="modal" id="modal">
-
-
-<div class="box">
-
-
-<h3>
-添加学生
-</h3>
-
-
-<input id="name" placeholder="姓名">
-
-<input id="school" placeholder="学校">
-
-<input id="phone" placeholder="手机号">
-
-<input id="major" placeholder="专业">
-
-<input id="level" placeholder="层次">
-
-<input id="year" placeholder="入学时间">
-
-
-
-<button onclick="saveStudent()">
-
-保存
-
-</button>
-
-
-<button onclick="closeModal()">
-
-取消
-
-</button>
-
-
-
+<div class="title">
+四、报名资料
 </div>
+
+
+<div class="item">
+
+
+<p>
+身份证正反面照片
+</p>
+
+
+<p>
+毕业证照片
+</p>
+
+
+<p>
+近期电子照片
+</p>
 
 
 </div>
@@ -134,7 +399,45 @@ placeholder="搜索姓名/学校/手机号">
 
 
 
-<script src="app.js"></script>
+
+
+<div class="title">
+五、联系方式
+</div>
+
+
+<div class="item">
+
+
+<p>
+咨询电话：13800000000
+</p>
+
+
+<p>
+微信：13800000000
+</p>
+
+
+<p>
+地址：某某教育中心
+</p>
+
+
+</div>
+
+
+
+
+<a class="btn" href="index.html">
+
+返回首页
+
+</a>
+
+
+
+</div>
 
 
 </body>
