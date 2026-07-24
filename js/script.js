@@ -321,11 +321,22 @@ document.querySelectorAll("#modal input")
 async function editStudent(id){
 
 
-let {data,error}=await db
-
+let {data,error}=await client
 .from("students")
+.select("*");
 
-.select("*")
+
+if(error){
+
+console.log(error);
+return;
+
+}
+
+
+//显示学生总人数
+document.getElementById("totalInfo").innerHTML =
+"总人数：" + (data ? data.length : 0) + "人";
 
 .eq("id",id)
 
