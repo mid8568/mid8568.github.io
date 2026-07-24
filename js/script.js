@@ -143,44 +143,70 @@ html+=`
 
 <tr>
 
-<td>${s.id||""}</td>
+<td class="pc-col">${s.id||""}</td>
 
 
 <td>
 
-<a onclick="showStudent(${s.id})">
+<button 
+class="name-btn"
+onclick="showStudent(${s.id})">
 
 ${s.name||""}
 
-</a>
+</button>
 
 </td>
 
 
-<td>${s.school||""}</td>
+
+<td class="pc-col">
+${s.school||""}
+</td>
 
 
-<td>${s.idcard||""}</td>
 
+<td class="pc-col">
+${s.idcard||""}
+</td>
 
-<td>${s.phone||""}</td>
-
-
-<td>${s.gender||""}</td>
-
-
-<td>${s.major||""}</td>
-
-
-<td>${s.level||""}</td>
-
-
-<td>${s.year||""}</td>
 
 
 <td>
+${s.phone||""}
+</td>
 
-<button onclick="editStudent(${s.id})">
+
+
+<td class="pc-col">
+${s.gender||""}
+</td>
+
+
+
+<td>
+${s.major||""}
+</td>
+
+
+
+<td>
+${s.level||""}
+</td>
+
+
+
+<td class="pc-col">
+${s.year||""}
+</td>
+
+
+
+<td class="pc-col">
+
+<button 
+class="edit"
+onclick="editStudent(${s.id})">
 
 编辑
 
