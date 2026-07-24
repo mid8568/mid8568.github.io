@@ -38,7 +38,6 @@ let totalPages = 1;
 
 async function checkLogin(){
 
-
 let {data}=await db.auth.getSession();
 
 
@@ -55,7 +54,6 @@ loadStudents();
 
 
 }
-
 
 
 
@@ -113,6 +111,8 @@ return;
 }
 
 
+
+// 总页数
 
 totalPages=Math.ceil(count/pageSize)||1;
 
@@ -216,7 +216,17 @@ document.getElementById("pageInfo").innerHTML=
 `第 ${currentPage} / ${totalPages} 页`;
 
 
+
+//显示总人数
+
+document.getElementById("totalInfo").innerHTML=
+
+`总人数：${count}人`;
+
+
+
 }
+
 
 
 
@@ -231,6 +241,7 @@ currentPage=1;
 loadStudents();
 
 }
+
 
 
 
@@ -253,6 +264,7 @@ loadStudents();
 
 
 
+
 function prevPage(){
 
 
@@ -265,10 +277,6 @@ loadStudents();
 }
 
 }
-
-
-
-
 //====================
 // 添加学生
 //====================
@@ -314,6 +322,8 @@ document.querySelectorAll("#modal input")
 
 
 
+
+
 //====================
 // 编辑学生
 //====================
@@ -321,22 +331,11 @@ document.querySelectorAll("#modal input")
 async function editStudent(id){
 
 
-let {data,error}=await client
+let {data,error}=await db
+
 .from("students")
-.select("*");
 
-
-if(error){
-
-console.log(error);
-return;
-
-}
-
-
-//显示学生总人数
-document.getElementById("totalInfo").innerHTML =
-"总人数：" + (data ? data.length : 0) + "人";
+.select("*")
 
 .eq("id",id)
 
@@ -390,6 +389,10 @@ document.getElementById("modal")
 
 
 
+
+
+
+
 //====================
 // 保存学生
 //====================
@@ -401,24 +404,40 @@ async function saveStudent(){
 let obj={
 
 
-name:document.getElementById("name").value,
+name:
+document.getElementById("name").value,
 
-school:document.getElementById("school").value,
 
-idcard:document.getElementById("idcard").value,
+school:
+document.getElementById("school").value,
 
-phone:document.getElementById("phone").value,
 
-gender:document.getElementById("gender").value,
+idcard:
+document.getElementById("idcard").value,
 
-major:document.getElementById("major").value,
 
-level:document.getElementById("level").value,
+phone:
+document.getElementById("phone").value,
 
-year:document.getElementById("year").value
+
+gender:
+document.getElementById("gender").value,
+
+
+major:
+document.getElementById("major").value,
+
+
+level:
+document.getElementById("level").value,
+
+
+year:
+document.getElementById("year").value
 
 
 };
+
 
 
 
@@ -427,6 +446,7 @@ let result;
 
 
 if(editId){
+
 
 
 result=
@@ -444,6 +464,7 @@ await db
 }else{
 
 
+
 result=
 
 await db
@@ -453,11 +474,13 @@ await db
 .insert(obj);
 
 
+
 }
 
 
 
 if(result.error){
+
 
 alert(result.error.message);
 
@@ -477,7 +500,12 @@ loadStudents();
 }
 
 
+
 }
+
+
+
+
 
 
 
@@ -486,7 +514,8 @@ loadStudents();
 //====================
 
 async function showStudent(id){
-  
+
+
 if(!id){
 
 alert("学生ID不存在");
@@ -494,6 +523,8 @@ alert("学生ID不存在");
 return;
 
 }
+
+
 
 let {data,error}=await db
 
@@ -517,42 +548,42 @@ return;
 
 
 
-d_name.innerHTML=data.name||"";
+document.getElementById("d_name").innerHTML=data.name||"";
 
-d_school.innerHTML=data.school||"";
+document.getElementById("d_school").innerHTML=data.school||"";
 
-d_idcard.innerHTML=data.idcard||"";
+document.getElementById("d_idcard").innerHTML=data.idcard||"";
 
-d_phone.innerHTML=data.phone||"";
+document.getElementById("d_phone").innerHTML=data.phone||"";
 
-d_gender.innerHTML=data.gender||"";
+document.getElementById("d_gender").innerHTML=data.gender||"";
 
-d_major.innerHTML=data.major||"";
+document.getElementById("d_major").innerHTML=data.major||"";
 
-d_level.innerHTML=data.level||"";
+document.getElementById("d_level").innerHTML=data.level||"";
 
-d_year.innerHTML=data.year||"";
+document.getElementById("d_year").innerHTML=data.year||"";
 
 
 
-detailModal.style.display="block";
+document.getElementById("detailModal")
+.style.display="block";
 
 
 }
+
+
 
 
 
 function closeDetail(){
 
 
-detailModal.style.display="none";
+document.getElementById("detailModal")
+.style.display="none";
 
 
 }
-
-
-
-
 //====================
 // Excel导入
 //====================
@@ -560,10 +591,9 @@ detailModal.style.display="none";
 async function importExcel(){
 
 
-let file=
+let file =
+document.getElementById("excelFile").files[0];
 
-document.getElementById("excelFile")
-.files[0];
 
 
 if(!file){
@@ -667,6 +697,10 @@ reader.readAsArrayBuffer(file);
 
 
 
+
+
+
+
 //====================
 // Excel导出
 //====================
@@ -697,8 +731,6 @@ return;
 let list=data.map(s=>({
 
 
-ID:s.id,
-
 姓名:s.name,
 
 学校:s.school,
@@ -723,6 +755,7 @@ ID:s.id,
 let ws=
 
 XLSX.utils.json_to_sheet(list);
+
 
 
 let wb=
@@ -753,6 +786,10 @@ wb,
 
 
 }
+
+
+
+
 
 
 
@@ -800,6 +837,7 @@ data
 let html="";
 
 
+
 years.forEach(y=>{
 
 
@@ -819,38 +857,48 @@ ${y}
 
 
 
-yearList.innerHTML=html;
+document.getElementById("yearList").innerHTML=html;
 
 
-yearModal.style.display="block";
+document.getElementById("yearModal")
+.style.display="block";
 
 
 }
+
+
 
 
 
 function closeYearFilter(){
 
 
-yearModal.style.display="none";
+document.getElementById("yearModal")
+.style.display="none";
 
 
 }
 
 
 
-//====================
-// 按年份筛选
-//====================
+
+
+
 
 async function filterByYear(year){
 
 
+
 let {data,error}=await db
+
 .from("students")
+
 .select("*")
+
 .eq("year",year)
+
 .order("id");
+
 
 
 if(error){
@@ -866,6 +914,7 @@ return;
 let html="";
 
 
+
 data.forEach(s=>{
 
 
@@ -873,63 +922,93 @@ html+=`
 
 <tr>
 
+
 <td>
 
-<button 
+<button
+
 class="name-btn"
+
 onclick="showStudent(${s.id})">
 
 ${s.name||""}
 
 </button>
 
+
 </td>
 
 
+
 <td class="pc-col">
+
 ${s.school||""}
+
 </td>
 
 
+
 <td class="pc-col">
+
 ${s.idcard||""}
+
 </td>
 
 
+
 <td>
+
 ${s.phone||""}
+
 </td>
 
 
+
 <td class="pc-col">
+
 ${s.gender||""}
+
 </td>
 
 
+
 <td>
+
 ${s.major||""}
+
 </td>
+
 
 
 <td>
+
 ${s.level||""}
+
 </td>
 
 
+
 <td class="pc-col">
+
 ${s.year||""}
+
 </td>
+
 
 
 <td class="pc-col">
 
-<button 
+
+<button
+
 class="edit"
+
 onclick="editStudent(${s.id})">
 
 编辑
 
 </button>
+
 
 </td>
 
@@ -941,17 +1020,32 @@ onclick="editStudent(${s.id})">
 });
 
 
+
 document.getElementById("list").innerHTML=html;
 
 
+
 document.getElementById("pageInfo").innerHTML=
+
 `筛选：${year} 共 ${data.length} 人`;
+
+
+
+document.getElementById("totalInfo").innerHTML=
+
+`总人数：${data.length}人`;
+
 
 
 closeYearFilter();
 
 
 }
+
+
+
+
+
 
 
 //====================
@@ -971,19 +1065,45 @@ location.href="login.html";
 
 
 
+
+
+
+
+//====================
+// 首页按钮
+//====================
+
+function goHome(){
+
+
+window.location.href="students.html";
+
+
+}
+
+
+
+
+//====================
+// 返回按钮
+//====================
+
+function goBack(){
+
+
+window.location.href="students.html";
+
+
+}
+
+
+
+
+
+
+
 //====================
 // 启动
 //====================
 
 checkLogin();
-//====================
-// 首页
-//====================
-
-// 当前网站首页
-function goHome(){
-
-    // 返回网站首页 index.html
-    window.location.href = "students.html";
-
-}
