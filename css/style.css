@@ -1375,3 +1375,41 @@ display:none !important;
 
 
 }
+/* 手机隐藏电脑字段 */
+
+@media(max-width:768px){
+
+
+.pc-col{
+
+display:none;
+
+}
+
+
+
+.table-box table{
+
+
+min-width:0;
+
+width:100%;
+
+
+}
+
+
+
+th,
+td{
+
+
+font-size:14px;
+
+padding:10px 5px;
+
+
+}
+
+
+}
