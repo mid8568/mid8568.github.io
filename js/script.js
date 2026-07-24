@@ -985,7 +985,7 @@ function goBack(){
     // 如果上一页是登录页面，则直接返回首页
     if(ref.includes("login.html")){
 
-        window.location.href="index.html";
+        window.location.href="students.html";
 
     }else{
 
