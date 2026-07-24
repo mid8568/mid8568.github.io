@@ -1,16 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 
 <head>
 
 <meta charset="UTF-8">
 
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+
 <link rel="stylesheet" href="css/style.css">
 
-<title>管理员登录</title>
+
+<title>
+管理员登录
+</title>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 </head>
 
@@ -19,7 +27,8 @@
 <body>
 
 
-<div class="box">
+<div class="login-box">
+
 
 
 <h2>
@@ -27,23 +36,33 @@
 </h2>
 
 
-<input id="email"
-placeholder="邮箱">
+
+<input 
+id="email"
+type="email"
+placeholder="请输入邮箱"
+>
 
 
-<input id="password"
+
+<input 
+id="password"
 type="password"
-placeholder="请输入密码">
+placeholder="请输入密码"
+>
 
 
 
 <button onclick="login()">
+
 登录
+
 </button>
 
 
 
 </div>
+
 
 
 
@@ -68,11 +87,15 @@ key
 
 
 
+
+
 async function login(){
+
 
 
 let email =
 document.getElementById("email").value;
+
 
 
 let password =
@@ -80,13 +103,17 @@ document.getElementById("password").value;
 
 
 
-let {data,error}=await db.auth.signInWithPassword({
+
+let {data,error}=
+
+await db.auth.signInWithPassword({
 
 email,
 
 password
 
 });
+
 
 
 
@@ -100,12 +127,13 @@ alert(
 
 return;
 
+
 }
 
 
 
-location.href=
-"students.html";
+
+location.href="students.html";
 
 
 
@@ -114,6 +142,7 @@ location.href=
 
 
 </script>
+
 
 
 </body>
