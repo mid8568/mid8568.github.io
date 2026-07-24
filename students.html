@@ -5,22 +5,43 @@
 
 <meta charset="UTF-8">
 
+
+<!-- 手机H5适配 -->
+<meta 
+name="viewport" 
+content="width=device-width,initial-scale=1.0">
+
+
+<title>
+学生管理系统
+</title>
+
+
+
+<!-- CSS -->
+
 <link rel="stylesheet" href="css/style.css">
-  
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>学生管理系统</title>
 
+
+<!-- Supabase -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
+
+<!-- Excel -->
+
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-  
+
+
 
 </head>
 
 
+
 <body>
+
 
 
 <div class="container">
@@ -30,13 +51,19 @@
 
 学生管理系统
 
-<button class="logout" onclick="logout()">
+
+<button 
+class="logout"
+onclick="logout()">
 
 退出登录
 
 </button>
 
+
 </h1>
+
+
 
 
 
@@ -47,6 +74,7 @@
 id="search"
 placeholder="搜索姓名/学校/手机号/专业/性别/年份"
 >
+
 
 
 <button onclick="searchStudent()">
@@ -63,11 +91,15 @@ placeholder="搜索姓名/学校/手机号/专业/性别/年份"
 
 </button>
 
+
+
 <button onclick="openYearFilter()">
 
 按入学时间筛选
 
 </button>
+
+
 
 <input
 
@@ -78,6 +110,7 @@ id="excelFile"
 accept=".xlsx,.xls"
 
 >
+
 
 
 <button onclick="importExcel()">
@@ -107,7 +140,9 @@ accept=".xlsx,.xls"
 
 <thead>
 
+
 <tr>
+
 
 <th>ID</th>
 
@@ -129,17 +164,24 @@ accept=".xlsx,.xls"
 
 <th>操作</th>
 
+
 </tr>
+
 
 </thead>
 
 
+
 <tbody id="list">
+
 
 </tbody>
 
 
+
 </table>
+
+
 
 
 
@@ -173,14 +215,19 @@ accept=".xlsx,.xls"
 </div>
 
 
+
+
 </div>
 
 
 
 
 
-<!-- 学生详情 -->
 
+
+
+
+<!-- 学生详情弹窗 -->
 
 <div class="modal" id="detailModal">
 
@@ -195,42 +242,58 @@ accept=".xlsx,.xls"
 </h3>
 
 
-<p>姓名：
+
+<p>
+姓名：
 <span id="d_name"></span>
 </p>
 
 
-<p>学校：
+
+<p>
+学校：
 <span id="d_school"></span>
 </p>
 
 
-<p>身份证：
+
+<p>
+身份证：
 <span id="d_idcard"></span>
 </p>
 
 
-<p>手机号：
+
+<p>
+手机号：
 <span id="d_phone"></span>
 </p>
 
 
-<p>性别：
+
+<p>
+性别：
 <span id="d_gender"></span>
 </p>
 
 
-<p>专业：
+
+<p>
+专业：
 <span id="d_major"></span>
 </p>
 
 
-<p>层次：
+
+<p>
+层次：
 <span id="d_level"></span>
 </p>
 
 
-<p>入学时间：
+
+<p>
+入学时间：
 <span id="d_year"></span>
 </p>
 
@@ -243,16 +306,20 @@ accept=".xlsx,.xls"
 </button>
 
 
-</div>
-
 
 </div>
 
 
+</div>
 
 
 
-<!-- 添加编辑 -->
+
+
+
+
+
+<!-- 添加编辑弹窗 -->
 
 
 <div class="modal" id="modal">
@@ -261,7 +328,6 @@ accept=".xlsx,.xls"
 <div class="modal-content">
 
 
-  
 <h3 id="title">
 
 添加学生
@@ -269,24 +335,30 @@ accept=".xlsx,.xls"
 </h3>
 
 
+
 <input id="name" placeholder="姓名">
+
 
 <input id="school" placeholder="学校">
 
+
 <input id="idcard" placeholder="身份证">
+
 
 <input id="phone" placeholder="手机号">
 
+
 <input id="gender" placeholder="性别">
+
 
 <input id="major" placeholder="专业">
 
+
 <input id="level" placeholder="层次">
+
 
 <input id="year" placeholder="入学时间">
 
-
-<br>
 
 
 <button onclick="saveStudent()">
@@ -296,6 +368,7 @@ accept=".xlsx,.xls"
 </button>
 
 
+
 <button onclick="closeModal()">
 
 取消
@@ -303,959 +376,71 @@ accept=".xlsx,.xls"
 </button>
 
 
-</div>
-
 
 </div>
 
 
+</div>
 
-<script>
 
 
-const SUPABASE_URL =
-"https://ukxxmxnubxjezkwbbxdr.supabase.co";
 
 
-const SUPABASE_KEY =
-"sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
 
 
+<!-- 入学时间筛选弹窗 -->
 
-const db =
-supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
 
-
-
-let editId=null;
-
-
-let currentPage=1;
-
-
-let pageSize=50;
-
-
-let totalPages=1;
-
-//====================
-// 登录检查
-//====================
-
-async function checkLogin(){
-
-let {data}=await db.auth.getSession();
-
-
-if(!data.session){
-
-location.href="login.html";
-
-}
-
-}
-
-
-
-
-
-//====================
-// 加载学生（分页）
-//====================
-
-
-async function loadStudents(){
-
-
-let keyword =
-document.getElementById("search").value.trim();
-
-
-
-let start =
-(currentPage-1)*pageSize;
-
-
-
-let end =
-start+pageSize-1;
-
-
-
-let query =
-db.from("students")
-.select("*",{count:"exact"})
-.order("id");
-
-
-
-if(keyword){
-
-
-query=query.or(
-
-`
-name.ilike.%${keyword}%,
-school.ilike.%${keyword}%,
-phone.ilike.%${keyword}%,
-major.ilike.%${keyword}%,
-gender.ilike.%${keyword}%,
-year.ilike.%${keyword}%
-`
-
-);
-
-
-}
-
-
-
-
-let {data,count,error}=await query.range(start,end);
-
-
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-
-
-
-totalPages=Math.ceil(count/pageSize);
-
-
-
-if(totalPages===0){
-
-totalPages=1;
-
-}
-
-
-
-let html="";
-
-
-
-data.forEach(s=>{
-
-
-html+=`
-
-<tr>
-
-<td>${s.id||""}</td>
-
-
-<td>
-
-<a onclick="showStudent(${s.id})">
-
-${s.name||""}
-
-</a>
-
-</td>
-
-
-
-<td>${s.school||""}</td>
-
-
-<td>${s.idcard||""}</td>
-
-
-<td>${s.phone||""}</td>
-
-
-<td>${s.gender||""}</td>
-
-
-<td>${s.major||""}</td>
-
-
-<td>${s.level||""}</td>
-
-
-<td>${s.year||""}</td>
-
-
-
-<td>
-
-
-<button class="edit"
-
-onclick="editStudent(${s.id})">
-
-编辑
-
-</button>
-
-
-</td>
-
-
-</tr>
-
-`;
-
-
-});
-
-
-
-document.getElementById("list").innerHTML=html;
-
-
-
-document.getElementById("pageInfo").innerHTML=
-
-`
-第 ${currentPage} / ${totalPages} 页
-`;
-
-
-
-}
-
-
-
-
-
-//====================
-// 搜索
-//====================
-
-
-function searchStudent(){
-
-currentPage=1;
-
-loadStudents();
-
-}
-
-
-
-
-
-
-//====================
-// 下一页
-//====================
-
-
-function nextPage(){
-
-
-if(currentPage<totalPages){
-
-currentPage++;
-
-loadStudents();
-
-}
-
-
-}
-
-
-
-
-
-//====================
-// 上一页
-//====================
-
-
-function prevPage(){
-
-
-if(currentPage>1){
-
-currentPage--;
-
-loadStudents();
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-//====================
-// 添加学生
-//====================
-
-
-function openAdd(){
-
-
-editId=null;
-
-
-clearForm();
-
-
-document.getElementById("title").innerHTML="添加学生";
-
-
-document.getElementById("modal").style.display="block";
-
-
-}
-
-
-
-
-
-function closeModal(){
-
-
-document.getElementById("modal").style.display="none";
-
-
-}
-
-
-
-
-
-function clearForm(){
-
-
-document.querySelectorAll(".modal input")
-
-.forEach(i=>i.value="");
-
-
-}
-
-
-
-
-
-
-
-
-
-//====================
-// 编辑学生
-//====================
-
-
-async function editStudent(id){
-
-
-
-let {data,error}=await db
-
-.from("students")
-
-.select("*")
-
-.eq("id",id)
-
-.single();
-
-
-
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-
-
-editId=id;
-
-
-
-[
-"name",
-"school",
-"idcard",
-"phone",
-"gender",
-"major",
-"level",
-"year"
-
-].forEach(k=>{
-
-
-document.getElementById(k).value=data[k]||"";
-
-
-});
-
-
-
-document.getElementById("title").innerHTML="编辑学生";
-
-
-document.getElementById("modal").style.display="block";
-
-
-
-}
-
-
-
-
-
-
-
-
-//====================
-// 保存学生
-//====================
-
-
-async function saveStudent(){
-
-
-
-let obj={
-
-
-name:name.value,
-
-school:school.value,
-
-idcard:idcard.value,
-
-phone:phone.value,
-
-gender:gender.value,
-
-major:major.value,
-
-level:level.value,
-
-year:year.value
-
-
-};
-
-
-
-
-let result;
-
-
-
-if(editId){
-
-
-result=
-
-await db
-
-.from("students")
-
-.update(obj)
-
-.eq("id",editId);
-
-
-
-}else{
-
-
-result=
-
-await db
-
-.from("students")
-
-.insert(obj);
-
-
-
-}
-
-
-
-
-if(result.error){
-
-
-alert(result.error.message);
-
-
-
-}else{
-
-
-alert("保存成功");
-
-
-closeModal();
-
-
-loadStudents();
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-//====================
-// 学生详情
-//====================
-
-
-async function showStudent(id){
-
-
-
-let {data,error}=await db
-
-.from("students")
-
-.select("*")
-
-.eq("id",id)
-
-.single();
-
-
-
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-
-
-
-document.getElementById("d_name").innerHTML=data.name||"";
-
-document.getElementById("d_school").innerHTML=data.school||"";
-
-document.getElementById("d_idcard").innerHTML=data.idcard||"";
-
-document.getElementById("d_phone").innerHTML=data.phone||"";
-
-document.getElementById("d_gender").innerHTML=data.gender||"";
-
-document.getElementById("d_major").innerHTML=data.major||"";
-
-document.getElementById("d_level").innerHTML=data.level||"";
-
-document.getElementById("d_year").innerHTML=data.year||"";
-
-
-
-document.getElementById("detailModal").style.display="block";
-
-
-}
-
-
-
-
-
-function closeDetail(){
-
-
-document.getElementById("detailModal").style.display="none";
-
-
-}
-
-//====================
-// Excel导入
-//====================
-
-
-async function importExcel(){
-
-
-let file=
-document.getElementById("excelFile").files[0];
-
-
-
-if(!file){
-
-alert("请选择Excel文件");
-
-return;
-
-}
-
-
-
-let reader=new FileReader();
-
-
-
-reader.onload=async function(e){
-
-
-
-let workbook=XLSX.read(
-
-new Uint8Array(e.target.result),
-
-{type:"array"}
-
-);
-
-
-
-
-let sheet=
-
-workbook.Sheets[
-workbook.SheetNames[0]
-];
-
-
-
-
-
-let rows=
-
-XLSX.utils.sheet_to_json(sheet);
-
-
-
-
-
-let list=rows.map(r=>({
-
-school:String(r["学校"]||""),
-
-name:String(r["姓名"]||""),
-
-idcard:String(r["身份证号码"]||""),
-
-phone:String(r["手机号"]||""),
-
-gender:String(r["性别"]||""),
-
-major:String(r["专业"]||""),
-
-level:String(r["层次"]||""),
-
-year:String(r["入学时间"]||"")
-
-}));
-
-
-
-
-
-
-if(list.length===0){
-
-alert("Excel没有数据");
-
-return;
-
-}
-
-
-
-
-
-
-let {error}=await db
-
-.from("students")
-
-.insert(list);
-
-
-
-
-
-
-if(error){
-
-
-alert(error.message);
-
-
-
-}else{
-
-
-alert(
-"导入成功："+list.length+"条"
-);
-
-
-
-currentPage=1;
-
-
-loadStudents();
-
-
-}
-
-
-
-
-};
-
-
-
-reader.readAsArrayBuffer(file);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-//====================
-// Excel导出
-//====================
-
-
-async function exportExcel(){
-
-
-
-let {data,error}=await db
-
-.from("students")
-
-.select("*")
-
-.order("id");
-
-
-
-
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-
-
-
-if(!data || data.length===0){
-
-alert("暂无数据");
-
-return;
-
-}
-
-
-
-
-
-
-let list=data.map(s=>({
-
-
-
-ID:s.id,
-
-
-姓名:s.name,
-
-
-学校:s.school,
-
-
-身份证号码:s.idcard,
-
-
-手机号:s.phone,
-
-
-性别:s.gender,
-
-
-
-专业:s.major,
-
-
-层次:s.level,
-
-
-入学时间:s.year
-
-
-
-}));
-
-
-
-
-
-
-let worksheet=
-
-XLSX.utils.json_to_sheet(list);
-
-
-
-
-let workbook=
-
-XLSX.utils.book_new();
-
-
-
-
-XLSX.utils.book_append_sheet(
-
-workbook,
-
-worksheet,
-
-"学生名单"
-
-);
-
-
-
-
-XLSX.writeFile(
-
-workbook,
-
-"学生名单.xlsx"
-
-);
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-//====================
-// 退出登录
-//====================
-
-
-async function logout(){
-
-
-
-await db.auth.signOut();
-
-
-
-location.href="login.html";
-
-
-
-}
-
-
-
-
-
-
-
-
-//====================
-// 启动
-//====================
-
-
-
-checkLogin().then(()=>{
-
-
-loadStudents();
-
-
-});
-
-
-
-</script>
-
-<script src="js/script.js"></script>
-  
-</body>
 <div class="modal" id="yearModal">
+
 
 <div class="modal-content">
 
+
 <h3>
+
 选择入学时间
+
 </h3>
+
 
 
 <div id="yearList">
 
+
 </div>
+
 
 
 <br>
 
+
 <button onclick="closeYearFilter()">
+
 关闭
+
 </button>
 
 
-</div>
 
 </div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- JS文件放这里 -->
+
+<script src="js/script.js"></script>
+
+
+
+</body>
+
 
 </html>
