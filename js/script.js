@@ -143,8 +143,6 @@ html+=`
 
 <tr>
 
-<td class="pc-col">${s.id||""}</td>
-
 
 <td>
 
