@@ -1,48 +1,194 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="zh-CN">
+
 <head>
+
 <meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
 <title>学生管理系统</title>
 
-<style>
-body{
-    font-family:"Microsoft YaHei";
-    text-align:center;
-    padding:50px;
-}
 
-.box{
-    background:#f5f5f5;
-    padding:30px;
-    border-radius:10px;
-}
+<link rel="stylesheet" href="style.css">
 
-a{
-    display:inline-block;
-    margin-top:20px;
-    padding:12px 25px;
-    background:#1677ff;
-    color:white;
-    text-decoration:none;
-    border-radius:5px;
-}
-</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 </head>
 
+
 <body>
 
-<div class="box">
 
-<h1>学生管理系统</h1>
+<header>
 
-<p>欢迎使用学生信息管理平台</p>
+<h2>
+学生管理系统
+</h2>
 
-<a href="students.html">
-进入学生管理
-</a>
+</header>
+
+
+
+<div class="search-box">
+
+
+<input 
+id="search"
+placeholder="搜索姓名/学校/手机号">
+
+
+<button onclick="searchStudent()">
+搜索
+</button>
+
 
 </div>
 
+
+
+<div class="actions">
+
+
+<button onclick="openAdd()">
+
+➕ 添加学生
+
+</button>
+
+
+
+<button onclick="openYearFilter()">
+
+📅 入学时间
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div id="list">
+
+
+</div>
+
+
+
+
+
+<!-- 添加学生 -->
+
+<div class="modal" id="modal">
+
+
+<div class="box">
+
+
+<h3>
+添加学生
+</h3>
+
+
+<input id="name" placeholder="姓名">
+
+<input id="school" placeholder="学校">
+
+<input id="phone" placeholder="手机号">
+
+<input id="major" placeholder="专业">
+
+<input id="level" placeholder="层次">
+
+<input id="year" placeholder="入学时间">
+
+
+
+<button onclick="saveStudent()">
+
+保存
+
+</button>
+
+
+<button onclick="closeModal()">
+
+取消
+
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<!-- 年份筛选 -->
+
+
+<div class="modal" id="yearModal">
+
+
+<div class="box">
+
+
+<h3>
+选择年份
+</h3>
+
+
+<button onclick="filterByYear('2026')">
+2026级
+</button>
+
+
+<button onclick="filterByYear('2025')">
+2025级
+</button>
+
+
+<button onclick="filterByYear('2024')">
+2024级
+</button>
+
+
+<button onclick="filterByYear('2023')">
+2023级
+</button>
+
+
+
+<button onclick="closeYearFilter()">
+关闭
+</button>
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+<script src="app.js"></script>
+
+
 </body>
+
 </html>
