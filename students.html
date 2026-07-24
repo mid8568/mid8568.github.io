@@ -698,7 +698,6 @@ editId=id;
 "idcard",
 "phone",
 "gender",
-"nation",
 "major",
 "level",
 "year"
@@ -750,8 +749,6 @@ idcard:idcard.value,
 phone:phone.value,
 
 gender:gender.value,
-
-nation:nation.value,
 
 major:major.value,
 
@@ -967,32 +964,21 @@ XLSX.utils.sheet_to_json(sheet);
 
 let list=rows.map(r=>({
 
+school:String(r["学校"]||""),
 
+name:String(r["姓名"]||""),
 
-school:r["学校"]||"",
+idcard:String(r["身份证号码"]||""),
 
+phone:String(r["手机号"]||""),
 
-name:r["姓名"]||"",
+gender:String(r["性别"]||""),
 
+major:String(r["专业"]||""),
 
-idcard:r["身份证号码"]||"",
+level:String(r["层次"]||""),
 
-
-phone:r["手机号"]||"",
-
-
-gender:r["性别"]||"",
-
-
-
-major:r["专业"]||"",
-
-
-level:r["层次"]||"",
-
-
-year:r["入学时间"]||""
-
+year:String(r["入学时间"]||"")
 
 }));
 
