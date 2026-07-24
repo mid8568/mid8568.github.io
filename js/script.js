@@ -965,3 +965,23 @@ location.href="login.html";
 //====================
 
 checkLogin();
+//====================
+// 首页
+//====================
+
+function goHome(){
+
+location.href="index.html";
+
+}
+
+
+//====================
+// 返回
+//====================
+
+function goBack(){
+
+history.back();
+
+}
