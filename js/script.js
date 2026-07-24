@@ -162,10 +162,9 @@ ${s.phone||""}
 
 
 
-<td class="pc-col">
+<td class="gender-col">
 ${s.gender||""}
 </td>
-
 
 
 <td>
