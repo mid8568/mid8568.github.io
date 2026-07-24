@@ -1360,3 +1360,18 @@ font-size:15px;
 
 
 }
+/* =====================
+   手机端隐藏电脑功能
+===================== */
+
+@media(max-width:768px){
+
+
+.pc-only{
+
+display:none !important;
+
+}
+
+
+}
