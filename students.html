@@ -5,7 +5,7 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
 <title>成人高考平台管理</title>
@@ -23,17 +23,16 @@
 </head>
 
 
-
 <body>
 
 
 
-<!-- 顶部 -->
+<!-- 顶部导航 -->
 
-<div class="top-bar">
+<header class="top-header">
 
 
-<div class="logo">
+<div class="system-name">
 
 成人高考平台管理
 
@@ -41,11 +40,9 @@
 
 
 
-<div class="admin">
-
+<div class="admin-info">
 
 超级管理员
-
 
 <button onclick="logout()">
 
@@ -57,16 +54,14 @@
 </div>
 
 
-
-</div>
-
+</header>
 
 
 
 
 
 
-<div class="layout">
+<div class="main-layout">
 
 
 
@@ -74,9 +69,7 @@
 
 <!-- 左侧菜单 -->
 
-
-<div class="sidebar">
-
+<aside class="left-menu">
 
 
 <div class="menu-title">
@@ -87,67 +80,48 @@
 
 
 
-<button onclick="showGaokao()">
-
-成高学生
-
-</button>
+<ul>
 
 
+<li onclick="loadCategory('成高')">
 
-<button onclick="showZikao()">
+📚 成高学生
 
-自考学生
-
-</button>
-
+</li>
 
 
-<button onclick="showGraduated()">
+<li onclick="loadCategory('自考')">
 
-毕业名单
+📖 自考学生
 
-</button>
-
-
+</li>
 
 
+<li onclick="showGraduated()">
 
-<div class="menu-title">
+🎓 已毕业名单
 
-系统功能
-
-</div>
-
+</li>
 
 
-<button>
+<li>
 
-招生管理
+📊 数据统计
 
-</button>
-
-
-
-<button>
-
-数据统计
-
-</button>
+</li>
 
 
+<li>
 
-<button>
+⚙ 系统设置
 
-设置
-
-</button>
-
+</li>
 
 
-</div>
+</ul>
 
 
+</aside>
 
 
 
@@ -158,23 +132,22 @@
 <!-- 右侧内容 -->
 
 
-<div class="main">
+<section class="content-area">
 
 
 
 
 
-<!-- 搜索 -->
+<!-- 搜索工具 -->
 
 
-<div class="search-box">
+<div class="search-panel">
 
 
 <input
-
 id="search"
-
-placeholder="搜索姓名/手机号/专业/年份">
+placeholder="搜索姓名/手机号/专业/年份"
+>
 
 
 <button onclick="searchStudent()">
@@ -185,32 +158,12 @@ placeholder="搜索姓名/手机号/专业/年份">
 
 
 
-<button onclick="resetSearch()">
-
-重置
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-<!-- 操作按钮 -->
-
-
-<div class="toolbar">
-
-
 <button onclick="openAdd()">
 
-+ 新增学生
++ 新增
 
 </button>
+
 
 
 
@@ -220,7 +173,9 @@ type="file"
 
 id="excelFile"
 
-accept=".xlsx,.xls">
+accept=".xlsx,.xls"
+
+>
 
 
 
@@ -248,16 +203,25 @@ accept=".xlsx,.xls">
 
 
 
+<h2 id="pageTitle">
+
+成高学生
+
+</h2>
 
 
-<!-- 数据表 -->
 
 
-<div class="table-box">
+
+
+
+<!-- 表格 -->
+
+
+<div class="table-panel">
 
 
 <table>
-
 
 
 <thead>
@@ -308,7 +272,6 @@ accept=".xlsx,.xls">
 
 
 
-
 <tbody id="list">
 
 
@@ -317,7 +280,6 @@ accept=".xlsx,.xls">
 
 
 </table>
-
 
 
 </div>
@@ -333,7 +295,7 @@ accept=".xlsx,.xls">
 <!-- 分页 -->
 
 
-<div class="page">
+<div class="pagination">
 
 
 <button onclick="prevPage()">
@@ -362,11 +324,21 @@ accept=".xlsx,.xls">
 
 <span id="totalInfo">
 
-总人数0
+人数：0
 
 </span>
 
 
+
+</div>
+
+
+
+
+</section>
+
+
+
 </div>
 
 
@@ -374,27 +346,15 @@ accept=".xlsx,.xls">
 
 
 
-</div>
 
 
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- 学生详情 -->
+<!-- 学生详情弹窗 -->
 
 
 <div class="modal" id="detailModal">
 
 
-<div class="modal-content">
+<div class="modal-box">
 
 
 <h3>
@@ -411,10 +371,12 @@ accept=".xlsx,.xls">
 </p>
 
 
+
 <p>
 学校：
 <span id="d_school"></span>
 </p>
+
 
 
 <p>
@@ -423,16 +385,19 @@ accept=".xlsx,.xls">
 </p>
 
 
+
 <p>
 专业：
 <span id="d_major"></span>
 </p>
 
 
+
 <p>
 层次：
 <span id="d_level"></span>
 </p>
+
 
 
 <p>
@@ -449,12 +414,11 @@ accept=".xlsx,.xls">
 </button>
 
 
-</div>
-
 
 </div>
 
 
+</div>
 
 
 
@@ -462,13 +426,14 @@ accept=".xlsx,.xls">
 
 
 
-<!-- 添加编辑 -->
+
+<!-- 添加编辑弹窗 -->
 
 
 <div class="modal" id="modal">
 
 
-<div class="modal-content">
+<div class="modal-box">
 
 
 <h3 id="title">
@@ -524,9 +489,11 @@ accept=".xlsx,.xls">
 
 
 
+
 <script src="js/script.js"></script>
 
 
 </body>
+
 
 </html>
