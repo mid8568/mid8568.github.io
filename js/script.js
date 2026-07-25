@@ -1114,34 +1114,22 @@ closeYearFilter();
 
 
 
-
-
-
-
 //====================
-// 已毕业名单（分页）
+// 已毕业名单
 //====================
 
 async function showGraduated(){
 
 
-let start=(graduatePage-1)*pageSize;
-
-let end=start+pageSize-1;
-
-
-
-let {data,count,error}=await db
+let {data,error}=await db
 
 .from("students")
 
-.select("*",{count:"exact"})
+.select("*")
 
 .eq("status","毕业")
 
-.order("id")
-
-.range(start,end);
+.order("id");
 
 
 
@@ -1152,10 +1140,6 @@ alert(error.message);
 return;
 
 }
-
-
-
-graduateTotalPages=Math.ceil(count/pageSize)||1;
 
 
 
@@ -1173,7 +1157,8 @@ html+=`
 
 <td>
 
-<button class="name-btn"
+<button 
+class="name-btn"
 onclick="showStudent(${s.id})">
 
 ${s.name||""}
@@ -1239,14 +1224,13 @@ document.getElementById("list").innerHTML=html;
 
 document.getElementById("pageInfo").innerHTML=
 
-`毕业名单 第 ${graduatePage} / ${graduateTotalPages} 页`;
+`已毕业名单 共 ${data.length} 人`;
 
 
 
 document.getElementById("totalInfo").innerHTML=
 
-`毕业人数：${count}人`;
-
+`毕业人数：${data.length}人`;
 
 
 }
