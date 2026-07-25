@@ -3,257 +3,342 @@
 ===================== */
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:"Microsoft YaHei",Arial,sans-serif;
-}
 
-
-html,body{
-
-    width:100%;
-    min-height:100%;
-    overflow-x:hidden;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Microsoft YaHei",Arial,sans-serif;
 
 }
 
 
 body{
 
-    background:#f5f6fa;
-    color:#333;
-    padding:20px;
-
-}
-
-
-button{
-
-    height:38px;
-    padding:0 15px;
-    border:none;
-    border-radius:6px;
-    background:#1677ff;
-    color:white;
-    cursor:pointer;
-    font-size:14px;
-
-}
-
-
-button:hover{
-
-    opacity:.85;
+background:#f3f4f6;
+color:#333;
 
 }
 
 
 /* =====================
- 登录页面
+顶部栏
 ===================== */
 
 
-.login-page{
+.topbar{
 
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+height:60px;
+
+background:#3c8dbc;
+
+color:white;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:0 30px;
+
+font-size:18px;
+
+}
+
+
+.logo{
+
+font-size:20px;
 
 }
 
 
 
-.login-box{
+.admin{
 
-    width:380px;
-    max-width:95%;
-    background:white;
-    padding:35px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,.12);
+display:flex;
 
-}
+align-items:center;
 
+gap:15px;
 
-.login-box h2{
-
-    text-align:center;
-    margin-bottom:25px;
+font-size:15px;
 
 }
 
 
-.login-box input{
-
-    width:100%;
-    height:45px;
-    margin-bottom:15px;
-    padding:0 12px;
-    border:1px solid #ddd;
-    border-radius:8px;
-
-}
+.admin button{
 
 
+background:#fff;
 
-.login-box button{
+color:#3c8dbc;
 
-    width:100%;
-    height:45px;
+border:none;
+
+padding:6px 15px;
+
+border-radius:4px;
+
+cursor:pointer;
 
 }
+
+
 
 
 
 /* =====================
- 主页面
+整体布局
 ===================== */
 
 
-.container{
+.layout{
 
-    max-width:1400px;
-    margin:auto;
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:
-    0 3px 15px rgba(0,0,0,.08);
+display:flex;
+
+min-height:calc(100vh - 60px);
 
 }
+
+
 
 
 
 /* =====================
- 顶部标题
+左侧菜单
 ===================== */
 
 
-h1{
+.sidebar{
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-size:26px;
-    margin-bottom:20px;
+
+width:220px;
+
+background:#263645;
+
+color:white;
+
+
+}
+
+
+.user{
+
+
+height:80px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:18px;
+
+border-bottom:1px solid rgba(255,255,255,.1);
 
 }
 
 
 
-.logout{
+.sidebar ul{
 
-    background:#ff4d4f;
-    color:white;
+list-style:none;
 
 }
+
+
+
+.sidebar li{
+
+
+height:48px;
+
+line-height:48px;
+
+padding-left:30px;
+
+cursor:pointer;
+
+font-size:15px;
+
+transition:.2s;
+
+}
+
+
+
+.sidebar li:hover{
+
+
+background:#1e2936;
+
+
+}
+
+
+
+
 
 
 
 /* =====================
- 后台左右布局
+右侧内容
 ===================== */
 
 
-.main-layout{
+.content{
 
-    display:flex;
-    gap:20px;
+
+flex:1;
+
+padding:20px;
+
 
 }
 
 
 
-/* 左侧菜单 */
 
 
-.left-menu{
+/* 搜索区域 */
 
-    width:180px;
-    flex-shrink:0;
+
+.search-box{
+
+
+background:white;
+
+padding:18px;
+
+border-radius:5px;
+
+display:flex;
+
+gap:10px;
+
+align-items:center;
+
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+margin-bottom:20px;
+
 
 }
 
 
 
-.left-menu button{
+.search-box input{
 
-    width:100%;
-    margin-bottom:12px;
+
+height:38px;
+
+border:1px solid #ddd;
+
+border-radius:4px;
+
+padding:0 12px;
+
+font-size:14px;
+
+}
+
+
+
+.search-box button{
+
+
+height:38px;
+
+background:#3c8dbc;
+
+border:none;
+
+color:white;
+
+padding:0 18px;
+
+border-radius:4px;
+
+cursor:pointer;
+
 
 }
 
 
 
-/* 右侧内容 */
+.search-box button:hover{
 
 
-.right-content{
+opacity:.85;
 
-    flex:1;
-    min-width:0;
 
 }
+
+
+
+
+
 
 
 
 /* =====================
- 搜索区域
+标题
 ===================== */
 
 
-.toolbar{
+.content h2{
 
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-bottom:20px;
+
+background:white;
+
+padding:15px;
+
+font-size:20px;
+
+border-radius:5px;
+
+margin-bottom:15px;
+
 
 }
 
 
 
-.toolbar input{
-
-    height:38px;
-    padding:0 12px;
-    border:1px solid #ddd;
-    border-radius:6px;
-    flex:1;
-
-}
 
 
 
-.toolbar input:focus{
-
-    outline:none;
-    border-color:#1677ff;
-
-}
 
 
 /* =====================
- 表格
+数据表
 ===================== */
 
 
-.table-box{
+.table-card{
 
-    width:100%;
-    overflow-x:auto;
+
+background:white;
+
+padding:15px;
+
+border-radius:5px;
+
+overflow-x:auto;
+
 
 }
 
 
 
-.table-box table{
+table{
 
-    width:100%;
-    min-width:900px;
-    border-collapse:collapse;
+
+width:100%;
+
+border-collapse:collapse;
+
 
 }
 
@@ -261,8 +346,13 @@ h1{
 
 th{
 
-    background:#f0f2f5;
-    font-weight:bold;
+
+background:#f5f7fa;
+
+font-weight:bold;
+
+color:#555;
+
 
 }
 
@@ -271,132 +361,127 @@ th{
 th,
 td{
 
-    border:1px solid #eee;
-    padding:10px;
-    text-align:center;
-    white-space:nowrap;
-    font-size:14px;
+
+padding:12px;
+
+border-bottom:1px solid #eee;
+
+text-align:center;
+
+font-size:14px;
+
 
 }
 
 
 
-tbody tr:hover{
+tr:hover{
 
-    background:#fafafa;
+
+background:#fafafa;
+
 
 }
 
 
 
-/* 姓名 */
+
+td button{
 
 
-.name-text{
+background:#3c8dbc;
 
-    cursor:pointer;
+color:white;
+
+border:none;
+
+padding:5px 12px;
+
+border-radius:3px;
+
+cursor:pointer;
+
 
 }
 
 
-.name-text:hover{
 
-    color:#1677ff;
 
-}
 
 
 
 
 /* =====================
- 分页
+分页
 ===================== */
 
 
 .page{
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:15px;
-    margin-top:20px;
+
+margin-top:20px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+gap:15px;
+
 
 }
 
 
 
-.page span{
+.page button{
 
-    color:#666;
+
+background:#3c8dbc;
+
+color:white;
+
+border:none;
+
+padding:8px 18px;
+
+border-radius:4px;
+
+cursor:pointer;
+
 
 }
+
+
+
 
 
 
 
 /* =====================
- 左侧年份筛选
-===================== */
-
-
-.year-box{
-
-    position:relative;
-
-}
-
-
-/* 年份展开 */
-
-#yearList{
-
-    position:absolute;
-    bottom:45px;
-    left:0;
-
-    background:white;
-
-    width:150px;
-
-    padding:10px;
-
-    border-radius:8px;
-
-    box-shadow:
-    0 5px 20px rgba(0,0,0,.15);
-
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-
-}
-
-
-
-.year-btn{
-
-    width:100%;
-    background:#1677ff;
-
-}
-
-
-
-/* =====================
- 弹窗
+弹窗
 ===================== */
 
 
 .modal{
 
-    display:none;
-    position:fixed;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,.45);
-    z-index:999;
+
+display:none;
+
+position:fixed;
+
+left:0;
+
+top:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,.45);
+
+z-index:999;
+
 
 }
 
@@ -404,16 +489,29 @@ tbody tr:hover{
 
 .modal-content{
 
-    width:400px;
-    max-width:90%;
 
-    background:white;
+width:400px;
 
-    margin:80px auto;
+background:white;
 
-    padding:25px;
+margin:80px auto;
 
-    border-radius:12px;
+padding:25px;
+
+border-radius:8px;
+
+
+}
+
+
+
+.modal-content h3{
+
+
+text-align:center;
+
+margin-bottom:20px;
+
 
 }
 
@@ -421,17 +519,39 @@ tbody tr:hover{
 
 .modal-content input{
 
-    width:100%;
-    height:42px;
 
-    margin-bottom:12px;
+width:100%;
 
-    padding:0 12px;
+height:40px;
 
-    border:
-    1px solid #ddd;
+margin-bottom:12px;
 
-    border-radius:6px;
+border:1px solid #ddd;
+
+padding:0 10px;
+
+border-radius:4px;
+
+
+}
+
+
+
+.modal-content button{
+
+
+background:#3c8dbc;
+
+color:white;
+
+border:none;
+
+padding:8px 20px;
+
+margin-right:10px;
+
+border-radius:4px;
+
 
 }
 
@@ -439,171 +559,169 @@ tbody tr:hover{
 
 .modal-content p{
 
-    padding:8px 0;
-    border-bottom:1px solid #eee;
+
+padding:8px;
+
+border-bottom:1px solid #eee;
+
+
+}
+
+
+.modal-content span{
+
+
+color:#3c8dbc;
+
+font-weight:bold;
+
 
 }
 
 
 
-#detailModal span{
-
-    color:#1677ff;
-    font-weight:bold;
-
-}
 
 
 
 
 
 /* =====================
- 文件上传
-===================== */
-
-
-input[type=file]{
-
-    cursor:pointer;
-
-}
-
-
-
-/* =====================
- 手机端
+手机端
 ===================== */
 
 
 @media(max-width:768px){
 
 
-body{
 
-    padding:10px;
-
-}
+.topbar{
 
 
+height:55px;
 
-.container{
-
-    padding:12px;
-
-}
-
-
-
-h1{
-
-    font-size:20px;
-
-}
-
-
-
-.main-layout{
-
-    flex-direction:column;
-
-}
-
-
-
-.left-menu{
-
-    width:100%;
-
-}
-
-
-
-.left-menu button{
-
-    width:100%;
-
-}
-
-
-
-.toolbar{
-
-    flex-direction:column;
-
-}
-
-
-
-.toolbar input,
-.toolbar button{
-
-    width:100%;
-
-    height:42px;
-
-}
-
-
-
-.table-box table{
-
-    min-width:700px;
-
-}
-
-
-
-th,
-td{
-
-    font-size:13px;
-
-    padding:8px;
-
-}
-
-
-/* 手机隐藏电脑字段 */
-
-
-.pc-col{
-
-    display:none;
-
-}
-
-
-
-.modal-content{
-
-    width:92%;
-    margin:50px auto;
-
-}
+padding:0 15px;
 
 
 }
 
 
 
-/* =====================
- 小屏手机
-===================== */
+.logo{
 
 
-@media(max-width:400px){
+font-size:16px;
 
-
-h1{
-
-    font-size:18px;
 
 }
 
 
-button{
 
-    font-size:14px;
+.layout{
+
+
+display:block;
+
+
+}
+
+
+
+.sidebar{
+
+
+width:100%;
+
+
+}
+
+
+
+.sidebar ul{
+
+
+display:flex;
+
+overflow-x:auto;
+
+
+}
+
+
+
+.sidebar li{
+
+
+min-width:120px;
+
+padding:0;
+
+text-align:center;
+
+font-size:14px;
+
+
+}
+
+
+
+.content{
+
+
+padding:10px;
+
+
+}
+
+
+
+
+.search-box{
+
+
+display:flex;
+
+flex-wrap:wrap;
+
+
+}
+
+
+
+.search-box input{
+
+
+width:100%;
+
+
+}
+
+
+
+.search-box button{
+
+
+flex:1;
+
+
+}
+
+
+
+.table-card{
+
+
+overflow-x:auto;
+
+
+}
+
+
+
+table{
+
+
+min-width:700px;
+
 
 }
 
