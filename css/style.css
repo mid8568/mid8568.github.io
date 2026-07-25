@@ -1,6 +1,7 @@
 /* =====================
-   全局
+全局
 ===================== */
+
 
 *{
 
@@ -23,9 +24,6 @@ background:#f2f3f5;
 color:#333;
 
 }
-
-
-
 
 
 /* =====================
@@ -54,67 +52,35 @@ justify-content:space-between;
 align-items:center;
 
 
-padding:0 30px;
+padding:0 25px;
 
 
 }
 
 
-
-.system-name{
-
+.top-header h2{
 
 font-size:20px;
 
-
 }
 
 
-
-.admin-info{
-
-
-display:flex;
-
-
-align-items:center;
-
-
-gap:15px;
-
-
-font-size:14px;
-
-
-}
-
-
-
-.admin-info button{
+.top-header button{
 
 
 background:white;
 
-
 color:#3c8dbc;
-
 
 border:none;
 
-
-padding:6px 15px;
-
+padding:8px 18px;
 
 border-radius:4px;
 
-
 cursor:pointer;
 
-
 }
-
-
-
 
 
 
@@ -124,7 +90,7 @@ cursor:pointer;
 ===================== */
 
 
-.main-layout{
+.main{
 
 
 display:flex;
@@ -137,20 +103,18 @@ height:calc(100vh - 60px);
 
 
 
-
-
 /* =====================
 左侧菜单
 ===================== */
 
 
-.left-menu{
+.sidebar{
 
 
 width:220px;
 
 
-background:#263645;
+background:#222d32;
 
 
 color:white;
@@ -163,78 +127,39 @@ flex-shrink:0;
 
 
 
-
-.menu-title{
-
-
-height:50px;
-
-
-line-height:50px;
-
-
-padding-left:25px;
-
-
-font-size:16px;
-
-
-border-bottom:1px solid rgba(255,255,255,.1);
-
-
-}
-
-
-
-
-.left-menu ul{
-
+.sidebar ul{
 
 list-style:none;
 
-
 }
 
 
-
-.left-menu li{
-
-
-height:45px;
+.sidebar li{
 
 
-line-height:45px;
-
-
-padding-left:30px;
+padding:18px 25px;
 
 
 cursor:pointer;
 
 
-font-size:14px;
-
-
 }
 
 
+.sidebar li:hover{
 
-.left-menu li:hover{
 
-
-background:#1d2b38;
+background:#1e282c;
 
 
 }
-
-
 
 
 
 
 
 /* =====================
-右侧区域
+内容区域
 ===================== */
 
 
@@ -255,86 +180,41 @@ overflow:auto;
 
 
 
-
 /* =====================
-搜索栏
+卡片
 ===================== */
 
 
-.search-panel{
+.card{
 
 
 background:white;
 
 
-padding:15px;
+border-radius:6px;
 
 
-border-radius:5px;
-
-
-display:flex;
-
-
-align-items:center;
-
-
-gap:10px;
-
-
-box-shadow:
-
-0 2px 8px rgba(0,0,0,.08);
+padding:20px;
 
 
 margin-bottom:20px;
 
 
-}
-
-
-
-.search-panel input{
-
-
-height:36px;
-
-
-border:1px solid #ddd;
-
-
-border-radius:4px;
-
-
-padding:0 12px;
-
-
-font-size:14px;
+box-shadow:
+0 1px 5px rgba(0,0,0,.1);
 
 
 }
 
 
 
-.search-panel button{
+
+/* =====================
+按钮
+===================== */
 
 
-height:36px;
-
-
-padding:0 18px;
-
-
-border:none;
-
-
-background:#3c8dbc;
-
-
-color:white;
-
-
-border-radius:4px;
+button{
 
 
 cursor:pointer;
@@ -343,8 +223,28 @@ cursor:pointer;
 }
 
 
+.btn{
 
-.search-panel button:hover{
+
+padding:8px 15px;
+
+
+border:none;
+
+
+border-radius:4px;
+
+
+background:#3c8dbc;
+
+
+color:white;
+
+
+}
+
+
+.btn:hover{
 
 
 opacity:.85;
@@ -355,44 +255,8 @@ opacity:.85;
 
 
 
-
-
-
-
-
 /* =====================
-标题
-===================== */
-
-
-.content-area h2{
-
-
-background:white;
-
-
-padding:15px;
-
-
-font-size:18px;
-
-
-border-radius:5px;
-
-
-margin-bottom:15px;
-
-
-}
-
-
-
-
-
-
-
-/* =====================
-表格
+表格区域
 ===================== */
 
 
@@ -402,24 +266,32 @@ margin-bottom:15px;
 background:white;
 
 
-padding:15px;
+padding:20px;
 
 
-border-radius:5px;
+border-radius:6px;
 
 
-overflow-x:auto;
+overflow:auto;
 
 
 }
 
 
 
+/* 固定表格宽度 */
+
 
 .table-panel table{
 
 
-width:100%;
+width:1100px;
+
+
+min-width:1100px;
+
+
+table-layout:fixed;
 
 
 border-collapse:collapse;
@@ -429,16 +301,103 @@ border-collapse:collapse;
 
 
 
+/* =====================
+固定表格列宽
+===================== */
+
+
+.table-panel th:nth-child(1),
+.table-panel td:nth-child(1){
+
+width:100px;
+
+}
+
+
+
+.table-panel th:nth-child(2),
+.table-panel td:nth-child(2){
+
+width:180px;
+
+}
+
+
+
+.table-panel th:nth-child(3),
+.table-panel td:nth-child(3){
+
+width:180px;
+
+}
+
+
+
+.table-panel th:nth-child(4),
+.table-panel td:nth-child(4){
+
+width:130px;
+
+}
+
+
+
+.table-panel th:nth-child(5),
+.table-panel td:nth-child(5){
+
+width:150px;
+
+}
+
+
+
+.table-panel th:nth-child(6),
+.table-panel td:nth-child(6){
+
+width:100px;
+
+}
+
+
+
+.table-panel th:nth-child(7),
+.table-panel td:nth-child(7){
+
+width:120px;
+
+}
+
+
+
+.table-panel th:nth-child(8),
+.table-panel td:nth-child(8){
+
+width:120px;
+
+}
+
+
+
+
+
+/* =====================
+表头
+===================== */
+
+
 .table-panel th{
 
 
-background:#f5f6fa;
+height:45px;
 
 
-color:#555;
+background:#f5f6f7;
 
 
-font-weight:bold;
+border-bottom:1px solid #ddd;
+
+
+font-size:14px;
 
 
 }
@@ -461,6 +420,15 @@ text-align:center;
 font-size:14px;
 
 
+white-space:nowrap;
+
+
+overflow:hidden;
+
+
+text-overflow:ellipsis;
+
+
 }
 
 
@@ -476,33 +444,144 @@ background:#fafafa;
 
 
 
+/* =====================
+搜索区域
+===================== */
 
 
-.table-panel button{
+.search-box{
 
 
-background:#3c8dbc;
+display:flex;
 
 
-color:white;
+gap:10px;
 
 
-border:none;
-
-
-padding:5px 12px;
-
-
-border-radius:3px;
-
-
-cursor:pointer;
+margin-bottom:20px;
 
 
 }
 
 
 
+.search-box input,
+.search-box select{
+
+
+height:35px;
+
+
+padding:0 10px;
+
+
+border:1px solid #ddd;
+
+
+border-radius:4px;
+
+
+}
+
+
+
+
+/* =====================
+弹窗详情
+===================== */
+
+
+.detail-box{
+
+
+background:white;
+
+
+width:400px;
+
+
+padding:25px;
+
+
+border-radius:8px;
+
+
+position:fixed;
+
+
+top:50%;
+
+
+left:50%;
+
+
+transform:translate(-50%,-50%);
+
+
+box-shadow:
+0 5px 20px rgba(0,0,0,.3);
+
+
+z-index:999;
+
+
+}
+
+
+
+.detail-box p{
+
+
+line-height:35px;
+
+
+border-bottom:1px solid #eee;
+
+
+}
+
+
+
+.detail-box span{
+
+
+color:#666;
+
+
+}
+
+
+
+
+/* 遮罩 */
+
+
+.mask{
+
+
+position:fixed;
+
+
+top:0;
+
+
+left:0;
+
+
+right:0;
+
+
+bottom:0;
+
+
+background:
+rgba(0,0,0,.4);
+
+
+z-index:998;
+
+
+}
 
 
 
@@ -519,16 +598,7 @@ cursor:pointer;
 margin-top:20px;
 
 
-display:flex;
-
-
-justify-content:center;
-
-
-align-items:center;
-
-
-gap:15px;
+text-align:center;
 
 
 }
@@ -538,220 +608,19 @@ gap:15px;
 .pagination button{
 
 
-background:#3c8dbc;
+margin:0 5px;
 
 
-color:white;
-
-
-border:none;
-
-
-padding:8px 18px;
-
-
-border-radius:4px;
-
-
-cursor:pointer;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =====================
-弹窗
-===================== */
-
-
-.modal{
-
-
-display:none;
-
-
-position:fixed;
-
-
-left:0;
-
-
-top:0;
-
-
-width:100%;
-
-
-height:100%;
-
-
-background:
-
-rgba(0,0,0,.45);
-
-
-z-index:999;
-
-
-}
-
-
-
-.modal-box{
-
-
-width:400px;
-
-
-max-width:90%;
-
-
-background:white;
-
-
-margin:80px auto;
-
-
-padding:25px;
-
-
-border-radius:8px;
-
-
-}
-
-
-
-
-.modal-box h3{
-
-
-text-align:center;
-
-
-margin-bottom:20px;
-
-
-}
-
-
-
-.modal-box input{
-
-
-width:100%;
-
-
-height:40px;
-
-
-margin-bottom:12px;
+padding:6px 12px;
 
 
 border:1px solid #ddd;
 
 
-padding:0 10px;
-
-
-border-radius:4px;
+background:white;
 
 
 }
-
-
-
-.modal-box button{
-
-
-background:#3c8dbc;
-
-
-color:white;
-
-
-border:none;
-
-
-padding:8px 20px;
-
-
-border-radius:4px;
-
-
-margin-right:10px;
-
-
-}
-
-
-
-.modal-box p{
-
-
-padding:8px;
-
-
-border-bottom:1px solid #eee;
-
-
-}
-
-
-
-.modal-box span{
-
-
-color:#3c8dbc;
-
-
-font-weight:bold;
-
-
-}
-
-
-
-
-
-
-
-/* =====================
-姓名点击
-===================== */
-
-
-.name-text{
-
-
-cursor:pointer;
-
-
-color:#333;
-
-
-}
-
-
-
-.name-text:hover{
-
-
-color:#3c8dbc;
-
-
-}
-
-
-
-
 
 
 
@@ -772,24 +641,22 @@ color:#3c8dbc;
 height:55px;
 
 
-padding:0 10px;
+padding:0 15px;
 
 
 }
 
 
 
-.system-name{
-
+.top-header h2{
 
 font-size:16px;
 
-
 }
 
 
 
-.main-layout{
+.main{
 
 
 display:block;
@@ -799,39 +666,10 @@ display:block;
 
 
 
-.left-menu{
+.sidebar{
 
 
-width:100%;
-
-
-}
-
-
-
-.left-menu ul{
-
-
-display:flex;
-
-
-overflow-x:auto;
-
-
-}
-
-
-
-.left-menu li{
-
-
-min-width:120px;
-
-
-text-align:center;
-
-
-padding:0;
+display:none;
 
 
 }
@@ -848,37 +686,7 @@ padding:10px;
 
 
 
-
-
-.search-panel{
-
-
-flex-wrap:wrap;
-
-
-}
-
-
-
-.search-panel input{
-
-
-width:100%;
-
-
-}
-
-
-
-.search-panel button{
-
-
-flex:1;
-
-
-}
-
-
+/* 手机表格固定 */
 
 .table-panel{
 
@@ -893,10 +701,86 @@ overflow-x:auto;
 .table-panel table{
 
 
-min-width:750px;
+min-width:1100px;
 
 
 }
 
 
+
+
+/* 手机隐藏电脑功能 */
+
+
+.pc-only{
+
+
+display:none!important;
+
+
 }
+
+
+
+/* 手机详情 */
+
+
+.detail-box{
+
+
+width:90%;
+
+
+}
+
+
+
+
+/* 手机搜索 */
+
+
+.search-box{
+
+
+flex-wrap:wrap;
+
+
+}
+
+
+
+.search-box input,
+.search-box select{
+
+
+width:100%;
+
+
+}
+
+
+
+}
+
+
+
+
+/* =====================
+隐藏ID列
+===================== */
+
+
+/*
+如果第一列是ID
+取消下面注释
+
+.table-panel th:nth-child(1),
+.table-panel td:nth-child(1){
+
+display:none;
+
+}
+
+*/
+
+
