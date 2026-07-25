@@ -880,7 +880,26 @@ wb,
 // 入学时间筛选
 //====================
 
+//====================
+// 入学时间筛选展开/收回
+//====================
+
 async function openYearFilter(){
+
+
+let box=document.getElementById("yearList");
+
+
+// 已经展开，点击收回
+
+if(box.innerHTML.trim()!=""){
+
+box.innerHTML="";
+
+return;
+
+}
+
 
 
 let {data,error}=await db
@@ -928,13 +947,13 @@ years.forEach(y=>{
 
 html+=`
 
-<button onclick="filterByYear('${y}')">
+<button 
+class="year-btn"
+onclick="filterByYear('${y}')">
 
 ${y}
 
 </button>
-
-<br><br>
 
 `;
 
@@ -942,7 +961,7 @@ ${y}
 
 
 
-document.getElementById("yearList").innerHTML=html;
+box.innerHTML=html;
 
 
 }
