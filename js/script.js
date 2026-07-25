@@ -871,11 +871,6 @@ wb,
 }
 
 
-
-
-
-
-
 //====================
 // 入学时间筛选
 //====================
@@ -886,7 +881,7 @@ async function openYearFilter(){
 let box=document.getElementById("yearList");
 
 
-// 已展开，点击收回
+//点击第二次收回
 
 if(box.innerHTML.trim()!=""){
 
@@ -902,9 +897,7 @@ let {data,error}=await db
 
 .from("students")
 
-.select("year")
-
-.neq("status","毕业")
+.select("year,status")
 
 .range(0,9999);
 
@@ -926,7 +919,9 @@ let years=[
 
 data
 
-.map(x=>x.year)
+.filter(s=>s.status!="毕业")
+
+.map(s=>s.year)
 
 .filter(Boolean)
 
@@ -935,13 +930,19 @@ data
 ];
 
 
-// 年份排序（从新到旧）
 
-years.sort((a,b)=>b-a);
+// 排序
+
+years.sort((a,b)=>{
+
+return Number(b)-Number(a);
+
+});
 
 
 
 let html="";
+
 
 
 years.forEach(y=>{
@@ -962,6 +963,7 @@ ${y}
 });
 
 
+
 box.innerHTML=html;
 
 
@@ -979,8 +981,6 @@ let {data,error}=await db
 .select("*")
 
 .eq("year",year)
-
-.neq("status","毕业")
 
 .order("id");
 
@@ -1000,8 +1000,9 @@ let html="";
 
 
 
-data.forEach(s=>{
-
+data
+.filter(s=>s.status!="毕业")
+.forEach(s=>{
 
 html+=`
 
