@@ -719,6 +719,24 @@ document.getElementById("detailModal")
 
 async function importExcel(){
 
+let typeName =
+currentTable=="students_chenggao"
+?
+"成高"
+:
+"自考";
+
+
+let ok=confirm(
+"当前导入到："+typeName+"学生\n确定继续吗？"
+);
+
+
+if(!ok){
+
+return;
+
+}
 
 let file=
 document.getElementById("excelFile").files[0];
@@ -822,7 +840,7 @@ return;
 
 
 alert(
-"导入成功："+list.length+"条"
+typeName+"导入成功："+list.length+"条"
 );
 
 
