@@ -427,9 +427,9 @@ overflow-x:auto;
 
 .table-panel table{
 
-width:1100px;
+width:1300px;
 
-min-width:1100px;
+min-width:1300px;
 
 table-layout:fixed;
 
@@ -530,14 +530,17 @@ width:120px;
 .table-panel th{
 
 
+.table-panel th{
+
 background:#f5f6fa;
 
-
-color:#555;
-
+color:#333;
 
 font-weight:bold;
 
+font-size:16px;
+
+height:55px;
 
 }
 
@@ -547,7 +550,7 @@ font-weight:bold;
 .table-panel td{
 
 
-height:45px;
+height:55px;
 
 
 border-bottom:1px solid #eee;
@@ -556,7 +559,7 @@ border-bottom:1px solid #eee;
 text-align:center;
 
 
-font-size:14px;
+font-size:16px;
 
 
 white-space:nowrap;
@@ -591,17 +594,14 @@ background:#fafafa;
 
 background:#3c8dbc;
 
-
 color:white;
-
 
 border:none;
 
+padding:7px 16px;
 
-padding:5px 12px;
 
-
-border-radius:3px;
+border-radius:4px;
 
 
 cursor:pointer;
