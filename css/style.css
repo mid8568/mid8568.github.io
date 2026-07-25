@@ -1419,11 +1419,8 @@ padding:10px 5px;
     display:none;
 }
 .bottom-btn{
-
-text-align:center;
-
-margin:20px 0;
-
+    text-align:left;
+    margin-top:20px;
 }
 
 
