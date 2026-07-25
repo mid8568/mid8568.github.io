@@ -17,18 +17,17 @@ SUPABASE_KEY
 );
 
 
-
 //====================
 // 全局变量
 //====================
 
-let editId = null;
+let editId=null;
 
-let currentPage = 1;
+let currentPage=1;
 
-let pageSize = 50;
+let pageSize=50;
 
-let totalPages = 1;
+let totalPages=1;
 
 
 
@@ -52,7 +51,6 @@ return;
 
 loadStudents();
 
-
 }
 
 
@@ -64,40 +62,42 @@ loadStudents();
 async function loadStudents(){
 
 
-let keyword =
+let keyword=
 document.getElementById("search").value.trim();
 
 
 
-let start =
-(currentPage-1)*pageSize;
+let start=(currentPage-1)*pageSize;
 
-
-let end =
-start+pageSize-1;
+let end=start+pageSize-1;
 
 
 
-let query =
-db
+let query=db
+
 .from("students")
+
 .select("*",{count:"exact"})
+
 .neq("status","毕业")
+
 .order("id");
+
+
 
 if(keyword){
 
 query=query.or(
+
 `name.ilike.%${keyword}%,school.ilike.%${keyword}%,phone.ilike.%${keyword}%,major.ilike.%${keyword}%,gender.ilike.%${keyword}%,year.ilike.%${keyword}%`
+
 );
 
 }
 
 
 
-let {data,count,error}=
-
-await query.range(start,end);
+let {data,count,error}=await query.range(start,end);
 
 
 
@@ -110,8 +110,6 @@ return;
 }
 
 
-
-// 总页数
 
 totalPages=Math.ceil(count/pageSize)||1;
 
@@ -131,8 +129,7 @@ html+=`
 
 <td>
 
-<button 
-class="name-btn"
+<button class="name-btn"
 onclick="showStudent(${s.id})">
 
 ${s.name||""}
@@ -148,17 +145,14 @@ ${s.school||""}
 </td>
 
 
-
 <td class="pc-col">
 ${s.idcard||""}
 </td>
 
 
-
 <td>
 ${s.phone||""}
 </td>
-
 
 
 <td class="gender-col">
@@ -171,11 +165,9 @@ ${s.major||""}
 </td>
 
 
-
 <td>
 ${s.level||""}
 </td>
-
 
 
 <td class="pc-col">
@@ -186,21 +178,19 @@ ${s.year||""}
 
 <td class="pc-col">
 
-<button 
-class="edit"
-onclick="editStudent(${s.id})">
+<button onclick="editStudent(${s.id})">
 
 编辑
 
 </button>
 
 
-<button 
-onclick="graduateStudent(${s.id})">
+<button onclick="graduateStudent(${s.id})">
 
 毕业
 
 </button>
+
 
 </td>
 
@@ -223,8 +213,6 @@ document.getElementById("pageInfo").innerHTML=
 
 
 
-//显示总人数
-
 document.getElementById("totalInfo").innerHTML=
 
 `总人数：${count}人`;
@@ -232,6 +220,7 @@ document.getElementById("totalInfo").innerHTML=
 
 
 }
+
 
 
 
@@ -257,7 +246,6 @@ loadStudents();
 
 function nextPage(){
 
-
 if(currentPage<totalPages){
 
 currentPage++;
@@ -270,9 +258,7 @@ loadStudents();
 
 
 
-
 function prevPage(){
-
 
 if(currentPage>1){
 
@@ -289,18 +275,13 @@ loadStudents();
 
 function openAdd(){
 
-
 editId=null;
-
 
 clearForm();
 
-
 document.getElementById("title").innerHTML="添加学生";
 
-
 document.getElementById("modal").style.display="block";
-
 
 }
 
@@ -308,10 +289,7 @@ document.getElementById("modal").style.display="block";
 
 function closeModal(){
 
-
-document.getElementById("modal")
-.style.display="none";
-
+document.getElementById("modal").style.display="none";
 
 }
 
@@ -319,12 +297,11 @@ document.getElementById("modal")
 
 function clearForm(){
 
-
 document.querySelectorAll("#modal input")
 .forEach(i=>i.value="");
 
-
 }
+
 
 
 
@@ -356,6 +333,7 @@ alert(error.message);
 return;
 
 }
+
 
 
 editId=id;
@@ -396,6 +374,61 @@ document.getElementById("modal")
 
 
 
+//====================
+// 学生毕业
+//====================
+
+async function graduateStudent(id){
+
+
+let ok=confirm(
+"确定把该学生移入已毕业名单吗？"
+);
+
+
+if(!ok){
+
+return;
+
+}
+
+
+
+let {error}=await db
+
+.from("students")
+
+.update({
+
+status:"毕业"
+
+})
+
+.eq("id",id);
+
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+
+
+alert("已移动到毕业名单");
+
+
+loadStudents();
+
+
+}
+
+
+
+
 
 
 //====================
@@ -403,7 +436,6 @@ document.getElementById("modal")
 //====================
 
 async function saveStudent(){
-
 
 
 let obj={
@@ -440,7 +472,10 @@ document.getElementById("level").value,
 year:
 document.getElementById("year").value,
 
+
 status:"在读"
+
+
 };
 
 
@@ -453,10 +488,7 @@ let result;
 if(editId){
 
 
-
-result=
-
-await db
+result=await db
 
 .from("students")
 
@@ -469,18 +501,15 @@ await db
 }else{
 
 
-
-result=
-
-await db
+result=await db
 
 .from("students")
 
 .insert(obj);
 
 
-
 }
+
 
 
 
@@ -503,7 +532,6 @@ loadStudents();
 
 
 }
-
 
 
 }
@@ -570,7 +598,6 @@ document.getElementById("d_level").innerHTML=data.level||"";
 document.getElementById("d_year").innerHTML=data.year||"";
 
 
-
 document.getElementById("detailModal")
 .style.display="block";
 
@@ -579,14 +606,10 @@ document.getElementById("detailModal")
 
 
 
-
-
 function closeDetail(){
-
 
 document.getElementById("detailModal")
 .style.display="none";
-
 
 }
 //====================
@@ -598,7 +621,6 @@ async function importExcel(){
 
 let file =
 document.getElementById("excelFile").files[0];
-
 
 
 if(!file){
@@ -659,7 +681,9 @@ major:String(r["专业"]||""),
 
 level:String(r["层次"]||""),
 
-year:String(r["入学时间"]||"")
+year:String(r["入学时间"]||""),
+
+status:"在读"
 
 
 }));
@@ -750,7 +774,9 @@ let list=data.map(s=>({
 
 层次:s.level,
 
-入学时间:s.year
+入学时间:s.year,
+
+状态:s.status
 
 
 }));
@@ -799,7 +825,7 @@ wb,
 
 
 //====================
-// 年份筛选
+// 入学时间筛选
 //====================
 
 async function openYearFilter(){
@@ -809,7 +835,9 @@ let {data,error}=await db
 
 .from("students")
 
-.select("year");
+.select("year")
+
+.neq("status","毕业");
 
 
 
@@ -871,55 +899,7 @@ document.getElementById("yearModal")
 
 }
 
-//====================
-// 学生毕业
-//====================
 
-async function graduateStudent(id){
-
-
-let ok = confirm("确定把该学生移入已毕业名单吗？");
-
-
-if(!ok){
-
-return;
-
-}
-
-
-
-let {error}=await db
-
-.from("students")
-
-.update({
-
-status:"毕业"
-
-})
-
-.eq("id",id);
-
-
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-
-
-alert("已移动到毕业名单");
-
-
-loadStudents();
-
-
-}
 
 
 
@@ -937,9 +917,7 @@ document.getElementById("yearModal")
 
 
 
-
 async function filterByYear(year){
-
 
 
 let {data,error}=await db
@@ -980,19 +958,14 @@ html+=`
 
 <td>
 
-<button
-
-class="name-btn"
-
+<button class="name-btn"
 onclick="showStudent(${s.id})">
 
 ${s.name||""}
 
 </button>
 
-
 </td>
-
 
 
 <td class="pc-col">
@@ -1002,13 +975,11 @@ ${s.school||""}
 </td>
 
 
-
 <td class="pc-col">
 
 ${s.idcard||""}
 
 </td>
-
 
 
 <td>
@@ -1018,21 +989,11 @@ ${s.phone||""}
 </td>
 
 
-
-<td class="pc-col">
-
-${s.gender||""}
-
-</td>
-
-
-
 <td>
 
 ${s.major||""}
 
 </td>
-
 
 
 <td>
@@ -1042,7 +1003,6 @@ ${s.level||""}
 </td>
 
 
-
 <td class="pc-col">
 
 ${s.year||""}
@@ -1050,20 +1010,13 @@ ${s.year||""}
 </td>
 
 
-
 <td class="pc-col">
 
-
-<button
-
-class="edit"
-
-onclick="editStudent(${s.id})">
+<button onclick="editStudent(${s.id})">
 
 编辑
 
 </button>
-
 
 </td>
 
@@ -1090,6 +1043,19 @@ document.getElementById("totalInfo").innerHTML=
 
 `总人数：${data.length}人`;
 
+
+
+closeYearFilter();
+
+
+}
+
+
+
+
+
+
+
 //====================
 // 已毕业名单
 //====================
@@ -1108,6 +1074,7 @@ let {data,error}=await db
 .order("id");
 
 
+
 if(error){
 
 alert(error.message);
@@ -1117,7 +1084,9 @@ return;
 }
 
 
+
 let html="";
+
 
 
 data.forEach(s=>{
@@ -1127,46 +1096,60 @@ html+=`
 
 <tr>
 
+
 <td>
 
-<button 
-class="name-btn"
+<button class="name-btn"
+
 onclick="showStudent(${s.id})">
 
 ${s.name||""}
 
 </button>
 
+
 </td>
 
 
 <td class="pc-col">
+
 ${s.school||""}
+
 </td>
 
 
 <td class="pc-col">
+
 ${s.idcard||""}
+
 </td>
 
 
 <td>
+
 ${s.phone||""}
+
 </td>
 
 
 <td>
+
 ${s.major||""}
+
 </td>
 
 
 <td>
+
 ${s.level||""}
+
 </td>
 
 
 <td class="pc-col">
+
 ${s.year||""}
+
 </td>
 
 
@@ -1177,7 +1160,9 @@ ${s.year||""}
 });
 
 
+
 document.getElementById("list").innerHTML=html;
+
 
 
 document.getElementById("pageInfo").innerHTML=
@@ -1185,79 +1170,10 @@ document.getElementById("pageInfo").innerHTML=
 `已毕业名单 共 ${data.length} 人`;
 
 
+
 document.getElementById("totalInfo").innerHTML=
 
 `毕业人数：${data.length}人`;
 
-}
-
-closeYearFilter();
-
 
 }
-
-
-
-
-
-
-
-//====================
-// 退出登录
-//====================
-
-async function logout(){
-
-
-await db.auth.signOut();
-
-
-location.href="login.html";
-
-
-}
-
-
-
-
-
-
-
-//====================
-// 首页按钮
-//====================
-
-function goHome(){
-
-
-window.location.href="students.html";
-
-
-}
-
-
-
-
-//====================
-// 返回按钮
-//====================
-
-function goBack(){
-
-
-window.location.href="students.html";
-
-
-}
-
-
-
-
-
-
-
-//====================
-// 启动
-//====================
-
-checkLogin();
