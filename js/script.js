@@ -258,7 +258,8 @@ document.getElementById("totalInfo").innerHTML=
 
 `总人数：${count}人`;
 
-
+document.getElementById("graduatePageBox")
+.style.display="none";
 
 }
 
@@ -1271,7 +1272,8 @@ document.getElementById("totalInfo").innerHTML=
 
 `毕业人数：${count}人`;
 
-
+document.getElementById("graduatePageBox")
+.style.display="block";
 
 }
 
