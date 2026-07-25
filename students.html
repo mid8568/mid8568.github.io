@@ -211,15 +211,28 @@ onclick="importExcel()">
 
 <div class="bottom-btn">
 
-<button onclick="showGraduated()">
-已毕业名单
-</button>
-  
+
 <button onclick="openYearFilter()">
 
 按入学时间筛选
 
 </button>
+
+
+<!-- 年份展开区域 -->
+
+<div id="yearList" class="year-list">
+
+</div>
+
+
+
+<button onclick="showGraduated()">
+
+已毕业名单
+
+</button>
+
 
 </div>
 
@@ -385,66 +398,6 @@ onclick="importExcel()">
 
 
 </div>
-
-
-
-
-
-
-
-
-
-<!-- 入学年份筛选 -->
-
-
-<div class="modal" id="yearModal">
-
-
-<div class="modal-content">
-
-
-
-<h3>
-
-选择入学时间
-
-</h3>
-
-
-
-
-<div id="yearList">
-
-
-</div>
-
-
-
-
-
-<br>
-
-
-
-<button onclick="closeYearFilter()">
-
-关闭
-
-</button>
-
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
 
 
 
