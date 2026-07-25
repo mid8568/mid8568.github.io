@@ -96,7 +96,7 @@ if(keyword){
 
 query=query.or(
 
-`name.ilike.%${keyword}%,school.ilike.%${keyword}%,phone.ilike.%${keyword}%,major.ilike.%${keyword}%,gender.ilike.%${keyword}%,year.ilike.%${keyword}%`
+`name.ilike.%${keyword}%,school.ilike.%${keyword}%,phone.ilike.%${keyword}%,major.ilike.%${keyword}%,year.ilike.%${keyword}%`
 
 );
 
@@ -385,7 +385,6 @@ editId=id;
 "school",
 "idcard",
 "phone",
-"gender",
 "major",
 "level",
 "year"
@@ -500,10 +499,6 @@ document.getElementById("idcard").value,
 
 phone:
 document.getElementById("phone").value,
-
-
-gender:
-document.getElementById("gender").value,
 
 
 major:
@@ -642,8 +637,6 @@ document.getElementById("d_idcard").innerHTML=data.idcard||"";
 
 document.getElementById("d_phone").innerHTML=data.phone||"";
 
-document.getElementById("d_gender").innerHTML=data.gender||"";
-
 document.getElementById("d_major").innerHTML=data.major||"";
 
 document.getElementById("d_level").innerHTML=data.level||"";
@@ -732,8 +725,6 @@ school:String(r["学校"]||""),
 idcard:String(r["身份证号码"]||""),
 
 phone:String(r["手机号"]||""),
-
-gender:String(r["性别"]||""),
 
 major:String(r["专业"]||""),
 
@@ -826,8 +817,6 @@ let list=data.map(s=>({
 身份证号码:s.idcard,
 
 手机号:s.phone,
-
-性别:s.gender,
 
 专业:s.major,
 
