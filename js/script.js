@@ -1130,21 +1130,29 @@ closeYearFilter();
 
 
 //====================
-// 已毕业名单
+// 已毕业名单（分页）
 //====================
 
 async function showGraduated(){
 
 
-let {data,error}=await db
+let start=(graduatePage-1)*pageSize;
+
+let end=start+pageSize-1;
+
+
+
+let {data,count,error}=await db
 
 .from("students")
 
-.select("*")
+.select("*",{count:"exact"})
 
 .eq("status","毕业")
 
-.order("id");
+.order("id")
+
+.range(start,end);
 
 
 
@@ -1155,6 +1163,10 @@ alert(error.message);
 return;
 
 }
+
+
+
+graduateTotalPages=Math.ceil(count/pageSize)||1;
 
 
 
@@ -1173,16 +1185,13 @@ html+=`
 <td>
 
 <button class="name-btn"
-
 onclick="showStudent(${s.id})">
 
 ${s.name||""}
 
 </button>
 
-
 </td>
-
 
 
 <td class="pc-col">
@@ -1192,13 +1201,11 @@ ${s.school||""}
 </td>
 
 
-
 <td class="pc-col">
 
 ${s.idcard||""}
 
 </td>
-
 
 
 <td>
@@ -1208,7 +1215,6 @@ ${s.phone||""}
 </td>
 
 
-
 <td>
 
 ${s.major||""}
@@ -1216,13 +1222,11 @@ ${s.major||""}
 </td>
 
 
-
 <td>
 
 ${s.level||""}
 
 </td>
-
 
 
 <td class="pc-col">
@@ -1246,13 +1250,14 @@ document.getElementById("list").innerHTML=html;
 
 document.getElementById("pageInfo").innerHTML=
 
-`已毕业名单 共 ${data.length} 人`;
+`毕业名单 第 ${graduatePage} / ${graduateTotalPages} 页`;
 
 
 
 document.getElementById("totalInfo").innerHTML=
 
-`毕业人数：${data.length}人`;
+`毕业人数：${count}人`;
+
 
 
 }
@@ -1318,3 +1323,34 @@ window.location.href="login.html";
 //====================
 
 checkLogin();
+//====================
+// 毕业名单分页
+//====================
+
+function nextGraduatePage(){
+
+
+if(graduatePage<graduateTotalPages){
+
+graduatePage++;
+
+showGraduated();
+
+}
+
+}
+
+
+
+function prevGraduatePage(){
+
+
+if(graduatePage>1){
+
+graduatePage--;
+
+showGraduated();
+
+}
+
+}
