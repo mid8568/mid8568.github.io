@@ -1471,3 +1471,17 @@ background:white;
 cursor:pointer;
 
 }
+.name-text{
+
+cursor:pointer;
+
+color:#333;
+
+}
+
+
+.name-text:hover{
+
+color:#007bff;
+
+}
