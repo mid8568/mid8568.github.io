@@ -880,17 +880,13 @@ wb,
 // 入学时间筛选
 //====================
 
-//====================
-// 入学时间筛选展开/收回
-//====================
-
 async function openYearFilter(){
 
 
 let box=document.getElementById("yearList");
 
 
-// 已经展开，点击收回
+// 已展开，点击收回
 
 if(box.innerHTML.trim()!=""){
 
@@ -908,7 +904,9 @@ let {data,error}=await db
 
 .select("year")
 
-.neq("status","毕业");
+.neq("status","毕业")
+
+.range(0,9999);
 
 
 
@@ -937,9 +935,13 @@ data
 ];
 
 
+// 年份排序（从新到旧）
+
+years.sort((a,b)=>b-a);
+
+
 
 let html="";
-
 
 
 years.forEach(y=>{
@@ -958,7 +960,6 @@ ${y}
 `;
 
 });
-
 
 
 box.innerHTML=html;
@@ -1105,10 +1106,6 @@ document.getElementById("pageInfo").innerHTML=
 document.getElementById("totalInfo").innerHTML=
 
 `总人数：${data.length}人`;
-
-
-
-closeYearFilter();
 
 
 }
