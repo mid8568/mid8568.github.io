@@ -30,7 +30,11 @@ let pageSize=10;
 
 let totalPages=1;
 
+//毕业名单分页
 
+let graduatePage=1;
+
+let graduateTotalPages=1;
 
 //====================
 // 登录检查
@@ -885,7 +889,7 @@ let {data,error}=await db
 
 .select("year")
 
-.or("status.is.null,status.neq.毕业");
+.neq("status","毕业");
 
 
 
@@ -941,29 +945,7 @@ ${y}
 document.getElementById("yearList").innerHTML=html;
 
 
-document.getElementById("yearModal")
-.style.display="block";
-
-
 }
-
-
-
-
-
-
-function closeYearFilter(){
-
-
-document.getElementById("yearModal")
-.style.display="none";
-
-
-}
-
-
-
-
 
 
 
@@ -978,7 +960,7 @@ let {data,error}=await db
 
 .eq("year",year)
 
-.or("status.is.null,status.neq.毕业")
+.neq("status","毕业")
 
 .order("id");
 
@@ -1121,15 +1103,23 @@ closeYearFilter();
 async function showGraduated(){
 
 
-let {data,error}=await db
+let start=(graduatePage-1)*pageSize;
+
+let end=start+pageSize-1;
+
+
+
+let {data,count,error}=await db
 
 .from("students")
 
-.select("*")
+.select("*",{count:"exact"})
 
 .eq("status","毕业")
 
-.order("id");
+.order("id")
+
+.range(start,end);
 
 
 
@@ -1143,8 +1133,11 @@ return;
 
 
 
-let html="";
+graduateTotalPages=Math.ceil(count/pageSize)||1;
 
+
+
+let html="";
 
 
 data.forEach(s=>{
@@ -1157,8 +1150,8 @@ html+=`
 
 <td>
 
-<button 
-class="name-btn"
+<button class="name-btn"
+
 onclick="showStudent(${s.id})">
 
 ${s.name||""}
@@ -1221,17 +1214,14 @@ ${s.year||""}
 document.getElementById("list").innerHTML=html;
 
 
-
 document.getElementById("pageInfo").innerHTML=
 
-`已毕业名单 共 ${data.length} 人`;
-
+`毕业名单 第 ${graduatePage}/${graduateTotalPages} 页`;
 
 
 document.getElementById("totalInfo").innerHTML=
 
-`毕业人数：${data.length}人`;
-
+`毕业人数：${count}人`;
 
 }
 //====================
