@@ -82,9 +82,8 @@ let query =
 db
 .from("students")
 .select("*",{count:"exact"})
+.neq("status","毕业")
 .order("id");
-
-
 
 if(keyword){
 
@@ -439,9 +438,9 @@ document.getElementById("level").value,
 
 
 year:
-document.getElementById("year").value
+document.getElementById("year").value,
 
-
+status:"在读"
 };
 
 
@@ -951,6 +950,8 @@ let {data,error}=await db
 
 .eq("year",year)
 
+.neq("status","毕业")
+
 .order("id");
 
 
@@ -1089,7 +1090,106 @@ document.getElementById("totalInfo").innerHTML=
 
 `总人数：${data.length}人`;
 
+//====================
+// 已毕业名单
+//====================
 
+async function showGraduated(){
+
+
+let {data,error}=await db
+
+.from("students")
+
+.select("*")
+
+.eq("status","毕业")
+
+.order("id");
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+
+let html="";
+
+
+data.forEach(s=>{
+
+
+html+=`
+
+<tr>
+
+<td>
+
+<button 
+class="name-btn"
+onclick="showStudent(${s.id})">
+
+${s.name||""}
+
+</button>
+
+</td>
+
+
+<td class="pc-col">
+${s.school||""}
+</td>
+
+
+<td class="pc-col">
+${s.idcard||""}
+</td>
+
+
+<td>
+${s.phone||""}
+</td>
+
+
+<td>
+${s.major||""}
+</td>
+
+
+<td>
+${s.level||""}
+</td>
+
+
+<td class="pc-col">
+${s.year||""}
+</td>
+
+
+</tr>
+
+`;
+
+});
+
+
+document.getElementById("list").innerHTML=html;
+
+
+document.getElementById("pageInfo").innerHTML=
+
+`已毕业名单 共 ${data.length} 人`;
+
+
+document.getElementById("totalInfo").innerHTML=
+
+`毕业人数：${data.length}人`;
+
+}
 
 closeYearFilter();
 
