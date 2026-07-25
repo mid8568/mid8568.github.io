@@ -7,82 +7,113 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:"Microsoft YaHei",Arial,sans-serif;
+
+font-family:
+"Microsoft YaHei",
+Arial,
+sans-serif;
 
 }
 
 
 body{
 
-background:#f3f4f6;
+background:#f2f3f5;
+
 color:#333;
 
 }
 
 
+
+
+
 /* =====================
-顶部栏
+顶部
 ===================== */
 
 
-.topbar{
+.top-header{
+
 
 height:60px;
 
+
 background:#3c8dbc;
+
 
 color:white;
 
+
 display:flex;
+
 
 justify-content:space-between;
 
+
 align-items:center;
+
 
 padding:0 30px;
 
-font-size:18px;
 
 }
 
 
-.logo{
+
+.system-name{
+
 
 font-size:20px;
 
+
 }
 
 
 
-.admin{
+.admin-info{
+
 
 display:flex;
 
+
 align-items:center;
+
 
 gap:15px;
 
-font-size:15px;
+
+font-size:14px;
+
 
 }
 
 
-.admin button{
+
+.admin-info button{
 
 
-background:#fff;
+background:white;
+
 
 color:#3c8dbc;
 
+
 border:none;
+
 
 padding:6px 15px;
 
+
 border-radius:4px;
+
 
 cursor:pointer;
 
+
 }
+
+
 
 
 
@@ -93,11 +124,14 @@ cursor:pointer;
 ===================== */
 
 
-.layout{
+.main-layout{
+
 
 display:flex;
 
-min-height:calc(100vh - 60px);
+
+height:calc(100vh - 60px);
+
 
 }
 
@@ -110,69 +144,85 @@ min-height:calc(100vh - 60px);
 ===================== */
 
 
-.sidebar{
+.left-menu{
 
 
 width:220px;
 
+
 background:#263645;
+
 
 color:white;
 
 
+flex-shrink:0;
+
+
 }
 
 
-.user{
 
 
-height:80px;
+.menu-title{
 
-display:flex;
 
-align-items:center;
+height:50px;
 
-justify-content:center;
 
-font-size:18px;
+line-height:50px;
+
+
+padding-left:25px;
+
+
+font-size:16px;
+
 
 border-bottom:1px solid rgba(255,255,255,.1);
 
+
 }
 
 
 
-.sidebar ul{
+
+.left-menu ul{
+
 
 list-style:none;
 
+
 }
 
 
 
-.sidebar li{
+.left-menu li{
 
 
-height:48px;
+height:45px;
 
-line-height:48px;
+
+line-height:45px;
+
 
 padding-left:30px;
 
+
 cursor:pointer;
 
-font-size:15px;
 
-transition:.2s;
+font-size:14px;
+
 
 }
 
 
 
-.sidebar li:hover{
+.left-menu li:hover{
 
 
-background:#1e2936;
+background:#1d2b38;
 
 
 }
@@ -184,16 +234,20 @@ background:#1e2936;
 
 
 /* =====================
-右侧内容
+右侧区域
 ===================== */
 
 
-.content{
+.content-area{
 
 
 flex:1;
 
+
 padding:20px;
+
+
+overflow:auto;
 
 
 }
@@ -202,25 +256,36 @@ padding:20px;
 
 
 
-/* 搜索区域 */
+/* =====================
+搜索栏
+===================== */
 
 
-.search-box{
+.search-panel{
 
 
 background:white;
 
-padding:18px;
+
+padding:15px;
+
 
 border-radius:5px;
 
+
 display:flex;
 
-gap:10px;
 
 align-items:center;
 
-box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+gap:10px;
+
+
+box-shadow:
+
+0 2px 8px rgba(0,0,0,.08);
+
 
 margin-bottom:20px;
 
@@ -229,37 +294,48 @@ margin-bottom:20px;
 
 
 
-.search-box input{
+.search-panel input{
 
 
-height:38px;
+height:36px;
+
 
 border:1px solid #ddd;
 
+
 border-radius:4px;
+
 
 padding:0 12px;
 
+
 font-size:14px;
+
 
 }
 
 
 
-.search-box button{
+.search-panel button{
 
 
-height:38px;
+height:36px;
 
-background:#3c8dbc;
-
-border:none;
-
-color:white;
 
 padding:0 18px;
 
+
+border:none;
+
+
+background:#3c8dbc;
+
+
+color:white;
+
+
 border-radius:4px;
+
 
 cursor:pointer;
 
@@ -268,7 +344,7 @@ cursor:pointer;
 
 
 
-.search-box button:hover{
+.search-panel button:hover{
 
 
 opacity:.85;
@@ -283,21 +359,26 @@ opacity:.85;
 
 
 
+
 /* =====================
 标题
 ===================== */
 
 
-.content h2{
+.content-area h2{
 
 
 background:white;
 
+
 padding:15px;
 
-font-size:20px;
+
+font-size:18px;
+
 
 border-radius:5px;
+
 
 margin-bottom:15px;
 
@@ -310,20 +391,22 @@ margin-bottom:15px;
 
 
 
-
 /* =====================
-数据表
+表格
 ===================== */
 
 
-.table-card{
+.table-panel{
 
 
 background:white;
 
+
 padding:15px;
 
+
 border-radius:5px;
+
 
 overflow-x:auto;
 
@@ -332,10 +415,12 @@ overflow-x:auto;
 
 
 
-table{
+
+.table-panel table{
 
 
 width:100%;
+
 
 border-collapse:collapse;
 
@@ -344,29 +429,34 @@ border-collapse:collapse;
 
 
 
-th{
+.table-panel th{
 
 
-background:#f5f7fa;
+background:#f5f6fa;
 
-font-weight:bold;
 
 color:#555;
+
+
+font-weight:bold;
 
 
 }
 
 
 
-th,
-td{
+.table-panel th,
+.table-panel td{
 
 
-padding:12px;
+height:45px;
+
 
 border-bottom:1px solid #eee;
 
+
 text-align:center;
+
 
 font-size:14px;
 
@@ -375,7 +465,8 @@ font-size:14px;
 
 
 
-tr:hover{
+
+.table-panel tr:hover{
 
 
 background:#fafafa;
@@ -386,18 +477,24 @@ background:#fafafa;
 
 
 
-td button{
+
+.table-panel button{
 
 
 background:#3c8dbc;
 
+
 color:white;
+
 
 border:none;
 
+
 padding:5px 12px;
 
+
 border-radius:3px;
+
 
 cursor:pointer;
 
@@ -416,16 +513,20 @@ cursor:pointer;
 ===================== */
 
 
-.page{
+.pagination{
 
 
 margin-top:20px;
 
+
 display:flex;
+
 
 justify-content:center;
 
+
 align-items:center;
+
 
 gap:15px;
 
@@ -434,23 +535,30 @@ gap:15px;
 
 
 
-.page button{
+.pagination button{
 
 
 background:#3c8dbc;
 
+
 color:white;
+
 
 border:none;
 
+
 padding:8px 18px;
 
+
 border-radius:4px;
+
 
 cursor:pointer;
 
 
 }
+
+
 
 
 
@@ -468,17 +576,26 @@ cursor:pointer;
 
 display:none;
 
+
 position:fixed;
+
 
 left:0;
 
+
 top:0;
+
 
 width:100%;
 
+
 height:100%;
 
-background:rgba(0,0,0,.45);
+
+background:
+
+rgba(0,0,0,.45);
+
 
 z-index:999;
 
@@ -487,16 +604,23 @@ z-index:999;
 
 
 
-.modal-content{
+.modal-box{
 
 
 width:400px;
 
+
+max-width:90%;
+
+
 background:white;
+
 
 margin:80px auto;
 
+
 padding:25px;
+
 
 border-radius:8px;
 
@@ -505,10 +629,12 @@ border-radius:8px;
 
 
 
-.modal-content h3{
+
+.modal-box h3{
 
 
 text-align:center;
+
 
 margin-bottom:20px;
 
@@ -517,18 +643,23 @@ margin-bottom:20px;
 
 
 
-.modal-content input{
+.modal-box input{
 
 
 width:100%;
 
+
 height:40px;
+
 
 margin-bottom:12px;
 
+
 border:1px solid #ddd;
 
+
 padding:0 10px;
+
 
 border-radius:4px;
 
@@ -537,30 +668,36 @@ border-radius:4px;
 
 
 
-.modal-content button{
+.modal-box button{
 
 
 background:#3c8dbc;
 
+
 color:white;
+
 
 border:none;
 
+
 padding:8px 20px;
 
-margin-right:10px;
 
 border-radius:4px;
+
+
+margin-right:10px;
 
 
 }
 
 
 
-.modal-content p{
+.modal-box p{
 
 
 padding:8px;
+
 
 border-bottom:1px solid #eee;
 
@@ -568,15 +705,50 @@ border-bottom:1px solid #eee;
 }
 
 
-.modal-content span{
+
+.modal-box span{
 
 
 color:#3c8dbc;
+
 
 font-weight:bold;
 
 
 }
+
+
+
+
+
+
+
+/* =====================
+姓名点击
+===================== */
+
+
+.name-text{
+
+
+cursor:pointer;
+
+
+color:#333;
+
+
+}
+
+
+
+.name-text:hover{
+
+
+color:#3c8dbc;
+
+
+}
+
 
 
 
@@ -594,19 +766,20 @@ font-weight:bold;
 
 
 
-.topbar{
+.top-header{
 
 
 height:55px;
 
-padding:0 15px;
+
+padding:0 10px;
 
 
 }
 
 
 
-.logo{
+.system-name{
 
 
 font-size:16px;
@@ -616,7 +789,7 @@ font-size:16px;
 
 
 
-.layout{
+.main-layout{
 
 
 display:block;
@@ -626,7 +799,7 @@ display:block;
 
 
 
-.sidebar{
+.left-menu{
 
 
 width:100%;
@@ -636,10 +809,11 @@ width:100%;
 
 
 
-.sidebar ul{
+.left-menu ul{
 
 
 display:flex;
+
 
 overflow-x:auto;
 
@@ -648,23 +822,23 @@ overflow-x:auto;
 
 
 
-.sidebar li{
+.left-menu li{
 
 
 min-width:120px;
 
-padding:0;
 
 text-align:center;
 
-font-size:14px;
+
+padding:0;
 
 
 }
 
 
 
-.content{
+.content-area{
 
 
 padding:10px;
@@ -675,10 +849,9 @@ padding:10px;
 
 
 
-.search-box{
 
+.search-panel{
 
-display:flex;
 
 flex-wrap:wrap;
 
@@ -687,7 +860,7 @@ flex-wrap:wrap;
 
 
 
-.search-box input{
+.search-panel input{
 
 
 width:100%;
@@ -697,7 +870,7 @@ width:100%;
 
 
 
-.search-box button{
+.search-panel button{
 
 
 flex:1;
@@ -707,7 +880,7 @@ flex:1;
 
 
 
-.table-card{
+.table-panel{
 
 
 overflow-x:auto;
@@ -717,10 +890,10 @@ overflow-x:auto;
 
 
 
-table{
+.table-panel table{
 
 
-min-width:700px;
+min-width:750px;
 
 
 }
