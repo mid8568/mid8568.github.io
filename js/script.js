@@ -1001,7 +1001,19 @@ let html="";
 
 
 data
-.filter(s=>s.status!="毕业")
+let years=[
+
+...new Set(
+
+data
+
+.map(s=>s.year)
+
+.filter(Boolean)
+
+)
+
+];
 .forEach(s=>{
 
 html+=`
