@@ -17,6 +17,7 @@ SUPABASE_KEY
 );
 
 
+
 //====================
 // 全局变量
 //====================
@@ -37,6 +38,7 @@ let totalPages=1;
 
 async function checkLogin(){
 
+
 let {data}=await db.auth.getSession();
 
 
@@ -51,7 +53,10 @@ return;
 
 loadStudents();
 
+
 }
+
+
 
 
 
@@ -62,7 +67,7 @@ loadStudents();
 async function loadStudents(){
 
 
-let keyword=
+let keyword =
 document.getElementById("search").value.trim();
 
 
@@ -79,13 +84,15 @@ let query=db
 
 .select("*",{count:"exact"})
 
-.neq("status","毕业")
+.or("status.is.null,status.neq.毕业")
 
 .order("id");
 
 
 
+
 if(keyword){
+
 
 query=query.or(
 
@@ -93,11 +100,15 @@ query=query.or(
 
 );
 
+
 }
 
 
 
-let {data,count,error}=await query.range(start,end);
+
+let {data,count,error}=
+
+await query.range(start,end);
 
 
 
@@ -108,6 +119,7 @@ alert(error.message);
 return;
 
 }
+
 
 
 
@@ -129,7 +141,8 @@ html+=`
 
 <td>
 
-<button class="name-btn"
+<button 
+class="name-btn"
 onclick="showStudent(${s.id})">
 
 ${s.name||""}
@@ -139,44 +152,56 @@ ${s.name||""}
 </td>
 
 
-
 <td class="pc-col">
+
 ${s.school||""}
+
 </td>
 
 
+
 <td class="pc-col">
+
 ${s.idcard||""}
+
 </td>
 
 
+
 <td>
+
 ${s.phone||""}
+
 </td>
 
-
-<td class="gender-col">
-${s.gender||""}
-</td>
 
 
 <td>
+
 ${s.major||""}
+
 </td>
+
 
 
 <td>
+
 ${s.level||""}
+
 </td>
 
 
+
 <td class="pc-col">
+
 ${s.year||""}
+
 </td>
 
 
 
 <td class="pc-col">
+
 
 <button onclick="editStudent(${s.id})">
 
@@ -195,11 +220,13 @@ ${s.year||""}
 </td>
 
 
+
 </tr>
 
 `;
 
 });
+
 
 
 
@@ -246,6 +273,7 @@ loadStudents();
 
 function nextPage(){
 
+
 if(currentPage<totalPages){
 
 currentPage++;
@@ -259,6 +287,7 @@ loadStudents();
 
 
 function prevPage(){
+
 
 if(currentPage>1){
 
@@ -275,13 +304,18 @@ loadStudents();
 
 function openAdd(){
 
+
 editId=null;
+
 
 clearForm();
 
+
 document.getElementById("title").innerHTML="添加学生";
 
+
 document.getElementById("modal").style.display="block";
+
 
 }
 
@@ -289,7 +323,10 @@ document.getElementById("modal").style.display="block";
 
 function closeModal(){
 
-document.getElementById("modal").style.display="none";
+
+document.getElementById("modal")
+.style.display="none";
+
 
 }
 
@@ -297,10 +334,13 @@ document.getElementById("modal").style.display="none";
 
 function clearForm(){
 
+
 document.querySelectorAll("#modal input")
 .forEach(i=>i.value="");
 
+
 }
+
 
 
 
@@ -374,6 +414,8 @@ document.getElementById("modal")
 
 
 
+
+
 //====================
 // 学生毕业
 //====================
@@ -384,6 +426,7 @@ async function graduateStudent(id){
 let ok=confirm(
 "确定把该学生移入已毕业名单吗？"
 );
+
 
 
 if(!ok){
@@ -431,11 +474,13 @@ loadStudents();
 
 
 
+
 //====================
 // 保存学生
 //====================
 
 async function saveStudent(){
+
 
 
 let obj={
@@ -470,10 +515,7 @@ document.getElementById("level").value,
 
 
 year:
-document.getElementById("year").value,
-
-
-status:"在读"
+document.getElementById("year").value
 
 
 };
@@ -488,7 +530,9 @@ let result;
 if(editId){
 
 
-result=await db
+result=
+
+await db
 
 .from("students")
 
@@ -501,11 +545,19 @@ result=await db
 }else{
 
 
-result=await db
+result=
+
+await db
 
 .from("students")
 
-.insert(obj);
+.insert({
+
+...obj,
+
+status:"在读"
+
+});
 
 
 }
@@ -532,6 +584,7 @@ loadStudents();
 
 
 }
+
 
 
 }
@@ -598,6 +651,7 @@ document.getElementById("d_level").innerHTML=data.level||"";
 document.getElementById("d_year").innerHTML=data.year||"";
 
 
+
 document.getElementById("detailModal")
 .style.display="block";
 
@@ -606,10 +660,14 @@ document.getElementById("detailModal")
 
 
 
+
+
 function closeDetail(){
+
 
 document.getElementById("detailModal")
 .style.display="none";
+
 
 }
 //====================
@@ -730,6 +788,7 @@ reader.readAsArrayBuffer(file);
 
 
 
+
 //====================
 // Excel导出
 //====================
@@ -776,7 +835,7 @@ let list=data.map(s=>({
 
 入学时间:s.year,
 
-状态:s.status
+状态:s.status||"在读"
 
 
 }));
@@ -837,7 +896,7 @@ let {data,error}=await db
 
 .select("year")
 
-.neq("status","毕业");
+.or("status.is.null,status.neq.毕业");
 
 
 
@@ -903,6 +962,7 @@ document.getElementById("yearModal")
 
 
 
+
 function closeYearFilter(){
 
 
@@ -911,6 +971,7 @@ document.getElementById("yearModal")
 
 
 }
+
 
 
 
@@ -928,7 +989,7 @@ let {data,error}=await db
 
 .eq("year",year)
 
-.neq("status","毕业")
+.or("status.is.null,status.neq.毕业")
 
 .order("id");
 
@@ -959,13 +1020,16 @@ html+=`
 <td>
 
 <button class="name-btn"
+
 onclick="showStudent(${s.id})">
 
 ${s.name||""}
 
 </button>
 
+
 </td>
+
 
 
 <td class="pc-col">
@@ -975,11 +1039,13 @@ ${s.school||""}
 </td>
 
 
+
 <td class="pc-col">
 
 ${s.idcard||""}
 
 </td>
+
 
 
 <td>
@@ -989,11 +1055,13 @@ ${s.phone||""}
 </td>
 
 
+
 <td>
 
 ${s.major||""}
 
 </td>
+
 
 
 <td>
@@ -1003,6 +1071,7 @@ ${s.level||""}
 </td>
 
 
+
 <td class="pc-col">
 
 ${s.year||""}
@@ -1010,7 +1079,9 @@ ${s.year||""}
 </td>
 
 
+
 <td class="pc-col">
+
 
 <button onclick="editStudent(${s.id})">
 
@@ -1018,7 +1089,9 @@ ${s.year||""}
 
 </button>
 
+
 </td>
+
 
 
 </tr>
@@ -1111,11 +1184,13 @@ ${s.name||""}
 </td>
 
 
+
 <td class="pc-col">
 
 ${s.school||""}
 
 </td>
+
 
 
 <td class="pc-col">
@@ -1125,11 +1200,13 @@ ${s.idcard||""}
 </td>
 
 
+
 <td>
 
 ${s.phone||""}
 
 </td>
+
 
 
 <td>
@@ -1139,11 +1216,13 @@ ${s.major||""}
 </td>
 
 
+
 <td>
 
 ${s.level||""}
 
 </td>
+
 
 
 <td class="pc-col">
@@ -1177,3 +1256,65 @@ document.getElementById("totalInfo").innerHTML=
 
 
 }
+//====================
+// 退出登录
+//====================
+
+async function logout(){
+
+
+await db.auth.signOut();
+
+
+location.href="login.html";
+
+
+}
+
+
+
+
+
+
+
+//====================
+// 首页按钮
+//====================
+
+function goHome(){
+
+
+window.location.href="students.html";
+
+
+}
+
+
+
+
+
+
+
+//====================
+// 返回按钮
+//====================
+
+function goBack(){
+
+
+window.location.href="login.html";
+
+
+}
+
+
+
+
+
+
+
+//====================
+// 启动
+//====================
+
+checkLogin();
