@@ -152,15 +152,13 @@ html+=`
 
 <td>
 
-<button
-
-class="name-btn"
-
-onclick="showStudent(${s.id})">
+<span 
+onclick="showStudent(${s.id})"
+class="name-text">
 
 ${s.name||""}
 
-</button>
+</span>
 
 </td>
 
@@ -1033,16 +1031,13 @@ html+=`
 
 <td>
 
-<button
-
-class="name-btn"
-
-onclick="showStudent(${s.id})">
+<span
+onclick="showStudent(${s.id})"
+class="name-text">
 
 ${s.name||""}
 
-</button>
-
+</span>
 
 </td>
 
