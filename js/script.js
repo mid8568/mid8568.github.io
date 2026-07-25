@@ -41,7 +41,49 @@ let graduateTotalPages=1;
 let showGraduate=false;
 
 
+//====================
+// 分类切换
+//====================
 
+function loadCategory(type){
+
+
+showGraduate=false;
+
+
+currentPage=1;
+
+
+if(type=="成高"){
+
+
+currentTable="students_chenggao";
+
+
+document.getElementById("pageTitle").innerHTML=
+"成高学生";
+
+
+}
+
+
+if(type=="自考"){
+
+
+currentTable="students_zikao";
+
+
+document.getElementById("pageTitle").innerHTML=
+"自考学生";
+
+
+}
+
+
+loadStudents();
+
+
+}
 //====================
 // 登录检查
 //====================
