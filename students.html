@@ -7,12 +7,15 @@
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
+
 <title>成人高考平台管理</title>
+
 
 <link rel="stylesheet" href="css/style.css">
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
@@ -20,46 +23,71 @@
 </head>
 
 
-<body class="student-page">
+
+<body>
+
 
 
 <!-- 顶部 -->
 
-<header class="top-bar">
+<div class="top-bar">
 
 
-<div class="platform-name">
+<div class="logo">
 
 成人高考平台管理
 
 </div>
 
 
-<button class="logout"
-onclick="logout()">
+
+<div class="admin">
+
+
+超级管理员
+
+
+<button onclick="logout()">
 
 退出登录
 
 </button>
 
 
-</header>
+</div>
+
+
+
+</div>
 
 
 
 
 
-<div class="main-layout">
+
+
+<div class="layout">
 
 
 
-<!-- 左侧功能区 -->
+
+
+<!-- 左侧菜单 -->
+
 
 <div class="sidebar">
 
 
 
-<button onclick="showAdultStudent()">
+<div class="menu-title">
+
+学生管理
+
+</div>
+
+
+
+<button onclick="showGaokao()">
 
 成高学生
 
@@ -67,7 +95,7 @@ onclick="logout()">
 
 
 
-<button onclick="showSelfStudent()">
+<button onclick="showZikao()">
 
 自考学生
 
@@ -75,58 +103,52 @@ onclick="logout()">
 
 
 
-
-<hr>
-
-
-
-<button onclick="openAdd()">
-
-+ 添加学生
-
-</button>
-
-
-
-
-<button onclick="openYearFilter()">
-
-按入学时间筛选
-
-</button>
-
-
-
-
 <button onclick="showGraduated()">
 
-已毕业名单
+毕业名单
 
 </button>
 
 
 
-<hr>
+
+
+<div class="menu-title">
+
+系统功能
+
+</div>
 
 
 
-<button onclick="importExcel()">
+<button>
 
-导入Excel
+招生管理
 
 </button>
 
 
 
-<button onclick="exportExcel()">
+<button>
 
-导出Excel
+数据统计
+
+</button>
+
+
+
+<button>
+
+设置
 
 </button>
 
 
 
 </div>
+
+
+
 
 
 
@@ -135,20 +157,24 @@ onclick="logout()">
 
 <!-- 右侧内容 -->
 
-<div class="content">
+
+<div class="main">
+
+
 
 
 
 <!-- 搜索 -->
 
+
 <div class="search-box">
 
 
 <input
-id="search"
-placeholder="搜索姓名/学校/手机号/专业/年份"
->
 
+id="search"
+
+placeholder="搜索姓名/手机号/专业/年份">
 
 
 <button onclick="searchStudent()">
@@ -158,18 +184,66 @@ placeholder="搜索姓名/学校/手机号/专业/年份"
 </button>
 
 
+
+<button onclick="resetSearch()">
+
+重置
+
+</button>
+
+
 </div>
 
 
 
 
 
-<!-- 年份展开 -->
 
-<div id="yearList"
-class="year-list">
+
+<!-- 操作按钮 -->
+
+
+<div class="toolbar">
+
+
+<button onclick="openAdd()">
+
++ 新增学生
+
+</button>
+
+
+
+<input
+
+type="file"
+
+id="excelFile"
+
+accept=".xlsx,.xls">
+
+
+
+<button onclick="importExcel()">
+
+导入
+
+</button>
+
+
+
+<button onclick="exportExcel()">
+
+导出
+
+</button>
+
+
 
 </div>
+
+
+
 
 
 
@@ -178,10 +252,12 @@ class="year-list">
 
 <!-- 数据表 -->
 
+
 <div class="table-box">
 
 
 <table>
+
 
 
 <thead>
@@ -189,21 +265,40 @@ class="year-list">
 
 <tr>
 
-<th>姓名</th>
 
-<th class="pc-col">学校</th>
+<th>
+姓名
+</th>
 
-<th class="pc-col">身份证</th>
 
-<th>手机号</th>
+<th>
+学校
+</th>
 
-<th>专业</th>
 
-<th>层次</th>
+<th>
+手机号
+</th>
 
-<th class="pc-col">入学时间</th>
 
-<th class="pc-col">操作</th>
+<th>
+专业
+</th>
+
+
+<th>
+层次
+</th>
+
+
+<th>
+入学时间
+</th>
+
+
+<th>
+操作
+</th>
 
 
 </tr>
@@ -212,16 +307,23 @@ class="year-list">
 </thead>
 
 
+
+
 <tbody id="list">
 
 
 </tbody>
 
 
+
 </table>
 
 
+
 </div>
+
+
+
 
 
 
@@ -260,11 +362,17 @@ class="year-list">
 
 <span id="totalInfo">
 
-总人数：0人
+总人数0
 
 </span>
 
 
+</div>
+
+
+
+
+
 
 </div>
 
@@ -273,8 +381,6 @@ class="year-list">
 </div>
 
 
-
-</div>
 
 
 
@@ -298,6 +404,7 @@ class="year-list">
 </h3>
 
 
+
 <p>
 姓名：
 <span id="d_name"></span>
@@ -307,12 +414,6 @@ class="year-list">
 <p>
 学校：
 <span id="d_school"></span>
-</p>
-
-
-<p>
-身份证：
-<span id="d_idcard"></span>
 </p>
 
 
@@ -340,6 +441,7 @@ class="year-list">
 </p>
 
 
+
 <button onclick="closeDetail()">
 
 关闭
@@ -357,6 +459,9 @@ class="year-list">
 
 
 
+
+
+
 <!-- 添加编辑 -->
 
 
@@ -368,7 +473,7 @@ class="year-list">
 
 <h3 id="title">
 
-添加学生
+新增学生
 
 </h3>
 
@@ -378,9 +483,6 @@ class="year-list">
 
 
 <input id="school" placeholder="学校">
-
-
-<input id="idcard" placeholder="身份证">
 
 
 <input id="phone" placeholder="手机号">
@@ -403,6 +505,7 @@ class="year-list">
 </button>
 
 
+
 <button onclick="closeModal()">
 
 取消
@@ -413,7 +516,9 @@ class="year-list">
 
 </div>
 
+
 </div>
+
 
 
 
