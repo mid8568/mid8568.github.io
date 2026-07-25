@@ -357,55 +357,6 @@ alert(error.message);
 return;
 
 }
-//====================
-// 学生毕业
-//====================
-
-async function graduateStudent(id){
-
-
-let ok = confirm("确定把该学生移入已毕业名单吗？");
-
-
-if(!ok){
-
-return;
-
-}
-
-
-
-let {error}=await db
-
-.from("students")
-
-.update({
-
-status:"毕业"
-
-})
-
-.eq("id",id);
-
-
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-
-
-alert("已移动到毕业名单");
-
-
-loadStudents();
-
-
-}
 
 
 editId=id;
@@ -921,7 +872,55 @@ document.getElementById("yearModal")
 
 }
 
+//====================
+// 学生毕业
+//====================
 
+async function graduateStudent(id){
+
+
+let ok = confirm("确定把该学生移入已毕业名单吗？");
+
+
+if(!ok){
+
+return;
+
+}
+
+
+
+let {error}=await db
+
+.from("students")
+
+.update({
+
+status:"毕业"
+
+})
+
+.eq("id",id);
+
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+
+
+alert("已移动到毕业名单");
+
+
+loadStudents();
+
+
+}
 
 
 
