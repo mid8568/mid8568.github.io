@@ -1,23 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 
-
 <head>
 
-
 <meta charset="UTF-8">
-
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 
-
-<title>成人高考管理平台</title>
-
+<title>成人高考平台管理</title>
 
 
 <link rel="stylesheet" href="css/style.css">
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -26,10 +20,7 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
 
-
 </head>
-
-
 
 
 <body class="student-page">
@@ -38,16 +29,11 @@
 
 <div class="nav-btn">
 
-
 <button onclick="goHome()">
-
 首页
-
 </button>
 
-
 </div>
-
 
 
 
@@ -58,29 +44,19 @@
 
 <h1>
 
-
-成人高考平台管理
-
+平台管理
 
 
-<button
-
+<button 
 class="logout"
-
 onclick="logout()">
 
-
 退出登录
-
 
 </button>
 
 
-
 </h1>
-
-
-
 
 
 
@@ -91,21 +67,15 @@ onclick="logout()">
 
 
 <input
-
 id="search"
-
 placeholder="搜索姓名/学校/手机号/专业/年份"
-
 >
-
 
 
 
 <button onclick="searchStudent()">
 
-
 搜索
-
 
 </button>
 
@@ -113,21 +83,13 @@ placeholder="搜索姓名/学校/手机号/专业/年份"
 
 
 
-<button
-
+<button 
 class="pc-only"
-
 onclick="openAdd()">
-
-
 
 + 添加学生
 
-
-
 </button>
-
-
 
 
 
@@ -135,40 +97,26 @@ onclick="openAdd()">
 
 <input
 
-
 class="pc-only"
-
 
 type="file"
 
-
 id="excelFile"
 
-
 accept=".xlsx,.xls"
-
 
 >
 
 
 
 
-
-<button
-
+<button 
 class="pc-only"
-
 onclick="importExcel()">
-
-
 
 导入Excel
 
-
-
 </button>
-
-
 
 
 
@@ -176,14 +124,9 @@ onclick="importExcel()">
 
 <button onclick="exportExcel()">
 
-
-
 导出Excel
 
-
-
 </button>
-
 
 
 
@@ -195,14 +138,7 @@ onclick="importExcel()">
 
 
 
-
-
-<!-- 学生表格 -->
-
-
-
 <div class="table-box">
-
 
 
 <table>
@@ -212,93 +148,40 @@ onclick="importExcel()">
 <thead>
 
 
-
 <tr>
-
-
 
 <th>姓名</th>
 
+<th class="pc-col">学校</th>
 
+<th class="pc-col">身份证</th>
 
-<th class="pc-col">
+<th>手机号</th>
 
-学校
+<th>专业</th>
 
-</th>
+<th>层次</th>
 
+<th class="pc-col">入学时间</th>
 
-
-<th class="pc-col">
-
-身份证
-
-</th>
-
-
-
-<th>
-
-手机号
-
-</th>
-
-
-
-<th>
-
-专业
-
-</th>
-
-
-
-<th>
-
-层次
-
-</th>
-
-
-
-<th class="pc-col">
-
-入学时间
-
-</th>
-
-
-
-<th class="pc-col">
-
-操作
-
-</th>
-
-
+<th class="pc-col">操作</th>
 
 </tr>
-
 
 
 </thead>
 
 
 
-
 <tbody id="list">
 
-
-
 </tbody>
-
 
 
 
 </table>
 
 
-
 </div>
 
 
@@ -306,59 +189,41 @@ onclick="importExcel()">
 
 
 
-
-
-
-<!-- 普通学生分页 -->
 
 
 
 <div class="page">
 
 
-
 <button onclick="prevPage()">
-
 
 上一页
 
-
 </button>
-
 
 
 
 <span id="pageInfo">
 
-
 第1页
 
-
 </span>
-
 
 
 
 <button onclick="nextPage()">
 
-
 下一页
-
 
 </button>
 
 
 
-
-
 <span id="totalInfo">
-
 
 总人数：0人
 
-
 </span>
-
 
 
 </div>
@@ -371,36 +236,35 @@ onclick="importExcel()">
 
 
 
-<!-- 底部功能 -->
-
+<!-- 底部按钮 -->
 
 
 <div class="bottom-btn">
 
 
 
+<!-- 年份筛选 -->
+
+<div class="year-box">
+
+
+<div id="yearList"></div>
+
+
 <button onclick="openYearFilter()">
-
-
 
 按入学时间筛选
 
-
-
 </button>
-
-
-
-<div id="yearList" class="year-list">
-
 
 
 </div>
 
 
 
-<div class="graduate-box">
 
+
+<!-- 已毕业 -->
 
 <button onclick="showGraduated()">
 
@@ -409,8 +273,21 @@ onclick="importExcel()">
 </button>
 
 
+</div>
 
-<div id="graduatePageBox" style="display:none;">
+
+
+
+
+
+
+
+
+<!-- 毕业分页 -->
+
+
+<div id="graduatePageBox"
+style="display:none;text-align:center;margin-top:15px;">
 
 
 <button onclick="prevGraduatePage()">
@@ -421,20 +298,17 @@ onclick="importExcel()">
 
 
 
+<span id="graduateInfo">
+
+</span>
+
+
+
 <button onclick="nextGraduatePage()">
 
 毕业下一页
 
 </button>
-
-
-</div>
-
-
-</div>
-
-
-</div>
 
 
 </div>
@@ -450,182 +324,122 @@ onclick="importExcel()">
 <!-- 学生详情 -->
 
 
-
 <div class="modal" id="detailModal">
-
 
 
 <div class="modal-content">
 
 
-
 <h3>
 
-
 学生档案
-
 
 </h3>
 
 
 
-
 <p>
-
 姓名：
-
 <span id="d_name"></span>
-
-
 </p>
 
 
 
 <p>
-
 学校：
-
 <span id="d_school"></span>
-
-
 </p>
 
 
 
 <p>
-
 身份证：
-
 <span id="d_idcard"></span>
-
-
 </p>
 
 
 
 <p>
-
 手机号：
-
 <span id="d_phone"></span>
-
-
 </p>
 
 
 
 <p>
-
 专业：
-
 <span id="d_major"></span>
-
-
 </p>
 
 
 
 <p>
-
 层次：
-
 <span id="d_level"></span>
-
-
 </p>
 
 
 
 <p>
-
 入学时间：
-
 <span id="d_year"></span>
-
-
 </p>
-
-
-
 
 
 
 <button onclick="closeDetail()">
 
-
-
 关闭
-
-
 
 </button>
 
 
+</div>
 
 
 </div>
 
 
 
-</div>
 
 
 
 
 
 
-
-
-
-<!-- 添加编辑学生 -->
-
+<!-- 添加编辑 -->
 
 
 <div class="modal" id="modal">
 
 
-
 <div class="modal-content">
-
-
-
 
 
 <h3 id="title">
 
-
 添加学生
 
-
 </h3>
-
-
-
 
 
 
 <input id="name" placeholder="姓名">
 
 
-
 <input id="school" placeholder="学校">
-
 
 
 <input id="idcard" placeholder="身份证">
 
 
-
 <input id="phone" placeholder="手机号">
-
 
 
 <input id="major" placeholder="专业">
 
 
-
 <input id="level" placeholder="层次">
-
 
 
 <input id="year" placeholder="入学时间">
@@ -633,44 +447,25 @@ onclick="importExcel()">
 
 
 
-
-
 <button onclick="saveStudent()">
-
-
 
 保存
 
-
-
 </button>
-
-
 
 
 
 <button onclick="closeModal()">
 
-
-
 取消
-
-
 
 </button>
 
 
-
-
-
-
 </div>
 
 
-
 </div>
-
-
 
 
 
@@ -681,10 +476,6 @@ onclick="importExcel()">
 <script src="js/script.js"></script>
 
 
-
-
 </body>
-
-
 
 </html>
