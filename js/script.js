@@ -22,19 +22,22 @@ SUPABASE_KEY
 // 全局变量
 //====================
 
-let editId=null;
+let editId = null;
 
-let currentPage=1;
+let currentPage = 1;
 
-let pageSize=10;
+let pageSize = 10;
 
-let totalPages=1;
+let totalPages = 1;
+
 
 //毕业名单分页
 
-let graduatePage=1;
+let graduatePage = 1;
 
-let graduateTotalPages=1;
+let graduateTotalPages = 1;
+
+
 
 //====================
 // 登录检查
@@ -64,8 +67,10 @@ loadStudents();
 
 
 
+
+
 //====================
-// 加载学生
+// 加载学生列表
 //====================
 
 async function loadStudents(){
@@ -76,22 +81,24 @@ document.getElementById("search").value.trim();
 
 
 
-let start=(currentPage-1)*pageSize;
-
-let end=start+pageSize-1;
-
+let start =
+(currentPage-1)*pageSize;
 
 
-let query=db
+let end =
+start+pageSize-1;
+
+
+
+let query = db
 
 .from("students")
 
 .select("*",{count:"exact"})
 
-.or("status.is.null,status.neq.毕业")
+.or("status.is.null,status.eq.在读")
 
 .order("id");
-
 
 
 
@@ -106,7 +113,6 @@ query=query.or(
 
 
 }
-
 
 
 
@@ -126,8 +132,9 @@ return;
 
 
 
+totalPages =
 
-totalPages=Math.ceil(count/pageSize)||1;
+Math.ceil(count/pageSize)||1;
 
 
 
@@ -145,8 +152,10 @@ html+=`
 
 <td>
 
-<button 
+<button
+
 class="name-btn"
+
 onclick="showStudent(${s.id})">
 
 ${s.name||""}
@@ -154,6 +163,7 @@ ${s.name||""}
 </button>
 
 </td>
+
 
 
 <td class="pc-col">
@@ -207,14 +217,18 @@ ${s.year||""}
 <td class="pc-col">
 
 
-<button onclick="editStudent(${s.id})">
+<button
+
+onclick="editStudent(${s.id})">
 
 编辑
 
 </button>
 
 
-<button onclick="graduateStudent(${s.id})">
+<button
+
+onclick="graduateStudent(${s.id})">
 
 毕业
 
@@ -224,13 +238,11 @@ ${s.year||""}
 </td>
 
 
-
 </tr>
 
 `;
 
 });
-
 
 
 
@@ -256,17 +268,25 @@ document.getElementById("totalInfo").innerHTML=
 
 
 
+
+
 //====================
 // 搜索
 //====================
 
 function searchStudent(){
 
+
 currentPage=1;
+
 
 loadStudents();
 
+
 }
+
+
+
 
 
 
@@ -286,6 +306,7 @@ loadStudents();
 
 }
 
+
 }
 
 
@@ -301,7 +322,15 @@ loadStudents();
 
 }
 
+
 }
+
+
+
+
+
+
+
 //====================
 // 添加学生
 //====================
@@ -325,14 +354,15 @@ document.getElementById("modal").style.display="block";
 
 
 
+
 function closeModal(){
 
 
-document.getElementById("modal")
-.style.display="none";
+document.getElementById("modal").style.display="none";
 
 
 }
+
 
 
 
@@ -340,6 +370,7 @@ function clearForm(){
 
 
 document.querySelectorAll("#modal input")
+
 .forEach(i=>i.value="");
 
 
@@ -403,12 +434,10 @@ document.getElementById(k).value=data[k]||"";
 
 
 
-document.getElementById("title")
-.innerHTML="编辑学生";
+document.getElementById("title").innerHTML="编辑学生";
 
 
-document.getElementById("modal")
-.style.display="block";
+document.getElementById("modal").style.display="block";
 
 
 }
@@ -471,19 +500,11 @@ loadStudents();
 
 
 }
-
-
-
-
-
-
-
 //====================
 // 保存学生
 //====================
 
 async function saveStudent(){
-
 
 
 let obj={
@@ -518,7 +539,6 @@ document.getElementById("year").value
 
 
 };
-
 
 
 
@@ -563,7 +583,6 @@ status:"在读"
 
 
 
-
 if(result.error){
 
 
@@ -585,7 +604,6 @@ loadStudents();
 }
 
 
-
 }
 
 
@@ -595,20 +613,10 @@ loadStudents();
 
 
 //====================
-// 查看详情
+// 查看学生详情
 //====================
 
 async function showStudent(id){
-
-
-if(!id){
-
-alert("学生ID不存在");
-
-return;
-
-}
-
 
 
 let {data,error}=await db
@@ -648,9 +656,7 @@ document.getElementById("d_level").innerHTML=data.level||"";
 document.getElementById("d_year").innerHTML=data.year||"";
 
 
-
-document.getElementById("detailModal")
-.style.display="block";
+document.getElementById("detailModal").style.display="block";
 
 
 }
@@ -662,11 +668,18 @@ document.getElementById("detailModal")
 function closeDetail(){
 
 
-document.getElementById("detailModal")
-.style.display="none";
+document.getElementById("detailModal").style.display="none";
 
 
 }
+
+
+
+
+
+
+
+
 //====================
 // Excel导入
 //====================
@@ -674,8 +687,10 @@ document.getElementById("detailModal")
 async function importExcel(){
 
 
-let file =
+let file=
+
 document.getElementById("excelFile").files[0];
+
 
 
 if(!file){
@@ -707,9 +722,7 @@ new Uint8Array(e.target.result),
 
 let sheet=
 
-workbook.Sheets[
-workbook.SheetNames[0]
-];
+workbook.Sheets[workbook.SheetNames[0]];
 
 
 
@@ -752,6 +765,7 @@ let {error}=await db
 
 
 if(error){
+
 
 alert(error.message);
 
@@ -871,6 +885,11 @@ wb,
 }
 
 
+
+
+
+
+
 //====================
 // 入学时间筛选
 //====================
@@ -881,7 +900,7 @@ async function openYearFilter(){
 let box=document.getElementById("yearList");
 
 
-//点击第二次收回
+//再次点击收回
 
 if(box.innerHTML.trim()!=""){
 
@@ -897,9 +916,7 @@ let {data,error}=await db
 
 .from("students")
 
-.select("year,status")
-
-.range(0,9999);
+.select("year");
 
 
 
@@ -919,8 +936,6 @@ let years=[
 
 data
 
-.filter(s=>s.status!="毕业")
-
 .map(s=>s.year)
 
 .filter(Boolean)
@@ -930,8 +945,6 @@ data
 ];
 
 
-
-// 排序
 
 years.sort((a,b)=>{
 
@@ -950,8 +963,10 @@ years.forEach(y=>{
 
 html+=`
 
-<button 
+<button
+
 class="year-btn"
+
 onclick="filterByYear('${y}')">
 
 ${y}
@@ -963,13 +978,21 @@ ${y}
 });
 
 
-
 box.innerHTML=html;
 
 
 }
 
 
+
+
+
+
+
+//====================
+// 按年份显示
+// 包含已毕业学生
+//====================
 
 async function filterByYear(year){
 
@@ -1000,21 +1023,8 @@ let html="";
 
 
 
-data
-let years=[
+data.forEach(s=>{
 
-...new Set(
-
-data
-
-.map(s=>s.year)
-
-.filter(Boolean)
-
-)
-
-];
-.forEach(s=>{
 
 html+=`
 
@@ -1023,7 +1033,9 @@ html+=`
 
 <td>
 
-<button class="name-btn"
+<button
+
+class="name-btn"
 
 onclick="showStudent(${s.id})">
 
@@ -1097,7 +1109,6 @@ ${s.year||""}
 </td>
 
 
-
 </tr>
 
 `;
@@ -1107,7 +1118,6 @@ ${s.year||""}
 
 
 document.getElementById("list").innerHTML=html;
-
 
 
 document.getElementById("pageInfo").innerHTML=
@@ -1121,20 +1131,22 @@ document.getElementById("totalInfo").innerHTML=
 `总人数：${data.length}人`;
 
 
+
 }
-
-
-
 //====================
 // 已毕业名单
 //====================
 
+
 async function showGraduated(){
 
 
-let start=(graduatePage-1)*pageSize;
+let start =
+(graduatePage-1)*pageSize;
 
-let end=start+pageSize-1;
+
+let end =
+start+pageSize-1;
 
 
 
@@ -1162,11 +1174,13 @@ return;
 
 
 
-graduateTotalPages=Math.ceil(count/pageSize)||1;
+graduateTotalPages =
+Math.ceil(count/pageSize)||1;
 
 
 
 let html="";
+
 
 
 data.forEach(s=>{
@@ -1179,15 +1193,17 @@ html+=`
 
 <td>
 
-<button class="name-btn"
-
+<button
+class="name-btn"
 onclick="showStudent(${s.id})">
 
 ${s.name||""}
 
 </button>
 
+
 </td>
+
 
 
 <td class="pc-col">
@@ -1197,11 +1213,13 @@ ${s.school||""}
 </td>
 
 
+
 <td class="pc-col">
 
 ${s.idcard||""}
 
 </td>
+
 
 
 <td>
@@ -1211,11 +1229,13 @@ ${s.phone||""}
 </td>
 
 
+
 <td>
 
 ${s.major||""}
 
 </td>
+
 
 
 <td>
@@ -1225,11 +1245,13 @@ ${s.level||""}
 </td>
 
 
+
 <td class="pc-col">
 
 ${s.year||""}
 
 </td>
+
 
 
 </tr>
@@ -1243,19 +1265,78 @@ ${s.year||""}
 document.getElementById("list").innerHTML=html;
 
 
+
 document.getElementById("pageInfo").innerHTML=
 
 `毕业名单 第 ${graduatePage}/${graduateTotalPages} 页`;
+
 
 
 document.getElementById("totalInfo").innerHTML=
 
 `毕业人数：${count}人`;
 
+
+
 }
+
+
+
+
+//====================
+// 毕业名单下一页
+//====================
+
+
+function nextGraduatePage(){
+
+
+if(graduatePage < graduateTotalPages){
+
+
+graduatePage++;
+
+
+showGraduated();
+
+
+}
+
+
+}
+
+
+
+//====================
+// 毕业名单上一页
+//====================
+
+
+function prevGraduatePage(){
+
+
+if(graduatePage > 1){
+
+
+graduatePage--;
+
+
+showGraduated();
+
+
+}
+
+
+}
+
+
+
+
+
 //====================
 // 退出登录
 //====================
+
 
 async function logout(){
 
@@ -1272,11 +1353,10 @@ location.href="login.html";
 
 
 
-
-
 //====================
 // 首页按钮
 //====================
+
 
 function goHome(){
 
@@ -1290,21 +1370,18 @@ window.location.href="students.html";
 
 
 
-
-
 //====================
 // 返回按钮
 //====================
 
+
 function goBack(){
 
 
-window.location.href="login.html";
+history.back();
 
 
 }
-
-
 
 
 
@@ -1314,35 +1391,5 @@ window.location.href="login.html";
 // 启动
 //====================
 
+
 checkLogin();
-//====================
-// 毕业名单分页
-//====================
-
-function nextGraduatePage(){
-
-
-if(graduatePage<graduateTotalPages){
-
-graduatePage++;
-
-showGraduated();
-
-}
-
-}
-
-
-
-function prevGraduatePage(){
-
-
-if(graduatePage>1){
-
-graduatePage--;
-
-showGraduated();
-
-}
-
-}
