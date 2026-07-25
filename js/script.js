@@ -31,11 +31,11 @@ let pageSize = 10;
 let totalPages = 1;
 
 
-//毕业名单分页
+let graduatePage=1;
 
-let graduatePage = 1;
+let graduateTotalPages=1;
 
-let graduateTotalPages = 1;
+let showGraduate=false;
 
 
 
@@ -297,6 +297,22 @@ loadStudents();
 function nextPage(){
 
 
+if(showGraduate){
+
+
+if(graduatePage<graduateTotalPages){
+
+graduatePage++;
+
+showGraduated(false);
+
+}
+
+
+}
+else{
+
+
 if(currentPage<totalPages){
 
 currentPage++;
@@ -308,9 +324,29 @@ loadStudents();
 
 }
 
+}
+
+
+
 
 
 function prevPage(){
+
+
+if(showGraduate){
+
+
+if(graduatePage>1){
+
+graduatePage--;
+
+showGraduated(false);
+
+}
+
+
+}
+else{
 
 
 if(currentPage>1){
@@ -324,10 +360,7 @@ loadStudents();
 
 }
 
-
-
-
-
+}
 
 
 //====================
@@ -995,7 +1028,8 @@ box.innerHTML=html;
 
 async function filterByYear(year){
 
-
+showGraduate=false;
+  
 let {data,error}=await db
 
 .from("students")
@@ -1134,11 +1168,20 @@ document.getElementById("totalInfo").innerHTML=
 //====================
 
 
-async function showGraduated(){
+async function showGraduated(resetPage=true){
 
-document.getElementById("graduatePageBox").style.display="block";
+showGraduate=true;
+
+
+document.getElementById("graduatePageBox")
+.style.display="block";
+
+
+if(resetPage){
+
 graduatePage=1;
 
+}
 let start =
 (graduatePage-1)*pageSize;
 
