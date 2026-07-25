@@ -1136,6 +1136,8 @@ document.getElementById("totalInfo").innerHTML=
 
 async function showGraduated(){
 
+document.getElementById("graduatePageBox").style.display="block";
+graduatePage=1;
 
 let start =
 (graduatePage-1)*pageSize;
@@ -1264,7 +1266,7 @@ document.getElementById("list").innerHTML=html;
 
 document.getElementById("pageInfo").innerHTML=
 
-`毕业名单 第 ${graduatePage}/${graduateTotalPages} 页`;
+`第 ${graduatePage}/${graduateTotalPages} 页`;
 
 
 
