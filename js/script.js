@@ -19,8 +19,14 @@ SUPABASE_KEY
 
 
 //====================
-// 全局变量
+// 当前模式
 //====================
+
+// students_chenggao = 成高
+// students_zikao = 自考
+
+let currentTable="students_chenggao";
+
 
 let editId=null;
 
@@ -34,20 +40,13 @@ let pageSize=10;
 let totalPages=1;
 
 
-
-//当前学生类型
-
-let currentType="成高";
-
-
-
-//毕业分页
-
 let graduatePage=1;
+
 
 let graduateTotalPages=1;
 
 
+let showGraduate=false;
 
 
 
@@ -61,52 +60,65 @@ async function checkLogin(){
 let {data}=await db.auth.getSession();
 
 
-
 if(!data.session){
-
 
 location.href="login.html";
 
-
 return;
 
-
 }
-
 
 
 loadStudents();
 
-
 }
 
 
 
 
-
 //====================
-// 切换学生类型
+// 切换成高
 //====================
 
+function loadAdult(){
 
-function changeType(type){
+
+currentTable="students_chenggao";
 
 
-currentType=type;
+showGraduate=false;
 
 
 currentPage=1;
 
 
-document.getElementById("typeTitle").innerHTML=
-type+"学生";
+loadStudents();
+
+
+}
+
+
+
+//====================
+// 切换自考
+//====================
+
+function loadSelf(){
+
+
+currentTable="students_zikao";
+
+
+showGraduate=false;
+
+
+currentPage=1;
 
 
 loadStudents();
 
 
 }
-
 
 
 
@@ -115,7 +127,6 @@ loadStudents();
 //====================
 // 加载学生
 //====================
-
 
 async function loadStudents(){
 
@@ -129,83 +140,79 @@ let start=
 (currentPage-1)*pageSize;
 
 
-
 let end=
 start+pageSize-1;
 
 
 
+let {data,count,error}=await db
 
-
-let query=db
-
-.from("students")
+.from(currentTable)
 
 .select("*",{count:"exact"})
 
-.eq("type",currentType)
 
-.or("status.is.null,status.eq.在读")
+.or(
+"status.is.null,status.eq.在读"
+)
 
-.order("id");
+.order("id")
 
 
-
+.range(start,end);
 
 
 
 if(keyword){
 
 
-query=query.or(
+let result=await db
 
-`name.ilike.%${keyword}%,school.ilike.%${keyword}%,phone.ilike.%${keyword}%,major.ilike.%${keyword}%,year.ilike.%${keyword}%`
+.from(currentTable)
 
-);
+.select("*",{count:"exact"})
+
+
+.or(
+
+`name.ilike.%${keyword}%,phone.ilike.%${keyword}%,major.ilike.%${keyword}%,year.ilike.%${keyword}%`
+
+)
+
+
+.range(start,end);
+
+
+
+data=result.data;
+
+count=result.count;
+
+error=result.error;
 
 
 }
-
-
-
-
-
-
-
-let {data,count,error}=
-
-await query.range(start,end);
 
 
 
 
 if(error){
 
-
 alert(error.message);
 
-
 return;
-
 
 }
 
 
 
 
-
-
 totalPages=
-
 Math.ceil(count/pageSize)||1;
 
 
 
-
-
 let html="";
-
-
 
 
 
@@ -216,9 +223,7 @@ html+=`
 
 <tr>
 
-
 <td>
-
 
 <span
 
@@ -226,12 +231,25 @@ class="name-text"
 
 onclick="showStudent(${s.id})">
 
-
 ${s.name||""}
-
 
 </span>
 
+</td>
+
+
+
+<td class="pc-col">
+
+${s.school||""}
+
+</td>
+
+
+
+<td>
+
+${s.phone||""}
 
 </td>
 
@@ -253,15 +271,7 @@ ${s.level||""}
 
 
 
-<td>
-
-${s.phone||""}
-
-</td>
-
-
-
-<td>
+<td class="pc-col">
 
 ${s.year||""}
 
@@ -269,8 +279,7 @@ ${s.year||""}
 
 
 
-<td>
-
+<td class="pc-col">
 
 <button onclick="editStudent(${s.id})">
 
@@ -279,20 +288,16 @@ ${s.year||""}
 </button>
 
 
-
 <button onclick="graduateStudent(${s.id})">
 
 毕业
 
 </button>
 
-
 </td>
 
 
-
 </tr>
-
 
 `;
 
@@ -300,12 +305,7 @@ ${s.year||""}
 
 
 
-
-
-
 document.getElementById("list").innerHTML=html;
-
-
 
 
 
@@ -315,11 +315,9 @@ document.getElementById("pageInfo").innerHTML=
 
 
 
-
-
 document.getElementById("totalInfo").innerHTML=
 
-`共 ${count} 人`;
+`总人数：${count}人`;
 
 
 
@@ -328,11 +326,9 @@ document.getElementById("totalInfo").innerHTML=
 
 
 
-
 //====================
 // 搜索
 //====================
-
 
 function searchStudent(){
 
@@ -348,11 +344,9 @@ loadStudents();
 
 
 
-
 //====================
-// 分页
+// 下一页
 //====================
-
 
 function nextPage(){
 
@@ -373,6 +367,11 @@ loadStudents();
 
 
 
+
+//====================
+// 上一页
+//====================
+
 function prevPage(){
 
 
@@ -390,77 +389,15 @@ loadStudents();
 
 }
 //====================
-// 打开添加学生
-//====================
-
-function openAdd(){
-
-
-editId=null;
-
-
-clearForm();
-
-
-document.getElementById("title").innerHTML=
-"添加学生";
-
-
-document.getElementById("modal").style.display=
-"block";
-
-
-}
-
-
-
-//====================
-// 关闭弹窗
-//====================
-
-function closeModal(){
-
-
-document.getElementById("modal")
-.style.display="none";
-
-
-}
-
-
-
-
-//====================
-// 清空表单
-//====================
-
-function clearForm(){
-
-
-document.querySelectorAll("#modal input")
-
-.forEach(i=>i.value="");
-
-
-}
-
-
-
-
-
-
-
-//====================
 // 编辑学生
 //====================
 
 async function editStudent(id){
 
 
-
 let {data,error}=await db
 
-.from("students")
+.from(currentTable)
 
 .select("*")
 
@@ -470,24 +407,17 @@ let {data,error}=await db
 
 
 
-
-
 if(error){
-
 
 alert(error.message);
 
-
 return;
-
 
 }
 
 
 
-
 editId=id;
-
 
 
 
@@ -503,23 +433,27 @@ editId=id;
 ].forEach(k=>{
 
 
-document.getElementById(k).value=
-data[k]||"";
+let el=document.getElementById(k);
+
+
+if(el){
+
+el.value=data[k]||"";
+
+}
 
 
 });
 
 
 
-
-
-document.getElementById("title")
-.innerHTML="编辑学生";
+document.getElementById("title").innerHTML=
+"编辑学生";
 
 
 
-document.getElementById("modal")
-.style.display="block";
+document.getElementById("modal").style.display=
+"block";
 
 
 }
@@ -528,18 +462,14 @@ document.getElementById("modal")
 
 
 
-
-
 //====================
-// 保存学生
+// 保存修改
 //====================
 
 async function saveStudent(){
 
 
-
 let obj={
-
 
 
 name:
@@ -567,12 +497,7 @@ document.getElementById("level").value,
 
 
 year:
-document.getElementById("year").value,
-
-
-type:
-currentType
-
+document.getElementById("year").value
 
 
 };
@@ -581,22 +506,9 @@ currentType
 
 
 
+let {error}=await db
 
-let result;
-
-
-
-
-
-if(editId){
-
-
-
-result=
-
-await db
-
-.from("students")
+.from(currentTable)
 
 .update(obj)
 
@@ -604,49 +516,18 @@ await db
 
 
 
-}else{
 
+if(error){
 
-
-result=
-
-await db
-
-.from("students")
-
-.insert({
-
-...obj,
-
-status:"在读"
-
-});
-
-
-
-}
-
-
-
-
-
-
-if(result.error){
-
-
-alert(result.error.message);
-
+alert(error.message);
 
 return;
 
-
 }
 
 
 
-
-alert("保存成功");
-
+alert("修改成功");
 
 
 closeModal();
@@ -663,18 +544,94 @@ loadStudents();
 
 
 
+//====================
+// 关闭编辑窗口
+//====================
+
+function closeModal(){
+
+
+document.getElementById("modal")
+.style.display="none";
+
+
+}
+
+
+
+
+
 
 //====================
-// 查看学生详情
+// 学生毕业
+//====================
+
+async function graduateStudent(id){
+
+
+let ok=confirm(
+"确定移动到毕业名单吗？"
+);
+
+
+
+if(!ok){
+
+return;
+
+}
+
+
+
+
+let {error}=await db
+
+.from(currentTable)
+
+.update({
+
+status:"毕业"
+
+})
+
+.eq("id",id);
+
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+
+
+alert("已进入毕业名单");
+
+
+loadStudents();
+
+
+}
+
+
+
+
+
+
+
+//====================
+// 查看详情
 //====================
 
 async function showStudent(id){
 
 
-
 let {data,error}=await db
 
-.from("students")
+.from(currentTable)
 
 .select("*")
 
@@ -685,15 +642,11 @@ let {data,error}=await db
 
 
 
-
 if(error){
-
 
 alert(error.message);
 
-
 return;
-
 
 }
 
@@ -701,39 +654,40 @@ return;
 
 
 
-
-document.getElementById("d_name")
-.innerHTML=data.name||"";
-
-
-
-document.getElementById("d_school")
-.innerHTML=data.school||"";
+document.getElementById("d_name").innerHTML=
+data.name||"";
 
 
 
-document.getElementById("d_idcard")
-.innerHTML=data.idcard||"";
+document.getElementById("d_school").innerHTML=
+data.school||"";
 
 
 
-document.getElementById("d_phone")
-.innerHTML=data.phone||"";
+document.getElementById("d_idcard").innerHTML=
+data.idcard||"";
 
 
 
-document.getElementById("d_major")
-.innerHTML=data.major||"";
+document.getElementById("d_phone").innerHTML=
+data.phone||"";
 
 
 
-document.getElementById("d_level")
-.innerHTML=data.level||"";
+document.getElementById("d_major").innerHTML=
+data.major||"";
 
 
 
-document.getElementById("d_year")
-.innerHTML=data.year||"";
+document.getElementById("d_level").innerHTML=
+data.level||"";
+
+
+
+document.getElementById("d_year").innerHTML=
+data.year||"";
+
+
 
 
 
@@ -760,74 +714,6 @@ document.getElementById("detailModal")
 
 
 
-
-
-
-
-//====================
-// 学生毕业
-//====================
-
-async function graduateStudent(id){
-
-
-
-let ok=confirm(
-
-"确定把该学生移入毕业名单吗？"
-
-);
-
-
-
-if(!ok){
-
-return;
-
-}
-
-
-
-
-
-let {error}=await db
-
-.from("students")
-
-.update({
-
-status:"毕业"
-
-})
-
-.eq("id",id);
-
-
-
-
-
-if(error){
-
-
-alert(error.message);
-
-
-return;
-
-
-}
-
-
-
-
-
-alert("已进入毕业名单");
-
-
-loadStudents();
-
-
-}
 //====================
 // Excel导入
 //====================
@@ -836,27 +722,23 @@ async function importExcel(){
 
 
 let file=
-document.getElementById("excelFile").files[0];
+document.getElementById("excelFile")
+.files[0];
 
 
 
 if(!file){
 
-
 alert("请选择Excel文件");
 
-
 return;
-
 
 }
 
 
 
 
-
 let reader=new FileReader();
-
 
 
 
@@ -868,7 +750,9 @@ let workbook=XLSX.read(
 
 new Uint8Array(e.target.result),
 
-{type:"array"}
+{
+type:"array"
+}
 
 );
 
@@ -876,25 +760,19 @@ new Uint8Array(e.target.result),
 
 
 let sheet=
-
 workbook.Sheets[
 workbook.SheetNames[0]
 ];
 
 
 
-
 let rows=
-
 XLSX.utils.sheet_to_json(sheet);
 
 
 
 
-
-
 let list=rows.map(r=>({
-
 
 
 
@@ -919,10 +797,6 @@ level:String(r["层次"]||""),
 year:String(r["入学时间"]||""),
 
 
-
-type:currentType,
-
-
 status:"在读"
 
 
@@ -936,10 +810,9 @@ status:"在读"
 
 let {error}=await db
 
-.from("students")
+.from(currentTable)
 
 .insert(list);
-
 
 
 
@@ -948,13 +821,10 @@ let {error}=await db
 if(error){
 
 
-
 alert(error.message);
 
 
-
 return;
-
 
 
 }
@@ -976,89 +846,55 @@ loadStudents();
 
 
 
-
-
 reader.readAsArrayBuffer(file);
 
 
-
 }
-
-
-
-
-
-
-
 //====================
 // Excel导出
 //====================
 
-
 async function exportExcel(){
-
 
 
 let {data,error}=await db
 
-.from("students")
+.from(currentTable)
 
 .select("*")
-
-.eq("type",currentType)
 
 .order("id");
 
 
 
-
-
 if(error){
-
 
 alert(error.message);
 
-
 return;
 
-
 }
-
-
-
 
 
 
 let list=data.map(s=>({
 
 
-
 姓名:s.name,
-
 
 学校:s.school,
 
-
 身份证号码:s.idcard,
-
 
 手机号:s.phone,
 
-
 专业:s.major,
-
 
 层次:s.level,
 
-
 入学时间:s.year,
 
-
-类型:s.type,
-
-
 状态:s.status||"在读"
-
 
 
 }));
@@ -1066,22 +902,13 @@ let list=data.map(s=>({
 
 
 
-
-
 let ws=
-
 XLSX.utils.json_to_sheet(list);
 
 
 
-
-
 let wb=
-
 XLSX.utils.book_new();
-
-
-
 
 
 
@@ -1097,22 +924,16 @@ ws,
 
 
 
-
-
-
 XLSX.writeFile(
 
 wb,
 
-currentType+"学生名单.xlsx"
+"学生名单.xlsx"
 
 );
 
 
-
 }
-
-
 
 
 
@@ -1124,9 +945,7 @@ currentType+"学生名单.xlsx"
 // 入学年份筛选
 //====================
 
-
 async function openYearFilter(){
-
 
 
 let box=
@@ -1134,11 +953,7 @@ document.getElementById("yearList");
 
 
 
-
-
-//再次点击关闭
-
-if(box.innerHTML.trim()!=""){
+if(box.innerHTML!=""){
 
 
 box.innerHTML="";
@@ -1146,37 +961,27 @@ box.innerHTML="";
 
 return;
 
-
 }
-
-
 
 
 
 
 let {data,error}=await db
 
-.from("students")
+.from(currentTable)
 
-.select("year")
-
-.eq("type",currentType);
-
+.select("year");
 
 
 
 
 if(error){
 
-
 alert(error.message);
-
 
 return;
 
-
 }
-
 
 
 
@@ -1198,7 +1003,6 @@ data
 
 
 
-
 years.sort((a,b)=>{
 
 return Number(b)-Number(a);
@@ -1208,20 +1012,14 @@ return Number(b)-Number(a);
 
 
 
-
-
 let html="";
-
-
 
 
 
 years.forEach(y=>{
 
 
-
 html+=`
-
 
 <button
 
@@ -1233,36 +1031,16 @@ ${y}
 
 </button>
 
-
 `;
 
-
-
 });
-
-
-
-
 
 
 
 box.innerHTML=html;
 
 
-
-
-//向上弹出
-
-box.style.bottom="45px";
-
-
-
 }
-
-
-
-
-
 
 
 
@@ -1274,18 +1052,15 @@ box.style.bottom="45px";
 // 包含毕业学生
 //====================
 
-
 async function filterByYear(year){
 
 
 
 let {data,error}=await db
 
-.from("students")
+.from(currentTable)
 
 .select("*")
-
-.eq("type",currentType)
 
 .eq("year",year)
 
@@ -1297,19 +1072,11 @@ let {data,error}=await db
 
 if(error){
 
-
-
 alert(error.message);
-
-
 
 return;
 
-
-
 }
-
-
 
 
 
@@ -1318,15 +1085,10 @@ let html="";
 
 
 
-
-
-
 data.forEach(s=>{
 
 
-
 html+=`
-
 
 <tr>
 
@@ -1340,12 +1102,26 @@ class="name-text"
 
 onclick="showStudent(${s.id})">
 
-
 ${s.name||""}
-
 
 </span>
 
+
+</td>
+
+
+
+<td class="pc-col">
+
+${s.school||""}
+
+</td>
+
+
+
+<td>
+
+${s.phone||""}
 
 </td>
 
@@ -1367,24 +1143,14 @@ ${s.level||""}
 
 
 
-<td>
-
-${s.phone||""}
-
-</td>
-
-
-
-<td>
+<td class="pc-col">
 
 ${s.year||""}
 
 </td>
 
 
-
-<td>
-
+<td class="pc-col">
 
 <button onclick="editStudent(${s.id})">
 
@@ -1396,14 +1162,9 @@ ${s.year||""}
 </td>
 
 
-
 </tr>
 
-
-
 `;
-
-
 
 });
 
@@ -1411,21 +1172,14 @@ ${s.year||""}
 
 
 
-
-
-document.getElementById("list").innerHTML=html;
-
-
-
+document.getElementById("list").innerHTML=
+html;
 
 
 
 document.getElementById("pageInfo").innerHTML=
 
-`${year}年 共${data.length}人`;
-
-
-
+`筛选：${year} 共 ${data.length} 人`;
 
 
 
@@ -1436,13 +1190,251 @@ document.getElementById("totalInfo").innerHTML=
 
 
 
-
-
-//选择后自动关闭年份框
+//选择年份以后自动关闭
 
 document.getElementById("yearList")
 .innerHTML="";
 
 
+}
+
+
+
+
+
+
+
+
+//====================
+// 已毕业名单
+//====================
+
+async function showGraduated(reset=true){
+
+
+showGraduate=true;
+
+
+
+if(reset){
+
+graduatePage=1;
 
 }
+
+
+
+let start=
+(graduatePage-1)*pageSize;
+
+
+let end=
+start+pageSize-1;
+
+
+
+
+
+let {data,count,error}=await db
+
+.from(currentTable)
+
+.select("*",{count:"exact"})
+
+.eq("status","毕业")
+
+.order("id")
+
+.range(start,end);
+
+
+
+
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+
+
+
+graduateTotalPages=
+Math.ceil(count/pageSize)||1;
+
+
+
+
+
+let html="";
+
+
+
+data.forEach(s=>{
+
+
+html+=`
+
+<tr>
+
+
+<td>
+
+<span
+
+class="name-text"
+
+onclick="showStudent(${s.id})">
+
+${s.name||""}
+
+</span>
+
+
+</td>
+
+
+
+<td class="pc-col">
+
+${s.school||""}
+
+</td>
+
+
+
+<td>
+
+${s.phone||""}
+
+</td>
+
+
+
+<td>
+
+${s.major||""}
+
+</td>
+
+
+
+<td>
+
+${s.level||""}
+
+</td>
+
+
+
+<td class="pc-col">
+
+${s.year||""}
+
+</td>
+
+
+</tr>
+
+`;
+
+});
+
+
+
+
+
+document.getElementById("list")
+.innerHTML=html;
+
+
+
+
+document.getElementById("pageInfo")
+.innerHTML=
+
+`毕业名单 第 ${graduatePage}/${graduateTotalPages} 页`;
+
+
+
+
+
+document.getElementById("totalInfo")
+.innerHTML=
+
+`毕业人数：${count}人`;
+
+
+
+}
+
+
+
+
+
+
+
+//====================
+// 退出登录
+//====================
+
+async function logout(){
+
+
+await db.auth.signOut();
+
+
+location.href="login.html";
+
+
+}
+
+
+
+
+
+
+//====================
+// 首页
+//====================
+
+function goHome(){
+
+
+location.href="students_chenggao.html";
+
+
+}
+
+
+
+
+
+
+//====================
+// 返回
+//====================
+
+function goBack(){
+
+
+history.back();
+
+
+}
+
+
+
+
+
+
+
+//====================
+// 启动
+//====================
+
+checkLogin();
