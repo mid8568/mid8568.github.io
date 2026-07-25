@@ -26,7 +26,7 @@ let editId=null;
 
 let currentPage=1;
 
-let pageSize=50;
+let pageSize=10;
 
 let totalPages=1;
 
