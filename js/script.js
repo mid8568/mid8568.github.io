@@ -317,36 +317,30 @@ ${s.major||""}
 
 </td>
 
-
-
 <td>
-
+${
+currentTable=="students_chenggao"
+?
+`
+<td>
 ${s.level||""}
-
 </td>
 
-
-
 <td class="pc-col">
-
 ${s.year||""}
-
 </td>
 
-
-
 <td class="pc-col">
-
 
 <button onclick="graduateStudent(${s.id})">
-
 毕业
-
 </button>
 
-
 </td>
-
+`
+:
+""
+}
 
 
 </tr>
