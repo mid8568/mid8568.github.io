@@ -1519,7 +1519,100 @@ document.getElementById("yearFilter").innerHTML=html;
 
 }
 
+//====================
+// 成高展开年份
+//====================
 
+async function toggleChenggao(){
+
+
+currentTable="students_chenggao";
+
+
+document.getElementById("pageTitle").innerHTML=
+"成高学生";
+
+
+let box=document.getElementById("chenggaoYears");
+
+
+// 已展开就关闭
+
+if(box.innerHTML!=""){
+
+box.innerHTML="";
+
+return;
+
+}
+
+
+
+let {data,error}=await db
+
+.from("students_chenggao")
+
+.select("year");
+
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+
+
+let years=[
+
+...new Set(
+
+data
+
+.map(s=>s.year)
+
+.filter(Boolean)
+
+)
+
+];
+
+
+
+years.sort((a,b)=>Number(b)-Number(a));
+
+
+
+let html="";
+
+
+years.forEach(y=>{
+
+
+html+=`
+
+<li onclick="filterByYear('${y}')">
+
+${y}级
+
+</li>
+
+`;
+
+});
+
+
+box.innerHTML=html;
+
+
+
+loadStudents();
+
+
+}
 
 
 
