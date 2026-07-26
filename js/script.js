@@ -504,11 +504,19 @@ ${s.year||""}
 
 <td class="pc-col">
 
+<td class="pc-col">
+
+${
+s.status=="毕业"
+?
+""
+:
+`
 <button onclick="graduateStudent(${s.id})">
-
 毕业
-
 </button>
+`
+}
 
 </td>
 
@@ -1220,19 +1228,17 @@ loadStudents();
 async function filterByYear(year){
 
 
-
-let {data,error}=await db
+let query=db
 
 .from(currentTable)
 
 .select("*")
 
-.eq("year",year)
-
-.order("id");
+.eq("year",year);
 
 
 
+let {data,error}=await query.order("id");
 
 if(error){
 
@@ -1242,24 +1248,15 @@ return;
 
 }
 
-
-
-
-
 let html="";
-
-
-
 
 
 data.forEach(s=>{
 
 
-
 html+=`
 
 <tr>
-
 
 
 ${
@@ -1286,8 +1283,6 @@ ${s.idno||""}
 }
 
 
-
-
 <td>
 
 <span
@@ -1301,8 +1296,6 @@ ${s.name||""}
 </span>
 
 </td>
-
-
 
 
 ${
@@ -1322,15 +1315,11 @@ ${s.school||""}
 }
 
 
-
-
 <td class="pc-col">
 
 ${s.idcard||""}
 
 </td>
-
-
 
 
 <td>
@@ -1340,15 +1329,11 @@ ${s.phone||""}
 </td>
 
 
-
-
 <td>
 
 ${s.major||""}
 
 </td>
-
-
 
 
 ${
@@ -1361,7 +1346,6 @@ currentTable=="students_chenggao"
 ${s.level||""}
 
 </td>
-
 
 <td class="pc-col">
 
@@ -1395,8 +1379,6 @@ ${s.year||""}
 
 
 
-
-
 document.getElementById("list").innerHTML=html;
 
 
@@ -1406,20 +1388,15 @@ document.getElementById("pageInfo").innerHTML=
 `筛选：${year} 共 ${data.length} 人`;
 
 
-
 document.getElementById("totalInfo").innerHTML=
 
 `总人数：${data.length}人`;
 
 
-
 document.getElementById("yearList").innerHTML="";
 
 
-
 }
-
-
 
 
 
@@ -1429,24 +1406,16 @@ document.getElementById("yearList").innerHTML="";
 
 async function toggleChenggao(){
 
-
-
 currentTable="students_chenggao";
-
-
 
 document.getElementById("pageTitle").innerHTML=
 
 "成高学生";
 
 
-
 let box=
 
 document.getElementById("chenggaoYears");
-
-
-
 
 
 if(box.innerHTML!=""){
@@ -1460,17 +1429,11 @@ return;
 
 }
 
-
-
-
 let {data,error}=await db
 
 .from("students_chenggao")
 
 .select("year");
-
-
-
 
 if(error){
 
@@ -1479,9 +1442,6 @@ alert(error.message);
 return;
 
 }
-
-
-
 
 let years=[
 
@@ -1497,22 +1457,11 @@ data
 
 ];
 
-
-
-
-
 years.sort((a,b)=>Number(b)-Number(a));
-
-
-
-
 
 let html="";
 
-
-
 years.forEach(y=>{
-
 
 html+=`
 
@@ -1528,22 +1477,11 @@ ${y}级
 });
 
 
-
-
 box.innerHTML=html;
-
-
 
 loadStudents();
 
-
-
 }
-
-
-
-
-
 
 
 //====================
@@ -1552,16 +1490,11 @@ loadStudents();
 
 async function showYearList(){
 
-
-
 let {data,error}=await db
 
 .from(currentTable)
 
 .select("year");
-
-
-
 
 if(error){
 
@@ -1570,10 +1503,6 @@ alert(error.message);
 return;
 
 }
-
-
-
-
 
 let years=[
 
@@ -1590,19 +1519,12 @@ data
 ];
 
 
-
-
 years.sort((a,b)=>Number(b)-Number(a));
-
-
 
 
 let html="";
 
-
-
 years.forEach(y=>{
-
 
 html+=`
 
@@ -1619,17 +1541,9 @@ ${y}
 
 });
 
-
-
-
 document.getElementById("yearFilter").innerHTML=html;
 
-
-
 }
-
-
-
 
 
 //====================
@@ -1639,7 +1553,6 @@ document.getElementById("yearFilter").innerHTML=html;
 async function showGraduated(reset=true){
 
 
-
 if(reset){
 
 graduatePage=1;
@@ -1647,21 +1560,13 @@ graduatePage=1;
 }
 
 
-
-
-
 let start=
 
 (graduatePage-1)*pageSize;
 
-
-
 let end=
 
 start+pageSize-1;
-
-
-
 
 
 let {data,count,error}=await db
@@ -1676,10 +1581,6 @@ let {data,count,error}=await db
 
 .range(start,end);
 
-
-
-
-
 if(error){
 
 alert(error.message);
@@ -1689,33 +1590,19 @@ return;
 }
 
 
-
-
-
 graduateTotalPages=
 
 Math.ceil(count/pageSize)||1;
 
-
-
-
-
 let html="";
 
-
-
-
-
 data.forEach(s=>{
-
 
 html+=`
 
 <tr>
 
-
 <td>
-
 
 <span
 
@@ -1727,10 +1614,7 @@ ${s.name||""}
 
 </span>
 
-
 </td>
-
-
 
 <td class="pc-col">
 
@@ -1739,14 +1623,11 @@ ${s.school||""}
 </td>
 
 
-
 <td class="pc-col">
 
 ${s.idcard||""}
 
 </td>
-
-
 
 <td>
 
@@ -1754,15 +1635,11 @@ ${s.phone||""}
 
 </td>
 
-
-
 <td>
 
 ${s.major||""}
 
 </td>
-
-
 
 <td>
 
@@ -1770,15 +1647,17 @@ ${s.level||""}
 
 </td>
 
+<td>
 
+${s.status||"在读"}
+
+</td>
 
 <td class="pc-col">
 
 ${s.year||""}
 
 </td>
-
-
 
 </tr>
 
@@ -1787,19 +1666,11 @@ ${s.year||""}
 });
 
 
-
-
-
-
 document.getElementById("list").innerHTML=html;
-
-
 
 document.getElementById("pageInfo").innerHTML=
 
 `毕业名单 第 ${graduatePage}/${graduateTotalPages} 页`;
-
-
 
 document.getElementById("totalInfo").innerHTML=
 
@@ -1810,32 +1681,17 @@ document.getElementById("totalInfo").innerHTML=
 }
 
 
-
-
-
 //====================
 // 退出登录
 //====================
 
 async function logout(){
 
-
-
 await db.auth.signOut();
-
-
 
 location.href="login.html";
 
-
-
 }
-
-
-
-
-
-
 
 //====================
 // 首页
@@ -1849,27 +1705,15 @@ location.href="students_chenggao.html";
 
 }
 
-
-
-
-
 //====================
 // 返回
 //====================
 
 function goBack(){
 
-
 history.back();
 
-
 }
-
-
-
-
-
-
 
 //====================
 // 启动
