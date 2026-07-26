@@ -206,6 +206,9 @@ head.innerHTML=`
 层次
 </th>
 
+<th>
+层次
+</th>
 
 <th class="pc-col">
 入学时间
@@ -314,11 +317,10 @@ let query=db
 
 if(currentTable=="students_chenggao"){
 
-
-query=query.or(
-"status.is.null,status.eq.在读"
+query=query.eq(
+"status",
+"在读"
 );
-
 
 }
 
@@ -487,6 +489,11 @@ ${s.level||""}
 
 </td>
 
+<td>
+
+${s.status||"在读"}
+
+</td>
 
 <td class="pc-col">
 
