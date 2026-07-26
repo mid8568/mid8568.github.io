@@ -844,10 +844,10 @@ if(currentTable=="students_zikao"){
 list=rows.map(r=>({
 
 
-oldidno:String(r["原身份证号"]||""),
+oldidno:String(r["旧准考证"]||""),
 
 
-idno:String(r["身份证号"]||""),
+idno:String(r["准考证"]||""),
 
 
 name:String(r["姓名"]||""),
