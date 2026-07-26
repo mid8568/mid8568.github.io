@@ -241,7 +241,7 @@ if(keyword){
 
 query=query.or(
 
-`name.ilike.%${keyword}%,phone.ilike.%${keyword}%,major.ilike.%${keyword}%`
+`name.ilike.%${keyword}%,idcard.ilike.%${keyword}%,phone.ilike.%${keyword}%`
 
 );
 
