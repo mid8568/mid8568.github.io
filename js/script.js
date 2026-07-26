@@ -169,7 +169,7 @@ async function loadStudents(){
 
 
 showGraduate=false;
-
+changeTableHead();
 
 
 let keyword=
@@ -1674,7 +1674,26 @@ loadStudents();
 
 }
 
+function changeTableHead(){
 
+let isChenggao =
+currentTable=="students_chenggao";
+
+
+document.querySelectorAll(".chenggao-only")
+.forEach(el=>{
+
+el.style.display=
+isChenggao
+?
+"table-cell"
+:
+"none";
+
+});
+
+
+}
 
 //====================
 // 返回
