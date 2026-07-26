@@ -376,9 +376,6 @@ Math.ceil(count/pageSize)||1;
 let html="";
 
 
-
-
-
 data.forEach(s=>{
 
 
@@ -387,26 +384,28 @@ html+=`
 <tr>
 
 
-
 ${
 currentTable=="students_zikao"
 ?
 `
 
 <td class="pc-col">
+
 ${s.oldidno||""}
+
 </td>
 
 
 <td class="pc-col">
+
 ${s.idno||""}
+
 </td>
 
 `
 :
 ""
 }
-
 
 
 
@@ -434,7 +433,9 @@ currentTable=="students_chenggao"
 `
 
 <td class="pc-col">
+
 ${s.school||""}
+
 </td>
 
 `
@@ -454,11 +455,13 @@ ${s.idcard||""}
 
 
 
+
 <td>
 
 ${s.phone||""}
 
 </td>
+
 
 
 
@@ -500,7 +503,6 @@ ${s.year||""}
 
 </button>
 
-
 </td>
 
 `
@@ -515,7 +517,6 @@ ${s.year||""}
 `;
 
 });
-
 
 
 
