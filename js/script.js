@@ -1440,7 +1440,82 @@ location.href="students_chenggao.html";
 
 
 }
+//====================
+// 显示入学时间
+//====================
 
+async function showYearList(){
+
+
+let {data,error}=await db
+
+.from(currentTable)
+
+.select("year");
+
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+
+
+let years=[
+
+...new Set(
+
+data
+
+.map(s=>s.year)
+
+.filter(Boolean)
+
+)
+
+];
+
+
+
+years.sort((a,b)=>{
+
+return Number(b)-Number(a);
+
+});
+
+
+
+let html="";
+
+
+years.forEach(y=>{
+
+
+html+=`
+
+<button
+
+onclick="filterByYear('${y}')">
+
+${y}
+
+</button>
+
+`;
+
+
+});
+
+
+
+document.getElementById("yearFilter").innerHTML=html;
+
+
+}
 
 
 
