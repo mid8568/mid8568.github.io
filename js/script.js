@@ -83,7 +83,6 @@ document.getElementById("pageTitle").innerHTML=
 
 loadStudents();
 
-openYearFilter();
 }
 //====================
 // 登录检查
@@ -1059,7 +1058,6 @@ ${y}
 
 
 box.innerHTML=html;
-
 
 
 }
