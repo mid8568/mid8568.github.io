@@ -862,11 +862,6 @@ phone:String(r["手机号"]||""),
 major:String(r["专业"]||""),
 
 
-enrollment_time:
-r["入学时间"]||null
-
-
-
 }));
 
 
