@@ -53,6 +53,7 @@ showGraduate=false;
 
 currentPage=1;
 
+document.getElementById("yearList").innerHTML="";
 
 if(type=="成高"){
 
@@ -82,7 +83,7 @@ document.getElementById("pageTitle").innerHTML=
 
 loadStudents();
 
-
+openYearFilter();
 }
 //====================
 // 登录检查
@@ -377,6 +378,7 @@ function searchStudent(){
 currentPage=1;
 
 loadStudents();
+
 
 }
 
