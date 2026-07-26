@@ -207,7 +207,7 @@ head.innerHTML=`
 </th>
 
 <th>
-层次
+状态
 </th>
 
 <th class="pc-col">
