@@ -489,11 +489,13 @@ ${s.level||""}
 
 </td>
 
+
 <td>
 
 ${s.status||"在读"}
 
 </td>
+
 
 <td class="pc-col">
 
@@ -501,11 +503,7 @@ ${s.year||""}
 
 </td>
 
-
 <td class="pc-col">
-
-<td class="pc-col">
-
 ${
 s.status=="毕业"
 ?
@@ -524,14 +522,6 @@ s.status=="毕业"
 :
 ""
 }
-
-
-
-</tr>
-
-`;
-
-});
 
 
 
@@ -1227,7 +1217,7 @@ loadStudents();
 
 async function filterByYear(year){
 
-
+changeTableHead();
 let query=db
 
 .from(currentTable)
