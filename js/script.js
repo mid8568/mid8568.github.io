@@ -239,11 +239,31 @@ db
 if(keyword){
 
 
+if(currentTable=="students_chenggao"){
+
+
 query=query.or(
 
-`name.ilike.%${keyword}%,idcard.ilike.%${keyword}%,phone.ilike.%${keyword}%`
+`name.ilike.%${keyword}%,phone.ilike.%${keyword}%,idcard.ilike.%${keyword}%`
 
 );
+
+
+}
+
+
+
+if(currentTable=="students_zikao"){
+
+
+query=query.or(
+
+`name.ilike.%${keyword}%,phone.ilike.%${keyword}%,idcard.ilike.%${keyword}%`
+
+);
+
+
+}
 
 
 }
