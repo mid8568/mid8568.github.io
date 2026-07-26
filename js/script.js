@@ -1149,21 +1149,6 @@ wb,
 async function graduateStudent(id){
 
 
-
-if(currentTable=="students_zikao"){
-
-
-alert("自考暂不支持毕业管理");
-
-
-return;
-
-
-}
-
-
-
-
 let ok=confirm(
 
 "确定移动到毕业名单吗？"
@@ -1645,23 +1630,6 @@ document.getElementById("yearFilter").innerHTML=html;
 //====================
 
 async function showGraduated(reset=true){
-
-
-
-if(currentTable=="students_zikao"){
-
-
-alert("自考暂无毕业名单");
-
-
-return;
-
-
-}
-
-
-
-showGraduate=true;
 
 
 
