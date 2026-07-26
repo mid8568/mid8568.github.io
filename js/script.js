@@ -720,28 +720,9 @@ document.getElementById("detailModal")
 
 async function importExcel(){
 
-let typeName =
-currentTable=="students_chenggao"
-?
-"成高"
-:
-"自考";
 
-
-let ok=confirm(
-"当前导入到："+typeName+"学生\n确定继续吗？"
-);
-
-
-if(!ok){
-
-return;
-
-}
-
-let file=
+let file =
 document.getElementById("excelFile").files[0];
-
 
 
 if(!file){
@@ -773,22 +754,32 @@ type:"array"
 
 
 
-let sheet=
-
+let sheet =
 workbook.Sheets[
 workbook.SheetNames[0]
 ];
 
 
 
-let rows=
-
+let rows =
 XLSX.utils.sheet_to_json(sheet);
 
 
 
 
-let list=rows.map(r=>({
+let list=[];
+
+
+
+//====================
+// 成高导入
+//====================
+
+if(currentTable=="students_chenggao"){
+
+
+
+list=rows.map(r=>({
 
 
 name:String(r["姓名"]||""),
@@ -815,7 +806,54 @@ year:String(r["入学时间"]||""),
 status:"在读"
 
 
+
 }));
+
+
+
+}
+
+
+
+//====================
+// 自考导入
+//====================
+
+if(currentTable=="students_zikao"){
+
+
+
+list=rows.map(r=>({
+
+
+oldidno:String(r["原身份证号"]||""),
+
+
+idno:String(r["身份证号"]||""),
+
+
+name:String(r["姓名"]||""),
+
+
+idcard:String(r["身份证号码"]||""),
+
+
+phone:String(r["手机号"]||""),
+
+
+major:String(r["专业"]||""),
+
+
+enrollment_time:
+r["入学时间"]||null
+
+
+
+}));
+
+
+
+}
 
 
 
@@ -826,7 +864,6 @@ let {error}=await db
 .from(currentTable)
 
 .insert(list);
-
 
 
 
@@ -841,7 +878,13 @@ return;
 
 
 alert(
-typeName+"导入成功："+list.length+"条"
+(currentTable=="students_chenggao"
+?
+"成高"
+:
+"自考")
++
+"导入成功："+list.length+"条"
 );
 
 
@@ -858,12 +901,6 @@ reader.readAsArrayBuffer(file);
 
 
 }
-
-
-
-
-
-
 
 //====================
 // Excel导出
