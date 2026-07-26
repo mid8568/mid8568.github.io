@@ -1372,10 +1372,7 @@ html+=`
 
 <td>
 
-<span
-
-class="name-text"
-
+<span class="name-text"
 onclick="showStudent(${s.id})">
 
 ${s.name||""}
@@ -1386,11 +1383,42 @@ ${s.name||""}
 
 
 
+${
+currentTable=="students_zikao"
+?
+`
+<td class="pc-col">
+
+${s.oldidno||""}
+
+</td>
+
+
+<td class="pc-col">
+
+${s.idno||""}
+
+</td>
+`
+:
+""
+}
+
+
+
+${
+currentTable=="students_chenggao"
+?
+`
 <td class="pc-col">
 
 ${s.school||""}
 
 </td>
+`
+:
+""
+}
 
 
 
@@ -1418,6 +1446,10 @@ ${s.major||""}
 
 
 
+${
+currentTable=="students_chenggao"
+?
+`
 <td>
 
 ${s.level||""}
@@ -1425,12 +1457,26 @@ ${s.level||""}
 </td>
 
 
-
 <td class="pc-col">
 
 ${s.year||""}
 
 </td>
+
+
+<td class="pc-col">
+
+<button onclick="graduateStudent(${s.id})">
+
+毕业
+
+</button>
+
+</td>
+`
+:
+""
+}
 
 
 
