@@ -1042,4 +1042,60 @@ font-size:13px;
 
 
 }  
+#yearList{
 
+
+background:white;
+
+
+padding:10px;
+
+
+margin-bottom:15px;
+
+
+border-radius:5px;
+
+
+/* 年份竖排 */
+
+display:flex;
+
+flex-direction:column;
+
+
+width:120px;
+
+
+}
+#yearList button{
+
+
+background:#3c8dbc;
+
+
+color:white;
+
+
+border:none;
+
+
+padding:8px 18px;
+
+
+margin-bottom:8px;
+
+
+border-radius:4px;
+
+
+cursor:pointer;
+
+
+font-size:14px;
+
+
+width:100%;
+
+
+}
