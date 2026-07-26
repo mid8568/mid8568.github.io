@@ -191,13 +191,24 @@ let query=db
 
 .from(currentTable)
 
-.select("*",{count:"exact"})
+.select("*",{count:"exact"});
 
-.or(
+
+
+//只有成高查询status
+
+if(currentTable=="students_chenggao"){
+
+
+query=query.or(
 "status.is.null,status.eq.在读"
-)
+);
 
-.order("id");
+
+}
+
+
+query=query.order("id");
 
 
 
@@ -569,7 +580,14 @@ document.getElementById("modal")
 
 async function graduateStudent(id){
 
+if(currentTable=="students_zikao"){
 
+alert("自考暂不支持毕业管理");
+
+return;
+
+}
+  
 let ok=confirm(
 "确定移动到毕业名单吗？"
 );
@@ -1169,7 +1187,13 @@ ${s.name||""}
 
 <td class="pc-col">
 
-${s.school||""}
+${
+currentTable=="students_chenggao"
+?
+s.school||""
+:
+""
+}
 
 </td>
 
@@ -1201,7 +1225,13 @@ ${s.major||""}
 
 <td>
 
-${s.level||""}
+${
+currentTable=="students_chenggao"
+?
+s.level||""
+:
+""
+}
 
 </td>
 
@@ -1209,7 +1239,13 @@ ${s.level||""}
 
 <td class="pc-col">
 
-${s.year||""}
+${
+currentTable=="students_chenggao"
+?
+s.year||""
+:
+""
+}
 
 </td>
 
