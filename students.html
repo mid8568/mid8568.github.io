@@ -44,6 +44,7 @@
 
 超级管理员
 
+
 <button onclick="logout()">
 
 退出登录
@@ -88,13 +89,19 @@
 📚 成高学生
 
 </li>
+
+
 <ul id="chenggaoYears"></ul>
+
+
 
 <li onclick="loadCategory('自考')">
 
 📖 自考学生
 
 </li>
+
+
 
 
 <li onclick="showGraduated()">
@@ -104,11 +111,13 @@
 </li>
 
 
+
 <li>
 
 📊 数据统计
 
 </li>
+
 
 
 <li>
@@ -129,8 +138,8 @@
 
 
 
-<!-- 右侧内容 -->
 
+<!-- 右侧内容 -->
 
 <section class="content-area">
 
@@ -138,21 +147,32 @@
 
 
 
-<!-- 搜索工具 -->
+<!-- 搜索区域 -->
 
 
 <div class="search-panel">
 
 
+
 <input
+
 id="search"
-placeholder="搜索姓名/手机号/专业/年份"
+
+placeholder="搜索姓名/手机号/专业"
+
 >
 
 
+
+
 <button onclick="searchStudent()">
+
 搜索
+
 </button>
+
+
+
 
 
 <input
@@ -166,18 +186,28 @@ accept=".xlsx,.xls"
 >
 
 
+
+
 <button onclick="importExcel()">
+
 导入
+
 </button>
+
+
 
 
 
 <button onclick="exportExcel()">
+
 导出
+
 </button>
 
 
+
 </div>
+
 
 
 
@@ -191,14 +221,20 @@ accept=".xlsx,.xls"
 
 </h2>
 
-<div id="yearList"></div>
+
+
+
+<div id="yearList">
+
+</div>
 
 
 
 
 
-<!-- 表格 -->
 
+
+<!-- 学生表格 -->
 
 <div class="table-panel">
 
@@ -206,47 +242,12 @@ accept=".xlsx,.xls"
 <table>
 
 
-<thead>
-
-
-<tr>
-
-
-<th>姓名</th>
-<th class="pc-col zikao-col">
-旧准考证
-</th>
-
-<th class="pc-col zikao-col">
-准考证
-</th>
-<th class="pc-col chenggao-only">
-学校
-</th>
-
-<th class="pc-col">身份证</th>
-
-<th>手机号</th>
-
-<th>专业</th>
-
-<th class="pc-col chenggao-only">
-层次
-</th>
-
-<th class="pc-col chenggao-only">
-入学时间
-</th>
-
-<th class="pc-col chenggao-only">
-操作
-</th>
-
-
-</tr>
+<thead id="tableHead">
 
 
 </thead>
+
+
 
 
 
@@ -258,6 +259,7 @@ accept=".xlsx,.xls"
 
 
 </table>
+
 
 
 </div>
@@ -276,11 +278,13 @@ accept=".xlsx,.xls"
 <div class="pagination">
 
 
+
 <button onclick="prevPage()">
 
 上一页
 
 </button>
+
 
 
 
@@ -292,11 +296,13 @@ accept=".xlsx,.xls"
 
 
 
+
 <button onclick="nextPage()">
 
 下一页
 
 </button>
+
 
 
 
@@ -309,6 +315,7 @@ accept=".xlsx,.xls"
 
 
 </div>
+
 
 
 
@@ -326,13 +333,16 @@ accept=".xlsx,.xls"
 
 
 
+
 <!-- 学生详情弹窗 -->
 
 
 <div class="modal" id="detailModal">
 
 
+
 <div class="modal-box">
+
 
 
 <h3>
@@ -342,50 +352,171 @@ accept=".xlsx,.xls"
 </h3>
 
 
+
+
+
 <p>
+
 姓名：
+
 <span id="d_name"></span>
+
 </p>
 
 
+
+
+
+
 <p>
+
 学校：
+
 <span id="d_school"></span>
+
 </p>
 
+
+
+
+
 <p>
+
 身份证：
+
 <span id="d_idcard"></span>
+
 </p>
 
+
+
+
+
 <p>
+
 手机号：
+
 <span id="d_phone"></span>
+
 </p>
 
 
 
+
+
+
 <p>
+
 专业：
+
 <span id="d_major"></span>
+
 </p>
 
 
+
+
+
+
 <p>
+
 层次：
+
 <span id="d_level"></span>
+
 </p>
+
+
+
 
 
 
 <p>
+
 入学时间：
+
 <span id="d_year"></span>
+
 </p>
+
+
+
 
 
 
 <button onclick="closeDetail()">
+
+关闭
+
+</button>
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- 编辑弹窗 -->
+
+<div class="modal" id="modal">
+
+
+<div class="modal-box">
+
+
+<h3 id="title">
+
+编辑学生
+
+</h3>
+
+
+
+
+<input id="name" placeholder="姓名">
+
+
+<input id="school" placeholder="学校">
+
+
+<input id="idcard" placeholder="身份证">
+
+
+<input id="phone" placeholder="手机号">
+
+
+<input id="major" placeholder="专业">
+
+
+<input id="level" placeholder="层次">
+
+
+<input id="year" placeholder="入学时间">
+
+
+
+
+<button onclick="saveStudent()">
+
+保存
+
+</button>
+
+
+
+
+<button onclick="closeModal()">
 
 关闭
 
@@ -401,7 +532,13 @@ accept=".xlsx,.xls"
 
 
 
+
+
+
+
+
 <script src="js/script.js"></script>
+
 
 
 </body>
