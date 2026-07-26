@@ -238,14 +238,14 @@ db
 
 if(keyword){
 
+let key = `%${keyword}%`;
+
 
 if(currentTable=="students_chenggao"){
 
 
 query=query.or(
-
-`name.ilike.%${keyword}%,phone.ilike.%${keyword}%,idcard.ilike.%${keyword}%`
-
+`name.ilike.${key},phone.ilike.${key},idcard.ilike.${key}`
 );
 
 
@@ -257,9 +257,7 @@ if(currentTable=="students_zikao"){
 
 
 query=query.or(
-
-`name.ilike.%${keyword}%,phone.ilike.%${keyword}%,idcard.ilike.%${keyword}%`
-
+`name.ilike.${key},phone.ilike.${key},idcard.ilike.${key},oldidno.ilike.${key},idno.ilike.${key}`
 );
 
 
