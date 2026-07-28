@@ -473,16 +473,6 @@ margin:0 auto;
 ===================== */
 
 
-/* ID */
-
-.table-panel th:nth-child(1),
-.table-panel td:nth-child(1){
-
-width:100px;
-
-}
-
-
 /* 姓名 */
 
 .table-panel th:nth-child(2),
@@ -1024,39 +1014,34 @@ overflow-x:auto;
 
 
 
-.table-panel table{
+/* 手机端隐藏字段 */
+
+.table-panel th:nth-child(2),
+.table-panel td:nth-child(2),
 
 
-min-width:600px;
+.table-panel th:nth-child(7),
+.table-panel td:nth-child(7),
 
-
-}
-
-/* 手机隐藏多余列 */
-
-
-.table-panel th:nth-child(1),
-.table-panel td:nth-child(1),
-
-.table-panel th:nth-child(3),
-.table-panel td:nth-child(3),
-
-.table-panel th:nth-child(4),
-.table-panel td:nth-child(4),
 
 .table-panel th:nth-child(8),
-.table-panel td:nth-child(8){
+.table-panel td:nth-child(8),
+
+
+.table-panel th:nth-child(9),
+.table-panel td:nth-child(9){
 
 display:none;
 
 }
 
 
-/* 手机调整剩余列 */
+/* 手机端表格优化 */
 
 .table-panel table{
 
-min-width:600px;
+width:100%;
+min-width:0;
 
 }
 
@@ -1064,12 +1049,11 @@ min-width:600px;
 .table-panel th,
 .table-panel td{
 
-font-size:13px;
+font-size:14px;
+
+padding:8px 5px;
 
 }
-
-
-}  
 #yearList{
 
 
