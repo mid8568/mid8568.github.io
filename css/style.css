@@ -471,12 +471,18 @@ margin:0 auto;
 /* =====================
 固定列宽
 ===================== */
+.table-panel th:nth-child(1),
+.table-panel td:nth-child(1){
+
+width:80px;
+
+}
 
 
 /* 姓名 */
 
-.table-panel th:nth-child(1),
-.table-panel td:nth-child(1){
+.table-panel th:nth-child(2),
+.table-panel td:nth-child(2){
 
 width:130px;
 
@@ -1016,8 +1022,13 @@ overflow-x:auto;
 
 /* 手机端隐藏字段 */
 
-.table-panel th:nth-child(2),
-.table-panel td:nth-child(2),
+
+.table-panel th:nth-child(1),
+.table-panel td:nth-child(1),
+
+
+.table-panel th:nth-child(3),
+.table-panel td:nth-child(3),
 
 
 .table-panel th:nth-child(7),
@@ -1025,11 +1036,7 @@ overflow-x:auto;
 
 
 .table-panel th:nth-child(8),
-.table-panel td:nth-child(8),
-
-
-.table-panel th:nth-child(9),
-.table-panel td:nth-child(9){
+.table-panel td:nth-child(8){
 
 display:none;
 
