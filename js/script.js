@@ -129,7 +129,7 @@ head.innerHTML=`
 
 <th class="pc-col">学校</th>
 
-<th class="pc-col">身份证</th>
+<th>身份证</th>
 
 <th>手机号</th>
 
@@ -137,7 +137,7 @@ head.innerHTML=`
 
 <th>层次</th>
 
-<th>状态</th>
+<th class="pc-col">状态</th>
 
 <th class="pc-col">入学时间</th>
 
@@ -370,7 +370,7 @@ ${s.school||""}
 
 
 
-<td class="pc-col">
+<td>
 
 ${s.idcard||""}
 
