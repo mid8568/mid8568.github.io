@@ -471,13 +471,6 @@ margin:0 auto;
 /* =====================
 固定列宽
 ===================== */
-.table-panel th:nth-child(1),
-.table-panel td:nth-child(1){
-
-width:80px;
-
-}
-
 
 /* 姓名 */
 
