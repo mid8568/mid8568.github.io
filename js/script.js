@@ -1205,8 +1205,6 @@ ${s.school||""}
 
 
 
-
-
 <td class="pc-col">
 
 ${s.idcard||""}
