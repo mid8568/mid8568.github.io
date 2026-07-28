@@ -1205,7 +1205,7 @@ ${s.school||""}
 
 
 
-<td class="pc-col">
+<td>
 
 ${s.idcard||""}
 
@@ -1695,7 +1695,7 @@ ${s.school||""}
 
 
 
-<td class="pc-col">
+<td>
 
 ${s.idcard||""}
 
